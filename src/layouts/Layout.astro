@@ -1,0 +1,451 @@
+---
+import "../styles/global.css";
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- unknown links -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+
+    <script
+      defer=""
+      src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.45.1/apexcharts.min.js"
+    ></script>
+    <!-- unknown links /-->
+
+    <!-- Icons -->
+    <link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	crossorigin="anonymous"
+	referrerpolicy="no-referrer"
+    />
+	
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+	
+    <link
+	rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+	integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+	crossorigin="anonymous"
+	referrerpolicy="no-referrer"
+    />
+	
+    <script defer="" src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <!-- Icons /-->
+	
+    <title>TWG</title>
+  </head>
+  <body>
+
+    <nav class="fixed h-screen w-64 hidden lg:block" id="nav-large-screen">
+        <div class="flex flex-col h-full bg-neutral-900 border-r border-gray-600" id="nav-container">
+            <!-- Logo -->
+            <div class="px-6 py-4 border-b border-red-500/20" id="nav-logo">
+                <h1 class="text-2xl font-bold text-white">TWG</h1>
+                <p class="text-sm text-gray-400">Kitchen Gallery</p>
+            </div>
+    
+            <!-- Navigation Links -->
+            <div class="flex-1 p-4 space-y-2" id="nav-links">
+                <a href="/" 
+                class="group text-white nav-link flex items-center space-x-3 p-3 rounded-lg transition duration-300 hover:bg-neutral-800">
+                 <svg class="nav-icon w-5 h-5 transition-colors duration-300 group-hover:text-red-500" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24">
+                     <path stroke-linecap="round" 
+                           stroke-linejoin="round" 
+                           stroke-width="2"
+                           d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                 </svg>
+                 <span class="font-medium">Home</span>
+             </a>
+                  
+             
+            
+                <a href="/products/" 
+                   class="group text-white nav-link flex items-center space-x-3 p-3 rounded-lg transition duration-300 hover:bg-neutral-800 ">
+                    <svg class="nav-icon w-5 h-5 transition-colors duration-300 group-hover:text-red-500" 
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                    </svg>
+                    <span class="font-medium  text-white">Products</span>
+                </a>
+            
+                <a href="/contact/" 
+                   class="group text-white nav-link flex items-center space-x-3 p-3 rounded-lg transition duration-300 hover:bg-neutral-800 ">
+                    <svg class="nav-icon w-5 h-5 transition-colors duration-300 group-hover:text-red-500" 
+                         fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    <span class="font-medium text-white">Contact</span>
+                </a>
+
+                <button  
+                class="openLoginModal flex w-full items-center space-x-3 p-3  border-red-500/30 text-gray-300 hover:bg-neutral-800  rounded-lg transition-all duration-300 group">
+            
+
+                 <svg class="w-5 h-5 fill-current text-gray-300   group-hover:text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.314 28.323" style="enable-background:new 0 0 28.314 28.323" xml:space="preserve"><path d="m27.728 20.384-4.242-4.242a1.982 1.982 0 0 0-1.413-.586h-.002c-.534 0-1.036.209-1.413.586L17.83 18.97l-8.485-8.485 2.828-2.828c.78-.78.78-2.05-.001-2.83L7.929.585A1.986 1.986 0 0 0 6.516 0h-.001C5.98 0 5.478.209 5.101.587L.858 4.83C.729 4.958-.389 6.168.142 8.827c.626 3.129 3.246 7.019 7.787 11.56 6.499 6.499 10.598 7.937 12.953 7.937 1.63 0 2.426-.689 2.604-.867l4.242-4.242c.378-.378.587-.881.586-1.416 0-.534-.208-1.037-.586-1.415zm-5.656 5.658c-.028.028-3.409 2.249-12.729-7.07C-.178 9.452 2.276 6.243 2.272 6.244L6.515 2l4.243 4.244-3.535 3.535a.999.999 0 0 0 0 1.414l9.899 9.899a.999.999 0 0 0 1.414 0l3.535-3.536 4.243 4.244-4.242 4.242z"/></svg>
+                 <span class="font-medium text-white">Login</span>
+             </button>
+
+                <a href="/catalogue/"  target="_blank"
+                   class="group text-white nav-link flex items-center space-x-3 p-3 rounded-lg transition duration-300 hover:bg-neutral-800 ">
+                   <svg class="nav-icon w-5 h-5 transition-colors duration-300 group-hover:text-red-500" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                   viewBox="0 0 370.32 370.32" xml:space="preserve">
+              <g>
+                  <path class="fill-current text-red-500 group-hover:text-red-500"  d="M148.879,85.993H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+                      c8.284,0,15-6.716,15-15C163.879,92.709,157.163,85.993,148.879,85.993z"/>
+                  <path class="fill-current text-red-500 group-hover:text-red-500"  d="M148.879,148.327H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+                      c8.284,0,15-6.716,15-15C163.879,155.043,157.163,148.327,148.879,148.327z"/>
+                  <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M211.944,253.354v14.608h7.717c9.359,0,9.359-5.599,9.359-7.439c0-1.775,0-7.17-9.359-7.17H211.944z
+                      "/>
+                  <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M325.879,225.752h-24.41V73.703c0-3.934-1.56-7.705-4.344-10.484l-58.876-58.88
+                      C235.465,1.561,231.699,0,227.765,0H50.58C34.527,0,21.469,13.059,21.469,29.112v312.095c0,16.054,13.059,29.113,29.111,29.113
+                      h221.777c16.052,0,29.111-13.06,29.111-29.113v-30.048h24.41c12.687,0,22.973-10.285,22.973-22.973v-39.462
+                      C348.852,236.038,338.566,225.752,325.879,225.752z M269.855,337.906H53.082V32.414H207.17V75.99
+                      c0,10.555,8.554,19.107,19.105,19.107h43.58v130.655h-74.178c-12.688,0-22.973,10.286-22.973,22.973v39.462
+                      c0,12.688,10.285,22.973,22.973,22.973h74.178V337.906z M238.51,260.523c0,10.441-7.224,16.928-18.85,16.928h-7.717v8.977
+                      c0,2.316-1.877,4.197-4.195,4.197h-1.097c-2.319,0-4.197-1.881-4.197-4.197v-38.366c0-2.316,1.878-4.197,4.197-4.197h13.009
+                      C231.287,243.864,238.51,250.246,238.51,260.523z M262.305,290.625H247.21c-2.319,0-4.197-1.881-4.197-4.197v-38.366
+                      c0-2.316,1.877-4.197,4.197-4.197h15.095c13.148,0,23.845,10.5,23.845,23.409C286.15,280.15,275.454,290.625,262.305,290.625z
+                       M322.455,249.156c0,2.32-1.878,4.197-4.197,4.197h-17.045v10.053h14.521c2.317,0,4.197,1.875,4.197,4.195v1.099
+                      c0,2.316-1.88,4.197-4.197,4.197h-14.521v13.53c0,2.316-1.877,4.197-4.196,4.197h-1.096c-2.32,0-4.197-1.881-4.197-4.197v-38.366
+                      c0-2.316,1.877-4.197,4.197-4.197h22.337c2.319,0,4.197,1.881,4.197,4.197V249.156z"/>
+                  <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M262.305,253.354h-9.803v27.782h9.803c7.915,0,14.355-6.222,14.355-13.862
+                      C276.661,259.598,270.221,253.354,262.305,253.354z"/>
+              </g>
+              </svg>
+              
+               
+                    
+                    <span class="font-medium text-white">Catalogue</span>
+                </a>
+
+            
+                
+                
+     
+                <a href="/dashboard/" 
+                class="text-white nav-link flex items-center space-x-3 p-3 rounded-lg transition duration-300 hover:bg-neutral-800">
+
+                <svg class="w-5 h-5 {% if request.path == '/dashboard/' %}text-red-500 group-hover:text-red-500"  fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                viewBox="0 0 474.565 474.565" xml:space="preserve">
+           <g>
+               <path class="fill-current text-red-500 " d="M255.204,102.3c-0.606-11.321-12.176-9.395-23.465-9.395C240.078,95.126,247.967,98.216,255.204,102.3z"/>
+               <path d="M134.524,73.928c-43.825,0-63.997,55.471-28.963,83.37c11.943-31.89,35.718-54.788,66.886-63.826
+                   C163.921,81.685,150.146,73.928,134.524,73.928z"/>
+               <path class="fill-current text-red-500" d="M43.987,148.617c1.786,5.731,4.1,11.229,6.849,16.438L36.44,179.459c-3.866,3.866-3.866,10.141,0,14.015l25.375,25.383
+                   c1.848,1.848,4.38,2.888,7.019,2.888c2.61,0,5.125-1.04,7.005-2.888l14.38-14.404c2.158,1.142,4.55,1.842,6.785,2.827
+                   c0-0.164-0.016-0.334-0.016-0.498c0-11.771,1.352-22.875,3.759-33.302c-17.362-11.174-28.947-30.57-28.947-52.715
+                   c0-34.592,28.139-62.739,62.723-62.739c23.418,0,43.637,13.037,54.43,32.084c11.523-1.429,22.347-1.429,35.376,1.033
+                   c-1.676-5.07-3.648-10.032-6.118-14.683l14.396-14.411c1.878-1.856,2.918-4.38,2.918-7.004c0-2.625-1.04-5.148-2.918-7.004
+                   l-25.361-25.367c-1.94-1.941-4.472-2.904-7.003-2.904c-2.532,0-5.063,0.963-6.989,2.904l-14.442,14.411
+                   c-5.217-2.764-10.699-5.078-16.444-6.825V9.9c0-5.466-4.411-9.9-9.893-9.9h-35.888c-5.451,0-9.909,4.434-9.909,9.9v20.359
+                   c-5.73,1.747-11.213,4.061-16.446,6.825L75.839,22.689c-1.942-1.941-4.473-2.904-7.005-2.904c-2.531,0-5.077,0.963-7.003,2.896
+                   L36.44,48.048c-1.848,1.864-2.888,4.379-2.888,7.012c0,2.632,1.04,5.148,2.888,7.004l14.396,14.403
+                   c-2.75,5.218-5.063,10.708-6.817,16.438H23.675c-5.482,0-9.909,4.441-9.909,9.915v35.889c0,5.458,4.427,9.908,9.909,9.908H43.987z"
+                   />
+               <path class="fill-current text-red-500" d="M354.871,340.654c15.872-8.705,26.773-25.367,26.773-44.703c0-28.217-22.967-51.168-51.184-51.168
+                   c-9.923,0-19.118,2.966-26.975,7.873c-4.705,18.728-12.113,36.642-21.803,52.202C309.152,310.022,334.357,322.531,354.871,340.654z
+                   "/>
+               <path d="M460.782,276.588c0-5.909-4.799-10.693-10.685-10.693H428.14c-1.896-6.189-4.411-12.121-7.393-17.75l15.544-15.544
+                   c2.02-2.004,3.137-4.721,3.137-7.555c0-2.835-1.118-5.553-3.137-7.563l-27.363-27.371c-2.08-2.09-4.829-3.138-7.561-3.138
+                   c-2.734,0-5.467,1.048-7.547,3.138l-15.576,15.552c-5.623-2.982-11.539-5.481-17.751-7.369v-21.958
+                   c0-5.901-4.768-10.685-10.669-10.685H311.11c-2.594,0-4.877,1.04-6.739,2.578c3.26,11.895,5.046,24.793,5.046,38.552
+                   c0,8.735-0.682,17.604-1.956,26.423c7.205-2.656,14.876-4.324,22.999-4.324c36.99,0,67.086,30.089,67.086,67.07
+                   c0,23.637-12.345,44.353-30.872,56.303c13.48,14.784,24.195,32.324,31.168,51.976c1.148,0.396,2.344,0.684,3.54,0.684
+                   c2.733,0,5.467-1.04,7.563-3.13l27.379-27.371c2.004-2.004,3.106-4.721,3.106-7.555s-1.102-5.551-3.106-7.563l-15.576-15.552
+                   c2.982-5.621,5.497-11.555,7.393-17.75h21.957c2.826,0,5.575-1.118,7.563-3.138c2.004-1.996,3.138-4.72,3.138-7.555
+                   L460.782,276.588z"/>
+               <path d="M376.038,413.906c-16.602-48.848-60.471-82.445-111.113-87.018c-16.958,17.958-37.954,29.351-61.731,29.351
+                   c-23.759,0-44.771-11.392-61.713-29.351c-50.672,4.573-94.543,38.17-111.145,87.026l-9.177,27.013
+                   c-2.625,7.773-1.368,16.338,3.416,23.007c4.783,6.671,12.486,10.631,20.685,10.631h315.853c8.215,0,15.918-3.96,20.702-10.631
+                   c4.767-6.669,6.041-15.234,3.4-23.007L376.038,413.906z"/>
+               <path d="M120.842,206.782c0,60.589,36.883,125.603,82.352,125.603c45.487,0,82.368-65.014,82.368-125.603
+                   C285.563,81.188,120.842,80.939,120.842,206.782z"/>
+           </g>
+           </svg>
+
+          
+            <span class="font-medium text-white">Admin</span>
+        </a>
+            </div>
+    
+            <!-- User Profile -->
+            <div class="border-t border-red-500/20 p-4 mt-auto" id="nav-profile">
+                <div class="flex items-center hover:bg-neutral-800 p-2 rounded-lg transition-all duration-300">
+                    <img src="https://avatar.iran.liara.run/public" alt="User" class="w-8 h-8 rounded-full transition-all duration-300 hover:scale-110" loading="lazy">
+                    <div class="ml-3">
+                        <p class="text-sm font-medium text-white">Site Made By</p>
+                        <p class="text-xs text-gray-400">john@twg.com</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <header class="sticky top-0 z-30 bg-black px-6 py-4 lg:hidden" id="mobile-header">
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold text-white">TWG</h2>
+            <button id="hamburger-menu" class="text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="mobile-nav-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+
+    
+
+
+    <div class="flex" x-data="{ isOpen: false }" id="el-2erdhyzh">
+                <!-- Sidebar Navigation -->
+
+
+        <!-- Mobile Menu Button -->
+        <div class="lg:hidden fixed top-2 right-4 z-50  " id="el-nnh62v45">
+            <button type="button"
+                class="rounded-lg p-2 bg-neutral-800 text-neutral-400 hover:text-white "
+                @click="isOpen = !isOpen" aria-controls="mobile-menu" :aria-expanded="isOpen" aria-expanded="false"
+                id="el-hrbb3kga">
+                <svg x-show="!isOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" id="el-l3uxfp8l">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"
+                        id="el-20pbcsun"></path>
+                </svg>
+                <svg x-show="isOpen" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" style="display: none;" id="el-tfexrgdo">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"
+                        id="el-o80pzb1t"></path>
+                </svg>
+            </button>
+        </div>
+
+
+
+        <!-- Mobile Menu -->
+        <!-- Mobile Menu -->
+        <div x-show="isOpen" class="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-lg z-40"
+            x-transition:enter="transition ease-out duration-150 transform"
+            x-transition:enter-start="opacity-0 translate-x-full" x-transition:enter-end="opacity-100 translate-x-0"
+            x-transition:leave="transition ease-in duration-150 transform"
+            x-transition:leave-start="opacity-100 translate-x-0" x-transition:leave-end="opacity-0 translate-x-full"
+            @click.away="isOpen = false" @resize.window="if (window.innerWidth > 1024) isOpen = false"
+            style="display: none;" id="el-jen0v7dk">
+            <div class="fixed inset-y-0 left-0 max-w-xs w-full bg-neutral-900 shadow-xl p-6 flex flex-col justify-center items-center"
+                id="el-8bxmt88z">
+                <!-- Close Button -->
+
+
+                <!-- Navigation Links -->
+                <div class="flex-1 p-4 space-y-2 mt-28 justify-center items-center h-full w-full text-2xl" id="nav-links">
+                    <a href="/" 
+                       class="flex items-center space-x-3 p-3  border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group">
+                        <svg class="w-5 h-5  group-hover:text-red-500" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                        </svg>
+                        <span class="font-medium text-white">Home</span>
+                    </a>
+                
+                    <a href="/products/" 
+                       class="flex items-center space-x-3 p-3   border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group">
+                        <svg class="w-5 h-5   group-hover:text-red-500" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                        </svg>
+                        <span class="font-medium  text-white">Products</span>
+                    </a>
+                
+                    <a href="/contact/" 
+                       class="flex items-center space-x-3 p-3   border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group">
+                        <svg class="w-5 h-5  group-hover:text-red-500" 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                        <span class="font-medium text-white">Contact</span>
+                    </a>
+
+
+                    <button  
+                       class="openLoginModal flex w-full items-center space-x-3 p-3  border-red-500/30 text-gray-300 hover:bg-neutral-800  rounded-lg transition-all duration-300 group">
+                   
+
+                        <svg class="w-5 h-5 fill-current text-gray-300   group-hover:text-red-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28.314 28.323" style="enable-background:new 0 0 28.314 28.323" xml:space="preserve"><path d="m27.728 20.384-4.242-4.242a1.982 1.982 0 0 0-1.413-.586h-.002c-.534 0-1.036.209-1.413.586L17.83 18.97l-8.485-8.485 2.828-2.828c.78-.78.78-2.05-.001-2.83L7.929.585A1.986 1.986 0 0 0 6.516 0h-.001C5.98 0 5.478.209 5.101.587L.858 4.83C.729 4.958-.389 6.168.142 8.827c.626 3.129 3.246 7.019 7.787 11.56 6.499 6.499 10.598 7.937 12.953 7.937 1.63 0 2.426-.689 2.604-.867l4.242-4.242c.378-.378.587-.881.586-1.416 0-.534-.208-1.037-.586-1.415zm-5.656 5.658c-.028.028-3.409 2.249-12.729-7.07C-.178 9.452 2.276 6.243 2.272 6.244L6.515 2l4.243 4.244-3.535 3.535a.999.999 0 0 0 0 1.414l9.899 9.899a.999.999 0 0 0 1.414 0l3.535-3.536 4.243 4.244-4.242 4.242z"/></svg>
+                        <span class="font-medium text-white">Login</span>
+                    </button>
+
+
+                    <a href="/catalogue/"  target="_blank"
+                    class="flex items-center space-x-3 p-3 {% if request.path == '{{latest_catalogue}}' %}bg-neutral-800 border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group ">
+                    <svg height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 370.32 370.32" xml:space="preserve">
+               <g>
+                   <path class="fill-current text-red-500 group-hover:text-red-500"  d="M148.879,85.993H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+                       c8.284,0,15-6.716,15-15C163.879,92.709,157.163,85.993,148.879,85.993z"/>
+                   <path class="fill-current text-red-500 group-hover:text-red-500" d="M148.879,148.327H95.135c-8.284,0-15,6.716-15,15c0,8.284,6.716,15,15,15h53.744
+                       c8.284,0,15-6.716,15-15C163.879,155.043,157.163,148.327,148.879,148.327z"/>
+                   <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M211.944,253.354v14.608h7.717c9.359,0,9.359-5.599,9.359-7.439c0-1.775,0-7.17-9.359-7.17H211.944z
+                       "/>
+                   <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M325.879,225.752h-24.41V73.703c0-3.934-1.56-7.705-4.344-10.484l-58.876-58.88
+                       C235.465,1.561,231.699,0,227.765,0H50.58C34.527,0,21.469,13.059,21.469,29.112v312.095c0,16.054,13.059,29.113,29.111,29.113
+                       h221.777c16.052,0,29.111-13.06,29.111-29.113v-30.048h24.41c12.687,0,22.973-10.285,22.973-22.973v-39.462
+                       C348.852,236.038,338.566,225.752,325.879,225.752z M269.855,337.906H53.082V32.414H207.17V75.99
+                       c0,10.555,8.554,19.107,19.105,19.107h43.58v130.655h-74.178c-12.688,0-22.973,10.286-22.973,22.973v39.462
+                       c0,12.688,10.285,22.973,22.973,22.973h74.178V337.906z M238.51,260.523c0,10.441-7.224,16.928-18.85,16.928h-7.717v8.977
+                       c0,2.316-1.877,4.197-4.195,4.197h-1.097c-2.319,0-4.197-1.881-4.197-4.197v-38.366c0-2.316,1.878-4.197,4.197-4.197h13.009
+                       C231.287,243.864,238.51,250.246,238.51,260.523z M262.305,290.625H247.21c-2.319,0-4.197-1.881-4.197-4.197v-38.366
+                       c0-2.316,1.877-4.197,4.197-4.197h15.095c13.148,0,23.845,10.5,23.845,23.409C286.15,280.15,275.454,290.625,262.305,290.625z
+                        M322.455,249.156c0,2.32-1.878,4.197-4.197,4.197h-17.045v10.053h14.521c2.317,0,4.197,1.875,4.197,4.195v1.099
+                       c0,2.316-1.88,4.197-4.197,4.197h-14.521v13.53c0,2.316-1.877,4.197-4.196,4.197h-1.096c-2.32,0-4.197-1.881-4.197-4.197v-38.366
+                       c0-2.316,1.877-4.197,4.197-4.197h22.337c2.319,0,4.197,1.881,4.197,4.197V249.156z"/>
+                   <path class="group-hover:text-red-500" style="fill:#d1d5db;" d="M262.305,253.354h-9.803v27.782h9.803c7.915,0,14.355-6.222,14.355-13.862
+                       C276.661,259.598,270.221,253.354,262.305,253.354z"/>
+               </g>
+               </svg>
+               
+                
+                     
+                     <span class="font-medium {% if request.path == '{{latest_catalogue}}' %}text-white">Catalogue</span>
+                 </a>
+                    
+                    
+                        
+                    
+                    
+                    <a href="/dashboard/" 
+                    class="flex items-center space-x-3 p-3 {% if request.path == '/dashboard/' %}bg-neutral-800 border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group">
+    
+                    <svg class="w-5 h-5 {% if request.path == '/dashboard/' %}text-red-500 group-hover:text-red-500"  fill="#FFFFFF" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+                    viewBox="0 0 474.565 474.565" xml:space="preserve">
+               <g>
+                   <path class="fill-current text-red-500 " d="M255.204,102.3c-0.606-11.321-12.176-9.395-23.465-9.395C240.078,95.126,247.967,98.216,255.204,102.3z"/>
+                   <path d="M134.524,73.928c-43.825,0-63.997,55.471-28.963,83.37c11.943-31.89,35.718-54.788,66.886-63.826
+                       C163.921,81.685,150.146,73.928,134.524,73.928z"/>
+                   <path class="fill-current text-red-500" d="M43.987,148.617c1.786,5.731,4.1,11.229,6.849,16.438L36.44,179.459c-3.866,3.866-3.866,10.141,0,14.015l25.375,25.383
+                       c1.848,1.848,4.38,2.888,7.019,2.888c2.61,0,5.125-1.04,7.005-2.888l14.38-14.404c2.158,1.142,4.55,1.842,6.785,2.827
+                       c0-0.164-0.016-0.334-0.016-0.498c0-11.771,1.352-22.875,3.759-33.302c-17.362-11.174-28.947-30.57-28.947-52.715
+                       c0-34.592,28.139-62.739,62.723-62.739c23.418,0,43.637,13.037,54.43,32.084c11.523-1.429,22.347-1.429,35.376,1.033
+                       c-1.676-5.07-3.648-10.032-6.118-14.683l14.396-14.411c1.878-1.856,2.918-4.38,2.918-7.004c0-2.625-1.04-5.148-2.918-7.004
+                       l-25.361-25.367c-1.94-1.941-4.472-2.904-7.003-2.904c-2.532,0-5.063,0.963-6.989,2.904l-14.442,14.411
+                       c-5.217-2.764-10.699-5.078-16.444-6.825V9.9c0-5.466-4.411-9.9-9.893-9.9h-35.888c-5.451,0-9.909,4.434-9.909,9.9v20.359
+                       c-5.73,1.747-11.213,4.061-16.446,6.825L75.839,22.689c-1.942-1.941-4.473-2.904-7.005-2.904c-2.531,0-5.077,0.963-7.003,2.896
+                       L36.44,48.048c-1.848,1.864-2.888,4.379-2.888,7.012c0,2.632,1.04,5.148,2.888,7.004l14.396,14.403
+                       c-2.75,5.218-5.063,10.708-6.817,16.438H23.675c-5.482,0-9.909,4.441-9.909,9.915v35.889c0,5.458,4.427,9.908,9.909,9.908H43.987z"
+                       />
+                   <path class="fill-current text-red-500" d="M354.871,340.654c15.872-8.705,26.773-25.367,26.773-44.703c0-28.217-22.967-51.168-51.184-51.168
+                       c-9.923,0-19.118,2.966-26.975,7.873c-4.705,18.728-12.113,36.642-21.803,52.202C309.152,310.022,334.357,322.531,354.871,340.654z
+                       "/>
+                   <path d="M460.782,276.588c0-5.909-4.799-10.693-10.685-10.693H428.14c-1.896-6.189-4.411-12.121-7.393-17.75l15.544-15.544
+                       c2.02-2.004,3.137-4.721,3.137-7.555c0-2.835-1.118-5.553-3.137-7.563l-27.363-27.371c-2.08-2.09-4.829-3.138-7.561-3.138
+                       c-2.734,0-5.467,1.048-7.547,3.138l-15.576,15.552c-5.623-2.982-11.539-5.481-17.751-7.369v-21.958
+                       c0-5.901-4.768-10.685-10.669-10.685H311.11c-2.594,0-4.877,1.04-6.739,2.578c3.26,11.895,5.046,24.793,5.046,38.552
+                       c0,8.735-0.682,17.604-1.956,26.423c7.205-2.656,14.876-4.324,22.999-4.324c36.99,0,67.086,30.089,67.086,67.07
+                       c0,23.637-12.345,44.353-30.872,56.303c13.48,14.784,24.195,32.324,31.168,51.976c1.148,0.396,2.344,0.684,3.54,0.684
+                       c2.733,0,5.467-1.04,7.563-3.13l27.379-27.371c2.004-2.004,3.106-4.721,3.106-7.555s-1.102-5.551-3.106-7.563l-15.576-15.552
+                       c2.982-5.621,5.497-11.555,7.393-17.75h21.957c2.826,0,5.575-1.118,7.563-3.138c2.004-1.996,3.138-4.72,3.138-7.555
+                       L460.782,276.588z"/>
+                   <path d="M376.038,413.906c-16.602-48.848-60.471-82.445-111.113-87.018c-16.958,17.958-37.954,29.351-61.731,29.351
+                       c-23.759,0-44.771-11.392-61.713-29.351c-50.672,4.573-94.543,38.17-111.145,87.026l-9.177,27.013
+                       c-2.625,7.773-1.368,16.338,3.416,23.007c4.783,6.671,12.486,10.631,20.685,10.631h315.853c8.215,0,15.918-3.96,20.702-10.631
+                       c4.767-6.669,6.041-15.234,3.4-23.007L376.038,413.906z"/>
+                   <path d="M120.842,206.782c0,60.589,36.883,125.603,82.352,125.603c45.487,0,82.368-65.014,82.368-125.603
+                       C285.563,81.188,120.842,80.939,120.842,206.782z"/>
+               </g>
+               </svg>
+    
+              
+                <span class="font-medium {% if request.path == '/dashboard/' %}text-white">Admin</span>
+            </a>
+           
+            
+
+                </div>
+                
+            </div>
+        </div>
+
+
+        <div class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50  shadow-[0px_4px_6px_rgba(239,68,68,0.5)]" id="login_modal">
+            <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
+                <button 
+                    id="closeloginBtn"
+                    class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300 transition-colors"
+                >
+                    &times;
+                </button>
+                
+                <h2 class="text-white text-2xl mb-6 font-semibold">Login with Phone</h2>
+                
+                <form id="loginForm">
+                  
+                    <div class="mb-6">
+                        <label class="text-white text-sm mb-2 block">Phone Number</label>
+                        <input type="hidden" name="user_action" value="through_navbar">
+                        <input
+                            type="tel"
+                            name="phone_number"
+                            id="phoneInput"
+                            maxlength="10"
+                            placeholder="9876543210"
+                            class="w-full bg-black text-white px-4 py-3 rounded-lg focus:border-red-500 focus:ring-1 focus:ring-red-500 placeholder-gray-400"
+                        >
+
+                        
+                    </div>
+                    
+                    <button
+                        type="submit"
+                        id="loginBtn"
+                        disabled
+                        class="w-full bg-red-600 text-white py-3 rounded-lg font-medium disabled:bg-red-900 disabled:cursor-not-allowed hover:bg-red-700 transition-colors"
+                    >
+                        Login
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    
+    <!-- slot to be filled by child -->
+<slot />
+<!-- slot to be filled by child -->
+
+    
+  
+
+    
+    
+    
+    <div id="page_complete">
+        
+
+        <!-- <script src="{% static  'js/loginForm.js' %}"></script> -->
+		
+		
+	</body>
+
+
+</html>
+
+
+

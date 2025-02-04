@@ -3,7 +3,16 @@
 [x-cloak] { display: none !important; }
 html { scroll-behavior: smooth; }
 
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
 
+.mont-alternate{
+  font-family: "Montserrat", serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+}
 
   *::-webkit-scrollbar {
     display: none;

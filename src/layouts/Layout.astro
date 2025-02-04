@@ -58,6 +58,7 @@ import "../styles/global.css";
     <title>TWG</title>
   </head>
   <body>
+    <div class="smooth-scroll-wrapper">
     <nav class="fixed h-screen w-64 hidden lg:block" id="nav-large-screen">
       <div
         class="flex flex-col h-full bg-neutral-900 border-r border-gray-600"
@@ -601,24 +602,17 @@ import "../styles/global.css";
     <div id="page_complete">
       <!-- <script src="{% static  'js/loginForm.js' %}"></script> -->
     </div>
+
+</div>
   </body>
 </html>
 
-<script is:inline>
-   const body = document.body,
-    height= body.getBoundingClientRect().height-1,
-    speed = 0.04;
-    var offset = 0;
 
-    body.style.height = Math.floor(height)+"px"
 
-    function smoothScroll(){
-        offset+=(window.pageYOffset-offset)*speed;
-        var scroll = "translateY(-"+offset+"px) translateZ(0)";
-        body.style.transform=scroll;
-        callScroll=requestAnimationFrame(smoothScroll)
-    }
+  <style>
+    
 
-    smoothScroll();
-    // ... (rest of your smoothScroll function) ...
-  </script>
+    .smooth-scroll-wrapper {
+   scroll-behavior: smooth;
+}
+  </style>

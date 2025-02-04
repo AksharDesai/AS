@@ -11,3 +11,6 @@ export async function fetchProducts() {
   console.log("Products:", data); // Check in console
   return data;
 }
+
+
+

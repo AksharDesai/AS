@@ -6,102 +6,286 @@ const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
 ---
 
-<section id="FeaturedProducts" class="py-16 bg-neutral-900">
+<section id="FeaturedProducts" class="py-16 bg-neutral-950">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     {/* Section Header */}
     <div class="text-center mb-12">
-      <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
-         More Featured Products 
+      <h2
+        class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight"
+      >
+        More Featured Products
       </h2>
-      <div class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto rounded-full"></div>
+      <div
+        class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto rounded-full"
+      >
+      </div>
     </div>
 
     {/* Product Filters */}
     <div class="flex flex-wrap justify-center gap-4 mb-12">
-      <button class="filter-btn px-6 py-2 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-sm hover:from-red-600 hover:to-red-700 transition-colors duration-300 shadow-md" data-category="all">
+      <button
+        class="filter-btn px-6 py-2 rounded-full bg-gradient-to-r from-red-500 to-red-600 text-white font-semibold text-sm hover:from-red-600 hover:to-red-700 transition-colors duration-300 shadow-md"
+        data-category="all"
+      >
         All Products
       </button>
-      <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md" data-category="Kitchen Storage">
+      <button
+        class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md"
+        data-category="Kitchen Storage"
+      >
         Kitchen Storage
       </button>
-      <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md" data-category="Wardrobe & Closet">
+      <button
+        class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md"
+        data-category="Wardrobe & Closet"
+      >
         Wardrobe & Closet
       </button>
-      <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md" data-category="Space Saving">
+      <button
+        class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md"
+        data-category="Space Saving"
+      >
         Space Saving
       </button>
-      <button class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md" data-category="General Hardware">
+      <button
+        class="filter-btn px-6 py-2 rounded-full border-2 border-gray-600 text-gray-300 font-semibold text-sm hover:border-red-600 hover:text-red-600 transition-colors duration-300 shadow-md"
+        data-category="General Hardware"
+      >
         General Hardware
       </button>
     </div>
 
     {/* Products Grid */}
-    <div id="product-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <div
-          
-          id={product.id}
-          class="product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12"
-          data-category={product.category}
-        >
-          {/* Product Image */}
-          <div class="relative aspect-square bg-neutral-700/50 rounded-xl overflow-hidden mb-6">
-            <img src={`${product.image}`} alt={product.name} class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105" />
+    <div
+      id="product-container"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+      {
+        products.map((product) => (
+          <div
+            id={product.id}
+            class="product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12"
+            data-category={product.category}
+          >
+            {/* Product Image */}
+            <div class="relative aspect-square bg-neutral-700/50 rounded-xl overflow-hidden mb-6">
+              <img
+                src={`${product.image}`}
+                alt={product.name}
+                class={`product-image-${product.id} w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105`}
+              />
+            </div>
+
+            {/* Product Details */}
+            <h3
+              class={`product-name-${product.id} text-xl sm:text-2xl font-bold text-white mb-2`}
+            >
+              {product.name}
+            </h3>
+
+            {/* Product Description */}
+            <p
+              class={`product-description-${product.id} descDot text-neutral-400 mb-4 text-sm sm:text-base`}
+              style="white-space: pre-line;"
+            >
+              {product.description}
+            </p>
+
+            {/* Price & Rating */}
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+              <span
+                class={`product-price-${product.id} text-2xl sm:text-3xl font-bold text-red-500`}
+              >
+                ₹{product.price}
+              </span>
+            </div>
+
+            {/* Category */}
+            <div class="mb-4">
+              <span
+                class={`product-category-${product.id} text-neutral-400 text-sm sm:text-base`}
+              >
+                Category: <span class="text-white">{product.category}</span>
+              </span>
+            </div>
+
+            {/* CTA Button */}
+            <button
+              value={product.id}
+              class="product-button w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-colors text-sm sm:text-base shadow-lg"
+            >
+              Learn More
+            </button>
           </div>
-
-          {/* Product Details */}
-          <h3 class="text-xl sm:text-2xl font-bold text-white mb-2">{product.name}</h3>
-
-          {/* Product Description */}
-          <p class="descDot text-neutral-400 mb-4 text-sm sm:text-base" style="white-space: pre-line;">
-            {product.description}
-          </p>
-
-          {/* Price & Rating */}
-          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-            <span class="text-2xl sm:text-3xl font-bold text-red-500">₹{product.price}</span>
-            
-          </div>
-
-          {/* Category */}
-          <div class="mb-4">
-            <span class="text-neutral-400 text-sm sm:text-base">Category: <span class="text-white">{product.category}</span></span>
-          </div>
-
-          {/* CTA Button */}
-          <button class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-colors text-sm sm:text-base shadow-lg">
-            Learn More
-          </button>
-        </div>
-      ))}
+        ))
+      }
     </div>
   </div>
 </section>
 
+<!-- Modal Overlay -->
+
+<div id="modal-itself" class="hidden fixed inset-0 flex items-center justify-center bg-black/75 z-50">
+  <!-- Modal Container -->
+  <div class="bg-black rounded-lg shadow-lg w-full sm:max-w-[372px] max-h-[90vh] mx-4 p-6 flex flex-col">
+    <!-- Modal Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-white text-2xl font-bold">Product Details</h2>
+      <button id="closeModal" class="text-red-500 hover:text-red-600 focus:outline-none">
+        <!-- Close Icon -->
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal Body -->
+    <div class="flex flex-col flex-grow overflow-hidden">
+      <!-- Image Section -->
+      <div class="h-64 overflow-hidden rounded-md mb-4">
+        <img
+          id="modal-image"
+          src="https://via.placeholder.com/400x300"
+          alt="Product Image"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Content Section -->
+      <div class="flex flex-col flex-grow overflow-y-auto">
+        <!-- Product Name -->
+        <h3 id="modal-name" class="text-white text-xl font-semibold mb-2">Product Name</h3>
+        <!-- Description -->
+        <p id="modal-description" class="text-gray-300 text-sm mb-4">
+          This is a brief description of the product. It gives details about features and benefits.
+          lorem50
+        </p>
+        <!-- Price and Rating -->
+        <div class="flex justify-between items-center mt-auto">
+          <span id="modal-price" class="text-white text-lg font-bold">$99.99</span>
+          <div class="flex items-center">
+            <!-- Star Icon for Rating -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5 text-yellow-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path
+                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.286 3.974c.3.921-.755 1.688-1.54 1.118L10 13.348l-3.38 2.455c-.784.57-1.838-.197-1.539-1.118l1.285-3.974a1 1 0 00-.364-1.118L2.67 9.401c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.974z"
+              ></path>
+            </svg>
+            <span id="modal-rating" class="text-white ml-1">4.5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optional Modal Footer could be added here if needed -->
+  </div>
+</div>
+
+
+
 <script is:inline>
+  
+  const learnMoreBtns = document.querySelectorAll(".product-button");
+
+  const productModal = document.getElementById("modal-itself");
+  const closeModal = document.getElementById("closeModal");
+  const modalImg = document.getElementById("modal-image");
+  const modalName = document.getElementById("modal-name");
+  const modalDescription = document.getElementById("modal-description");
+  const modalPrice = document.getElementById("modal-price");
+  const modalRating = document.getElementById("modal-rating");
+
+  closeModal.addEventListener('click',function(e){
+    productModal.classList.add('hidden')
+    document.body.classList.remove('overflow-hidden')
+  })
+
+  learnMoreBtns.forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+      const productID = e.target.value;
+
+      console.log(productID);
+
+      const image = document.querySelector(`.product-image-${productID}`);
+      const name = document.querySelector(`.product-name-${productID}`);
+      const description = document.querySelector(
+        `.product-description-${productID}`
+      );
+      const price = document.querySelector(`.product-price-${productID}`);
+      const category = document.querySelector(`.product-category-${productID}`);
+
+      //<=============== populating the modal with product details ==============>
+      productModal.classList.remove('hidden')
+      document.body.classList.add('overflow-hidden')
+      
+
+      modalImg.src =image.src;
+      modalName.textContent=name.textContent
+      modalDescription.textContent =description.textContent;
+      modalPrice.textContent =price.textContent
+      console.log(category.textContent);
+      //category and rating remaining
+    });
+  });
+
   document.addEventListener("DOMContentLoaded", function () {
     console.log("DOMContentLoaded event fired!"); // Check if the script is running
 
     const filterButtons = document.querySelectorAll(".filter-btn");
     const productCards = document.querySelectorAll(".product-card");
 
-    filterButtons.forEach(button => {
+    filterButtons.forEach((button) => {
       button.addEventListener("click", function () {
         const selectedCategory = this.getAttribute("data-category");
 
         // Remove active class from all buttons
-        filterButtons.forEach(btn => {
-          btn.classList.remove("bg-gradient-to-r", "from-red-500", "to-red-600", "text-white");
-          btn.classList.add("border-2", "border-gray-600", "text-gray-300", "hover:border-red-600", "hover:text-red-600");
+        filterButtons.forEach((btn) => {
+          btn.classList.remove(
+            "bg-gradient-to-r",
+            "from-red-500",
+            "to-red-600",
+            "text-white"
+          );
+          btn.classList.add(
+            "border-2",
+            "border-gray-600",
+            "text-gray-300",
+            "hover:border-red-600",
+            "hover:text-red-600"
+          );
         });
 
         // Add active class to the selected button
-        this.classList.add("bg-gradient-to-r", "from-red-500", "to-red-600", "text-white");
-        this.classList.remove("border-2", "border-gray-600", "text-gray-300", "hover:border-red-600", "hover:text-red-600");
+        this.classList.add(
+          "bg-gradient-to-r",
+          "from-red-500",
+          "to-red-600",
+          "text-white"
+        );
+        this.classList.remove(
+          "border-2",
+          "border-gray-600",
+          "text-gray-300",
+          "hover:border-red-600",
+          "hover:text-red-600"
+        );
 
         // Filter product cards
-        productCards.forEach(card => {
-          if (selectedCategory === "all" || card.getAttribute("data-category") === selectedCategory) {
+        productCards.forEach((card) => {
+          if (
+            selectedCategory === "all" ||
+            card.getAttribute("data-category") === selectedCategory
+          ) {
             card.style.display = "block"; // Show product
           } else {
             card.style.display = "none"; // Hide product
@@ -110,4 +294,16 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       });
     });
   });
+
+
+
+  console.log(modalImg);
+  console.log(modalName);
+  console.log(modalDescription);
+  console.log(modalPrice);
+  console.log(modalRating);
+  
+ 
+
+  console.log(productModal);
 </script>

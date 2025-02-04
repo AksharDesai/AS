@@ -11,7 +11,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     {/* Section Header */}
     <div class="text-center mb-12">
       <h2 class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight">
-        More Featured Products
+         More Featured Products 
       </h2>
       <div class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto rounded-full"></div>
     </div>
@@ -59,8 +59,8 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
           {/* Price & Rating */}
           <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-            <span class="text-2xl sm:text-3xl font-bold text-red-500">${product.price}</span>
-            <span class="ml-1 text-white">{product.rating}</span>
+            <span class="text-2xl sm:text-3xl font-bold text-red-500">₹{product.price}</span>
+            
           </div>
 
           {/* Category */}

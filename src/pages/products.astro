@@ -2,7 +2,7 @@
 
 import Layout from '../layouts/Layout.astro';
 import FeaturedProducts from '../components/Fetchproducts.astro'
-
+import SearchProduct from '../components/SearchProduct.astro';
 
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -96,17 +96,12 @@ import FeaturedProducts from '../components/Fetchproducts.astro'
                 <div id="root">
                     <section id="SearchAndFilter" class="fixed bottom-20 right-0 z-50">
                         <!-- Search Trigger Button -->
-                        <button id="searchTrigger"
-                            class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transition-colors">
-                            <i class="fas fa-search text-xl"></i>
-                        </button>
-    
+
+                        <SearchProduct>
+                        </SearchProduct>
+                        
                         <!-- Search and Filter Panel -->
-                        <div id="searchPanel"
-                            class="hidden fixed right-0 top-0 h-screen w-full md:w-96 bg-white shadow-2xl transform transition-transform duration-300">
-    
-                                <!-- {% include 'search_products.html' %} -->
-                        </div>
+
                     </section>
     
                     <script>

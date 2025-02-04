@@ -205,10 +205,10 @@ import Layout from "../layouts/Layout.astro";
                 id="el-bnyas547"
               >
                 <div
-                  class="no-display  group relative overflow-hidden rounded-2xl cursor-pointer"
+                  class="no-display   group relative overflow-hidden rounded-2xl cursor-pointer"
                 >
                   <!-- Image container with explicit sizing -->
-                  <div class="relative h-80 w-full bg-gray-800">
+                  <div class=" relative h-80 w-full bg-gray-800">
                     <!-- Set explicit height or use aspect ratio -->
                     <img
                       src="/images/tandum.jpeg"
@@ -331,7 +331,7 @@ import Layout from "../layouts/Layout.astro";
                     to bring your vision to life.
                   </p>
                   <a
-                    href="#"
+                    href="/products/"
                     class="group inline-flex items-center px-8 py-4 bg-white text-gray-900 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 hover:scale-105"
                     id="el-6yd9i91d"
                   >
@@ -599,7 +599,7 @@ import Layout from "../layouts/Layout.astro";
                 premium finishes.
               </p>
               <a
-                href="#"
+                href="/products/"
                 class="inline-flex items-center px-8 py-3 bg-red-600 text-white font-montserrat font-medium rounded-lg hover:bg-red-700 transition-colors duration-300"
               >
                 Request Sample Kit
@@ -778,7 +778,7 @@ import Layout from "../layouts/Layout.astro";
           <!-- CTA Section -->
           <div class="mt-16 text-center">
             <a
-              href="#"
+              href="/products/"
               class="inline-flex items-center px-8 py-3 bg-red-600 text-white font-montserrat font-medium rounded-lg hover:bg-red-700 transition-colors duration-300"
             >
               View All Products
@@ -1325,7 +1325,7 @@ import Layout from "../layouts/Layout.astro";
 
 const observer = new IntersectionObserver((entries)=>{
   entries.forEach((entry)=>{
-    console.log(entry)
+    // console.log(entry)
     if(entry.isIntersecting){
       entry.target.classList.add('show')
     }else{

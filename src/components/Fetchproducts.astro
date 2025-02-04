@@ -13,7 +13,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       <h2
         class="text-3xl sm:text-4xl font-extrabold text-white mb-4 tracking-tight"
       >
-        More Featured Products
+        All Featured Products
       </h2>
       <div
         class="w-24 h-1 bg-gradient-to-r from-red-500 to-red-700 mx-auto rounded-full"
@@ -78,21 +78,21 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
             {/* Product Details */}
             <h3
-              class={`product-name-${product.id} text-xl sm:text-2xl font-bold text-white mb-2`}
+              class={`product-name-${product.id}  text-xl sm:text-2xl font-bold text-white mb-2`}
             >
               {product.name}
             </h3>
 
             {/* Product Description */}
             <p
-              class={`product-description-${product.id} descDot text-neutral-400 mb-4 text-sm sm:text-base`}
+              class={`product-description-${product.id} hidden md:block descDot text-neutral-400 mb-4 text-sm sm:text-base`}
               style="white-space: pre-line;"
             >
               {product.description}
             </p>
 
             {/* Price & Rating */}
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <div class="hidden md:flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
               <span
                 class={`product-price-${product.id} text-2xl sm:text-3xl font-bold text-red-500`}
               >
@@ -124,14 +124,21 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 </section>
 
 <!-- Modal Overlay -->
-
-<div id="modal-itself" class=" hidden fixed inset-0 flex items-center justify-center bg-black/50  z-50">
+<div
+  id="modal-itself"
+  class="fixed inset-0 flex items-center justify-center bg-black/50 z-50 hidden"
+>
   <!-- Modal Container -->
-  <div class=" shadow-2xl shadow-red-500 bg-neutral-950 rounded-lg  w-full sm:max-w-[372px] max-h-[90vh] mx-4 p-6 flex flex-col">
+  <div
+    class="modal-container shadow-2xl shadow-red-500 bg-neutral-950 rounded-lg w-full sm:max-w-[372px] max-h-[90vh] mx-4 p-6 flex flex-col"
+  >
     <!-- Modal Header -->
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-white text-2xl font-bold">Product Details</h2>
-      <button id="closeModal" class="text-red-500 hover:text-red-600 focus:outline-none">
+      <button
+        id="closeModal"
+        class="text-red-500 hover:text-red-600 focus:outline-none"
+      >
         <!-- Close Icon -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -140,7 +147,12 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"
+          />
         </svg>
       </button>
     </div>
@@ -160,11 +172,13 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       <!-- Content Section -->
       <div class="flex flex-col flex-grow overflow-y-auto">
         <!-- Product Name -->
-        <h3 id="modal-name" class="text-white text-xl font-semibold mb-2">Product Name</h3>
+        <h3 id="modal-name" class="text-white text-xl font-semibold mb-2">
+          Product Name
+        </h3>
         <!-- Description -->
         <p id="modal-description" class="text-gray-300 text-sm mb-4">
-          This is a brief description of the product. It gives details about features and benefits.
-          lorem50
+          This is a brief description of the product. It gives details about
+          features and benefits. lorem50
         </p>
         <!-- Price and Rating -->
         <div class="flex justify-between items-center mt-auto">
@@ -191,10 +205,44 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   </div>
 </div>
 
+<style>
+  /* Style for the modal when opened */
+  .modal-open {
+    overflow: hidden;
+  }
 
+  /* Keyframes for the fade-in animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Keyframes for the scale-up animation */
+  @keyframes scaleUp {
+    from {
+      transform: scale(0.9);
+    }
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Apply the fade-in animation to the modal overlay */
+  #modal-itself.fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+  }
+
+  /* Apply the scale-up animation to the modal container */
+  .modal-container.scale-up {
+    animation: scaleUp 0.3s ease-in-out forwards;
+  }
+</style>
 
 <script is:inline>
-  
   const learnMoreBtns = document.querySelectorAll(".product-button");
 
   const productModal = document.getElementById("modal-itself");
@@ -204,11 +252,14 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   const modalDescription = document.getElementById("modal-description");
   const modalPrice = document.getElementById("modal-price");
   const modalRating = document.getElementById("modal-rating");
+  const modalContainer = document.querySelector(".modal-container");
 
-  closeModal.addEventListener('click',function(e){
-    productModal.classList.add('hidden')
-    document.body.classList.remove('overflow-hidden')
-  })
+  closeModal.addEventListener("click", function (e) {
+    productModal.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+    productModal.classList.remove("fade-in"); // Remove fade-in class
+    modalContainer.classList.remove("scale-up"); // Remove scale-up class
+  });
 
   learnMoreBtns.forEach((btn) => {
     btn.addEventListener("click", function (e) {
@@ -225,16 +276,15 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       const category = document.querySelector(`.product-category-${productID}`);
 
       //<=============== populating the modal with product details ==============>
-      productModal.classList.remove('hidden')
-      document.body.classList.add('overflow-hidden')
-      
+      productModal.classList.remove("hidden");
+      document.body.classList.add("overflow-hidden");
+      modalImg.src = image.src;
+      modalName.textContent = name.textContent;
+      modalDescription.textContent = description.textContent;
+      modalPrice.textContent = price.textContent;
 
-      modalImg.src =image.src;
-      modalName.textContent=name.textContent
-      modalDescription.textContent =description.textContent;
-      modalPrice.textContent =price.textContent
-      console.log(category.textContent);
-      //category and rating remaining
+      productModal.classList.add("fade-in"); // Add fade-in class
+      modalContainer.classList.add("scale-up"); // Add scale-up class
     });
   });
 
@@ -295,15 +345,11 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     });
   });
 
-
-
   console.log(modalImg);
   console.log(modalName);
   console.log(modalDescription);
   console.log(modalPrice);
   console.log(modalRating);
-  
- 
 
   console.log(productModal);
 </script>

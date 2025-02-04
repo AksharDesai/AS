@@ -45,7 +45,7 @@ import Layout from "../layouts/Layout.astro";
                 >
               </h1>
               <p
-                class="text-gray-300 text-lg   max-w-2xl mx-auto mb-8"
+                class="text-gray-300 text-lg max-w-2xl mx-auto mb-8"
                 id="el-kbrgp4ca"
               >
                 Shop ready-to-install Kitchen upgrades that blend style and
@@ -81,7 +81,7 @@ import Layout from "../layouts/Layout.astro";
               id="el-4jlk9kz5"
             >
               <div
-                class="hidden md:block  group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-red-500/50 transition-all duration-300 hover:transform hover:-translate-y-1"
+                class="hidden md:block group p-8 rounded-2xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 hover:border-red-500/50 transition-all duration-300 hover:transform hover:-translate-y-1"
                 id="el-iw83mx7r"
               >
                 <div
@@ -201,11 +201,11 @@ import Layout from "../layouts/Layout.astro";
               </div>
               <!-- 3 products -->
               <div
-                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                class=" grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                 id="el-bnyas547"
               >
                 <div
-                  class="group relative overflow-hidden rounded-2xl cursor-pointer"
+                  class="no-display  group relative overflow-hidden rounded-2xl cursor-pointer"
                 >
                   <!-- Image container with explicit sizing -->
                   <div class="relative h-80 w-full bg-gray-800">
@@ -237,7 +237,7 @@ import Layout from "../layouts/Layout.astro";
                   </div>
                 </div>
                 <div
-                  class="group relative overflow-hidden rounded-2xl cursor-pointer"
+                  class="no-display  group relative overflow-hidden rounded-2xl cursor-pointer"
                 >
                   <!-- Image container with explicit sizing -->
                   <div class="relative h-80 w-full bg-gray-800">
@@ -269,7 +269,7 @@ import Layout from "../layouts/Layout.astro";
                   </div>
                 </div>
                 <div
-                  class="group relative overflow-hidden rounded-2xl cursor-pointer"
+                  class="no-display  group relative overflow-hidden rounded-2xl cursor-pointer"
                 >
                   <!-- Image container with explicit sizing -->
                   <div class="relative h-80 w-full bg-gray-800">
@@ -781,7 +781,7 @@ import Layout from "../layouts/Layout.astro";
               href="#"
               class="inline-flex items-center px-8 py-3 bg-red-600 text-white font-montserrat font-medium rounded-lg hover:bg-red-700 transition-colors duration-300"
             >
-              View All Projects
+              View All Products
               <svg
                 class="w-4 h-4 ml-2"
                 fill="none"
@@ -1015,7 +1015,7 @@ import Layout from "../layouts/Layout.astro";
       data-section_id="f4398a01-799f-46e1-b691-322cf8f56026"
       class="page_sectionHighlight__ahPeD sectionCode"
     >
-      <section id="expertConnect" class="bg-black  py-12">
+      <section id="expertConnect" class="bg-black py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <!-- Section Header -->
           <div class="text-center">
@@ -1033,13 +1033,10 @@ import Layout from "../layouts/Layout.astro";
             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16"
           >
             <!-- Virtual Consultation -->
-           
 
             <!-- Live Chat -->
-            
 
             <!-- Project Calculator -->
-          
           </div>
 
           <!-- Featured Expert -->
@@ -1072,7 +1069,6 @@ import Layout from "../layouts/Layout.astro";
           </div>
 
           <!-- Sample Request Form -->
-          
         </div>
       </section>
     </div>
@@ -1099,10 +1095,9 @@ import Layout from "../layouts/Layout.astro";
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             <!-- Product in Action -->
             <div
-              class="border border-gray-800 rounded-lg overflow-hidden hover:border-red-500/30 transition-all duration-300"
+              class=" border border-gray-800 rounded-lg overflow-hidden transition-all duration-300"
             >
               <div class="w-full h-[400px]">
-                <!-- Set fixed height or use aspect ratio -->
                 <img
                   src="/images/magic_corner.jpg"
                   alt="Telescopic Channels"
@@ -1117,10 +1112,7 @@ import Layout from "../layouts/Layout.astro";
                   See our telescopic channels and slim tandem boxes in real
                   kitchens
                 </p>
-                <a
-                  href="#"
-                  class="text-red-500 hover:text-white transition-colors duration-300"
-                >
+                <a href="#" class="text-red-500 transition-colors duration-300">
                   Shop Storage Solutions →
                 </a>
               </div>
@@ -1324,7 +1316,52 @@ import Layout from "../layouts/Layout.astro";
         </div>
       </section>
     </div>
-
-   
   </main>
 </Layout>
+
+<script is:inline>
+
+
+
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach((entry)=>{
+    console.log(entry)
+    if(entry.isIntersecting){
+      entry.target.classList.add('show')
+    }else{
+      entry.target.classList.remove('show')
+    }
+  })
+})
+
+const hiddenElements = document.querySelectorAll('.no-display')
+hiddenElements.forEach((el)=>observer.observe(el))
+
+</script>
+
+
+<style>
+
+  .no-display{
+    opacity: 0;
+    filter: blur(5px);
+    transform: translateX(-100%);
+    transition: all 0.9s;
+  }
+  .show{
+    opacity: 1;
+    filter: blur(0);
+    transform: translateX(0);
+  }
+
+  .no-display:nth-child(2){
+    transition-delay:200ms ;
+  }
+  .no-display:nth-child(3){
+    transition-delay:400ms ;
+  }
+  .no-display:nth-child(4){
+    transition-delay:600ms ;
+  }
+
+</style>

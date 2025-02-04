@@ -3,6 +3,9 @@
 [x-cloak] { display: none !important; }
 html { scroll-behavior: smooth; }
 
+
+
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-in;
 }

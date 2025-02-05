@@ -13,7 +13,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     <!-- Cards (slides) -->
      {products.map((product)=>(
 
-         <div class="card overflow-hidden border-2 border-red-500 "><img class="w-full h-full" src={`${product.image}`} draggable="false" loading="lazy" decoding="async" alt="" srcset=""></div>
+         <div class="card overflow-hidden border-2 border-red-500   "><img class="w-full h-full" src={`${product.image}`} draggable="false" loading="lazy" decoding="async" alt="" srcset=""></div>
      ))}
   
   </div>
@@ -121,8 +121,8 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     
     .swiper-container {
       position: relative;
-      width: 240px;
-      height: 320px;
+      width: 340px;
+      height: 420px;
       perspective: 1000px; /* For 3D effect */
     }
     

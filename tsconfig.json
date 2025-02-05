@@ -1,14 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "ESNext",
-    "allowJs": true,
-    "strict": true,
-    "noImplicitAny": false,
-    "skipLibCheck": true,
-    "types": ["astro/client"]
-  },
-  "include": [".astro/types.d.ts", "src", "**/*.astro", "**/*.ts", "**/*.js"],
-  "exclude": ["dist", "node_modules"]
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }

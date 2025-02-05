@@ -8,7 +8,6 @@ export async function fetchProducts() {
     return [];
   }
 
-  console.log("Products:", data); // Check in console
   return data;
 }
 

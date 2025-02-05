@@ -1,0 +1,177 @@
+---
+
+import { fetchProducts } from "../lib/fetchProducts";
+
+// Fetch products dynamically from your Supabase DB
+const fetchedProducts = await fetchProducts();
+const products = fetchedProducts?.length ? fetchedProducts : [];
+
+
+
+---
+
+<div class="swiper-container">
+
+   
+    {products.map((product)=>(
+        <div class="card overflow-hidden border-2 "><img class="w-full h-full " src={`${product.image}`} loading="lazy" decoding="async" draggable="false" alt="" srcset=""></div>
+        ))}
+        
+    
+  
+</div>
+
+
+
+
+<script is:inline>
+    // Gesture state variables
+    let isDragging = false,
+        startX = 0,
+        startY = 0,
+        currentX = 0,
+        currentY = 0,
+        currentCard = null,
+        threshold = 100; // pixels needed to trigger swipe
+
+    const container = document.querySelector('.swiper-container');
+
+    // Returns the top card (last in DOM order)
+    function getTopCard() {
+      const cards = container.querySelectorAll('.card');
+      return cards[cards.length - 1];
+    }
+
+    // Update card stacking with a scattered effect.
+    function updateCards() {
+      const cards = container.querySelectorAll('.card');
+      const total = cards.length;
+      // Preset scatter transforms for cards behind the top card.
+      // They will be applied cyclically.
+      const scatterTransforms = [
+        { x: 5,  y: 10, scale: 0.98, rotate: 2 },
+        { x: -5, y: -10, scale: 0.96, rotate: -2 },
+        { x: 10, y: -5, scale: 0.94, rotate: 3 },
+        { x: -10, y: 5, scale: 0.92, rotate: -3 }
+      ];
+      
+      cards.forEach((card, index) => {
+        // posFromTop: 0 means top card, 1 means one behind, etc.
+        const posFromTop = total - 1 - index;
+        if (posFromTop === 0) {
+          // Top card: fully visible and centered.
+          card.style.transform = 'translate(0px, 0px) scale(1) rotate(0deg)';
+          card.style.opacity = '1';
+          card.style.zIndex = total;
+        } else {
+          // Use preset scatter transform based on the card's position.
+          const scatter = scatterTransforms[(posFromTop - 1) % scatterTransforms.length];
+          card.style.transform = `translate(${scatter.x}px, ${scatter.y}px) scale(${scatter.scale}) rotate(${scatter.rotate}deg)`;
+          card.style.opacity = '1';
+          card.style.zIndex = index;
+        }
+      });
+    }
+    updateCards();
+
+    // Drag start event: record initial position and select the top card.
+    function dragStart(e) {
+      currentCard = getTopCard();
+      if (!currentCard) return;
+      isDragging = true;
+      currentCard.style.transition = 'none';
+      startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+    }
+
+    // Drag move: update position and rotation based on pointer movement.
+    function dragMove(e) {
+      if (!isDragging || !currentCard) return;
+      currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
+      currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
+      const deltaX = currentX - startX;
+      const deltaY = currentY - startY;
+      // Adjust rotation factor as desired.
+      const rotate = deltaX / 15;
+      currentCard.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotate}deg)`;
+    }
+
+    // Drag end: determine whether to swipe away or snap back.
+    function dragEnd() {
+      if (!isDragging || !currentCard) return;
+      isDragging = false;
+      const deltaX = currentX - startX;
+      if (Math.abs(deltaX) > threshold) {
+        const direction = deltaX > 0 ? 1 : -1;
+        // Animate off-screen with fade-out.
+        currentCard.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+        currentCard.style.transform = `translate(${direction * container.clientWidth}px, ${currentY - startY}px) rotate(${direction * 45}deg)`;
+        currentCard.style.opacity = '0';
+        // After animation, reset the card and recycle it to the bottom.
+        setTimeout(() => {
+          currentCard.style.transition = 'none';
+          currentCard.style.transform = '';
+          currentCard.style.opacity = '1';
+          container.insertBefore(currentCard, container.firstChild);
+          updateCards();
+        }, 500);
+      } else {
+        // Not swiped far enough: snap back.
+        currentCard.style.transition = 'transform 0.3s ease-out';
+        currentCard.style.transform = '';
+      }
+    }
+
+    // Add event listeners for mouse and touch interactions.
+    container.addEventListener('mousedown', dragStart);
+    container.addEventListener('touchstart', dragStart);
+    container.addEventListener('mousemove', dragMove);
+    container.addEventListener('touchmove', dragMove);
+    container.addEventListener('mouseup', dragEnd);
+    container.addEventListener('touchend', dragEnd);
+    container.addEventListener('mouseleave', () => { if (isDragging) dragEnd(); });
+  </script>
+
+
+<style>
+
+    .swiper-container {
+      position: relative;
+      width: 260px;
+      height: 360px;
+      perspective: 1200px; /* Enhance 3D effect */
+    }
+    /* Card styling */
+    .card {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 20px;
+      top: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+      user-select: none;
+      cursor: grab;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    /* Distinct background colors */
+    .card:nth-child(1) { background-color: #d92121; }
+    .card:nth-child(2) { background-color: #0078ff; }
+    .card:nth-child(3) { background-color: #0ab86f; }
+    .card:nth-child(4) { background-color: #d36f07; }
+    .card:nth-child(5) { background-color: #76a30c; }
+    .card:nth-child(6) { background-color: #b40a2f; }
+    .card:nth-child(7) { background-color: #236313; }
+    .card:nth-child(8) { background-color: #0044ff; }
+    .card:nth-child(9) { background-color: #da0cda; }
+    /* Disable pointer events on cards that are not on top */
+    .card:not(:last-child) {
+      pointer-events: none;
+    }
+  </style>

@@ -6,7 +6,6 @@ const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
 ---
 
-
 <body>
 
   <div class="swiper-container">
@@ -19,99 +18,33 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   </div>
 
   <script is:inline>
-    // Variables to track gesture state
-    let isDragging = false,
-        startX = 0,
-        startY = 0,
-        currentX = 0,
-        currentY = 0,
-        currentCard = null,
-        threshold = 100; // pixels needed to consider swipe as valid
-
-    // Get the container and list of cards
     const container = document.querySelector('.swiper-container');
+    const cards = container.querySelectorAll('.card');
 
-    // Function to get the top card (last in the DOM order)
-    function getTopCard() {
-      const cards = container.querySelectorAll('.card');
-      return cards[cards.length - 1];
+    function animateCardAway(card) {
+      const viewportWidth = window.innerWidth;
+      const direction = Math.random() > 0.5 ? 1 : -1; // 1 for right, -1 for left
+      const translateX = viewportWidth * direction; // Move card off-screen
+      const randomRotation = (Math.random() - 0.5) * 360; // Optional: Add some rotation
+
+      card.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
+      card.style.transform = `translate(${translateX}px, 0px) rotate(${randomRotation}deg)`; //Animate only horizontally
+      card.style.opacity = 0;
+
+      setTimeout(() => {
+        card.remove(); // Remove the card from the DOM
+        if (container.children.length === 0) {
+          console.log("No more cards!");
+          // Optional:  Handle empty state
+        }
+      }, 500); // Match transition duration
     }
 
-    // Start dragging (mouse & touch)
-    function dragStart(e) {
-      currentCard = getTopCard();
-      if (!currentCard) return;
-      
-      isDragging = true;
-      currentCard.style.transition = 'none';
-      
-      // Determine starting coordinates
-      startX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-      startY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-    }
-
-    // Drag move event
-    function dragMove(e) {
-      if (!isDragging || !currentCard) return;
-      
-      // Get current position
-      currentX = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
-      currentY = e.type.includes('mouse') ? e.clientY : e.touches[0].clientY;
-      
-      // Calculate distance moved
-      const deltaX = currentX - startX;
-      const deltaY = currentY - startY;
-      
-      // Calculate rotation angle (in degrees) relative to movement
-      const rotate = deltaX / 10; // adjust divisor to control rotation
-      
-      // Apply translation and rotation
-      currentCard.style.transform = `translate(${deltaX}px, ${deltaY}px) rotate(${rotate}deg)`;
-    }
-
-    // End dragging: decide if the card should be swiped away or snap back
-    function dragEnd() {
-      if (!isDragging || !currentCard) return;
-      
-      isDragging = false;
-      const deltaX = currentX - startX;
-      
-      // If dragged beyond threshold, animate card out
-      if (Math.abs(deltaX) > threshold) {
-        const direction = deltaX > 0 ? 1 : -1;
-        // Animate off the screen horizontally (and a bit vertically)
-        currentCard.style.transition = 'transform 0.5s ease-out';
-        currentCard.style.transform = `translate(${direction * container.clientWidth}px, ${currentY - startY}px) rotate(${direction * 45}deg)`;
-        
-        // After the animation, reset the card and reinsert it to the bottom of the stack.
-        setTimeout(() => {
-          // Reset styles so the card appears in its original position
-          currentCard.style.transition = 'none';
-          currentCard.style.transform = 'translate(0px, 0px) rotate(0deg)';
-          
-          // Move the swiped card to the bottom of the deck (as the first child)
-          container.insertBefore(currentCard, container.firstChild);
-        }, 500);
-      } else {
-        // Snap back if not swiped far enough
-        currentCard.style.transition = 'transform 0.3s ease-out';
-        currentCard.style.transform = 'translate(0px, 0px) rotate(0deg)';
-      }
-    }
-
-    // Add event listeners for both mouse and touch events
-    container.addEventListener('mousedown', dragStart);
-    container.addEventListener('touchstart', dragStart);
-
-    container.addEventListener('mousemove', dragMove);
-    container.addEventListener('touchmove', dragMove);
-
-    container.addEventListener('mouseup', dragEnd);
-    container.addEventListener('touchend', dragEnd);
-
-    // Optional: handle mouse leaving the container while dragging
-    container.addEventListener('mouseleave', () => {
-      if (isDragging) dragEnd();
+    cards.forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.preventDefault();
+        animateCardAway(card);
+      });
     });
   </script>
 
@@ -140,7 +73,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       font-weight: bold;
       user-select: none;
       transition: transform 0.3s ease;
-      cursor: grab;
+      cursor: pointer; /* Changed from grab to pointer */
     }
     
     /* Give each card a distinct background color */
@@ -159,4 +92,3 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
   </style>
-

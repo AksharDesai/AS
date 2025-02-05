@@ -4,6 +4,8 @@ import { fetchProducts } from "../lib/fetchProducts";
 // Fetch products dynamically from your Supabase DB
 const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
+
+
 ---
 
 <section id="FeaturedProducts" class="py-16 bg-neutral-950">
@@ -64,7 +66,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
         products.map((product) => (
           <div
             id={product.id}
-            class="product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12"
+            class={`product-item searchable-${product.name.toLowerCase().replace(/[^a-z0-9]/g, '')} product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12`}
             data-category={product.category}
           >
             {/* Product Image */}
@@ -78,7 +80,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
             {/* Product Details */}
             <h3
-              class={`product-name-${product.id}  text-xl sm:text-2xl font-bold text-white mb-2`}
+              class={`product-name-${product.id}   text-xl sm:text-2xl font-bold text-white mb-2`}
             >
               {product.name}
             </h3>

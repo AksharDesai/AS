@@ -1,9 +1,20 @@
+---
+import { fetchProducts } from "../lib/fetchProducts";
+
+
+const fetchedProducts = await fetchProducts();
+const products = fetchedProducts?.length ? fetchedProducts : [];
+
+
+---
+
+
 <button id="searchTrigger"
 class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transition-colors">
 <i class="fas fa-search text-xl"></i>
 </button>
 
-<div id="searchOverlay" class=" fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden">
+<div id="searchOverlay" class=" fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 ">
     <div class="relative w-full max-w-xl">
       <!-- Option 1: Top Left -->
       <button 
@@ -57,6 +68,7 @@ class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transit
             <a href="#" class="hover:text-red-500 transition-colors">Kitchen Storage</a>
             <a href="#" class="hover:text-red-500 transition-colors">Wardrobe</a>
             <a href="#" class="hover:text-red-500 transition-colors">Hardware</a>
+         
           </div>
         </div>
       </form>
@@ -65,11 +77,18 @@ class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transit
 
 
 <script is:inline>
-    const searchBtn = document.getElementById('searchTrigger')
+    const searchTriggerBtn = document.getElementById('searchTrigger')
     const searchPanel = document.getElementById('searchOverlay')
     const closePanel = document.getElementById('closeSearch')
     const closePanelMobile = document.getElementById('closeSearchMobile')
-    searchBtn.addEventListener('click',function(e){
+
+    // get form elements through id
+    const searchForm = document.getElementById('searchForm')
+    const input = document.getElementById('searchInput')
+
+    const resultsContainer = document.getElementById('product-container')
+
+    searchTriggerBtn.addEventListener('click',function(e){
         searchPanel.classList.remove('hidden')
         document.body.classList.add('overflow-hidden')
     })    
@@ -82,6 +101,39 @@ class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transit
     closePanelMobile.addEventListener('click',function(e){
         searchPanel.classList.add('hidden')
         document.body.classList.remove('overflow-hidden')
+    })
+
+    searchForm.addEventListener('submit',function(e){
+      e.preventDefault()
+      const searchTerm = input.value;
+
+      const normalizedSearch = searchTerm.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+      console.log(normalizedSearch);
+
+      if (normalizedSearch === '') {
+      // searchResults.classList.add('hidden');
+      return;
+    }
+
+      const matchingProducts = document.querySelectorAll(`.product-item[class*="searchable-${normalizedSearch}"]`);
+      
+      console.log(matchingProducts);
+      
+      if (matchingProducts.length>0){
+        const resultsHtml = Array.from(matchingProducts).map(product=> product);
+        
+        console.log(resultsHtml);
+        
+
+        // resultsContainer.innerHTML=''
+        // resultsContainer.innerHTML = resultsHtml
+        // searchResults.classList.remove('hidden');
+      }else{
+        console.log('No products found of that name');
+        
+      }
+      
     })
 
 </script>

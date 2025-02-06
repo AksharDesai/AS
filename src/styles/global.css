@@ -54,11 +54,8 @@
             -moz-osx-font-smoothing: grayscale;
           }
   
-          /* Focus outline styles */
-          :focus-visible {
-            outline: 2px solid currentColor;
-            outline-offset: 2px;
-          }
+          
+     
   
           /* Print styles */
           @media print {

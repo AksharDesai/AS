@@ -16,6 +16,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
         height: 420px;
         perspective: 1000px; /* For 3D effect */
       }
+      
 
       /* Card styling */
       .card {
@@ -37,15 +38,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       }
 
       /* Distinct background colors (fallback or when images don’t cover the full card) */
-      .card:nth-child(1) { background-color: rgb(206, 17, 17); }
-      .card:nth-child(2) { background-color: rgb(0, 140, 255); }
-      .card:nth-child(3) { background-color: rgb(10, 184, 111); }
-      .card:nth-child(4) { background-color: rgb(211, 122, 7); }
-      .card:nth-child(5) { background-color: rgb(118, 163, 12); }
-      .card:nth-child(6) { background-color: rgb(180, 10, 47); }
-      .card:nth-child(7) { background-color: rgb(35, 99, 19); }
-      .card:nth-child(8) { background-color: rgb(0, 68, 255); }
-      .card:nth-child(9) { background-color: rgb(218, 12, 218); }
+     
 
       /* Add a subtle shadow to all cards except the top one */
       .card:not(:last-child) {
@@ -56,7 +49,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     <div class="swiper-container">
       <!-- Render each product card -->
       {products.map((product) => (
-        <div class="card overflow-hidden border-2 border-red-500">
+        <div class="card overflow-hidden border-4 border-neutral-700">
           <img
             class="w-full h-full"
             src={`${product.image}`}

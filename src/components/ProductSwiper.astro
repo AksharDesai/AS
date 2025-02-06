@@ -6,89 +6,121 @@ const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
 ---
 
-<body>
+    
+    
+    <style>
+      /* Container styling */
+      .swiper-container {
+        position: relative;
+        width: 340px;
+        height: 420px;
+        perspective: 1000px; /* For 3D effect */
+      }
 
-  <div class="swiper-container">
-    <!-- Cards (slides) -->
-     {products.map((product)=>(
+      /* Card styling */
+      .card {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 18px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 22px;
+        font-weight: bold;
+        user-select: none;
+        cursor: pointer;
+        /* Set transition for transform and opacity so that animations are smooth */
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      }
 
-         <div class="card overflow-hidden border-2 border-red-500   "><img class="w-full h-full" src={`${product.image}`} draggable="false" loading="lazy" decoding="async" alt="" srcset=""></div>
-     ))}
+      /* Distinct background colors (fallback or when images don’t cover the full card) */
+      .card:nth-child(1) { background-color: rgb(206, 17, 17); }
+      .card:nth-child(2) { background-color: rgb(0, 140, 255); }
+      .card:nth-child(3) { background-color: rgb(10, 184, 111); }
+      .card:nth-child(4) { background-color: rgb(211, 122, 7); }
+      .card:nth-child(5) { background-color: rgb(118, 163, 12); }
+      .card:nth-child(6) { background-color: rgb(180, 10, 47); }
+      .card:nth-child(7) { background-color: rgb(35, 99, 19); }
+      .card:nth-child(8) { background-color: rgb(0, 68, 255); }
+      .card:nth-child(9) { background-color: rgb(218, 12, 218); }
+
+      /* Add a subtle shadow to all cards except the top one */
+      .card:not(:last-child) {
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+    </style>
   
-  </div>
+    <div class="swiper-container">
+      <!-- Render each product card -->
+      {products.map((product) => (
+        <div class="card overflow-hidden border-2 border-red-500">
+          <img
+            class="w-full h-full"
+            src={`${product.image}`}
+            draggable="false"
+            loading="lazy"
+            decoding="async"
+            alt=""
+            srcset=""
+          />
+        </div>
+      ))}
+    </div>
 
-  <script is:inline>
-    const container = document.querySelector('.swiper-container');
-    const cards = container.querySelectorAll('.card');
+    <script is:inline>
+      // Select the container element
+      const container = document.querySelector('.swiper-container');
 
-    function animateCardAway(card) {
-      const viewportWidth = window.innerWidth;
-      const direction = Math.random() > 0.5 ? 1 : -1; // 1 for right, -1 for left
-      const translateX = viewportWidth * direction; // Move card off-screen
-      const randomRotation = (Math.random() - 0.5) * 360; // Optional: Add some rotation
+      // Initialize card transforms:
+      // All cards except the top (last child) start with a transform that mimics the "prev" effect (translated back in Z).
+      const initCards = () => {
+        const cards = container.querySelectorAll('.card');
+        cards.forEach((card) => {
+          if (card !== container.lastElementChild) {
+            card.style.transform = 'translate3d(0, 0, -400px)';
+          } else {
+            card.style.transform = 'none';
+          }
+          card.style.opacity = 1;
+        });
+      };
 
-      card.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
-      card.style.transform = `translate(${translateX}px, 0px) rotate(${randomRotation}deg)`; //Animate only horizontally
-      card.style.opacity = 0;
+      initCards();
 
-      setTimeout(() => {
-        card.remove(); // Remove the card from the DOM
-        if (container.children.length === 0) {
-          console.log("No more cards!");
-          // Optional:  Handle empty state
+      // Function to animate the top card away (mimicking the "next" effect: translate to the right)
+      function animateTopCard() {
+        const topCard = container.lastElementChild;
+        if (!topCard) return;
+
+        // Animate the top card: translate it 100% to the right
+        topCard.style.transform = 'translate3d(100%, 0, 0)';
+        topCard.style.opacity = 0;
+
+        // After the transition duration, remove the card and animate the new top card coming forward
+        setTimeout(() => {
+          topCard.remove();
+          const newTop = container.lastElementChild;
+          if (newTop) {
+            // Force reflow to ensure the transition is applied
+            newTop.getBoundingClientRect();
+            // Animate the new top card from the "prev" state (translateZ(-400px)) to its natural position (none)
+            newTop.style.transform = 'none';
+          } else {
+            console.log("No more cards!");
+          }
+        }, 500); // Transition duration matches the CSS transition
+      }
+
+      // Listen for click events on the container.
+      // Only the top (last) card should react to clicks.
+      container.addEventListener('click', (e) => {
+        // If the clicked card is the top card, animate it away
+        if (e.target.closest('.card') === container.lastElementChild) {
+          animateTopCard();
         }
-      }, 500); // Match transition duration
-    }
-
-    cards.forEach(card => {
-      card.addEventListener('click', (e) => {
-        e.preventDefault();
-        animateCardAway(card);
       });
-    });
-  </script>
+    </script>
 
-<style>
-    /* Container styling */
-
-    
-    .swiper-container {
-      position: relative;
-      width: 340px;
-      height: 420px;
-      perspective: 1000px; /* For 3D effect */
-    }
-    
-    /* Card styling */
-    .card {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 22px;
-      font-weight: bold;
-      user-select: none;
-      transition: transform 0.3s ease;
-      cursor: pointer; /* Changed from grab to pointer */
-    }
-    
-    /* Give each card a distinct background color */
-    .card:nth-child(1) { background-color: rgb(206, 17, 17); }
-    .card:nth-child(2) { background-color: rgb(0, 140, 255); }
-    .card:nth-child(3) { background-color: rgb(10, 184, 111); }
-    .card:nth-child(4) { background-color: rgb(211, 122, 7); }
-    .card:nth-child(5) { background-color: rgb(118, 163, 12); }
-    .card:nth-child(6) { background-color: rgb(180, 10, 47); }
-    .card:nth-child(7) { background-color: rgb(35, 99, 19); }
-    .card:nth-child(8) { background-color: rgb(0, 68, 255); }
-    .card:nth-child(9) { background-color: rgb(218, 12, 218); }
-    
-    /* Add a subtle shadow to cards that aren’t on top */
-    .card:not(:last-child) {
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    }
-  </style>

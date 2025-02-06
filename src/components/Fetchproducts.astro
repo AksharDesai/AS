@@ -57,71 +57,72 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       </button>
     </div>
 
-    {/* Products Grid */}
+ {/* Products Grid */}
+<div
+id="product-container"
+class="grid grid-cols-2 lg:grid-cols-3 gap-8"
+>
+{
+  products.map((product) => (
     <div
-      id="product-container"
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
+      id={product.id}
+      class={`product-item searchable-${product.name.toLowerCase().replace(/[^a-z0-9]/g, '')} product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12`}
+      data-category={product.category}
     >
-      {
-        products.map((product) => (
-          <div
-            id={product.id}
-            class={`product-item searchable-${product.name.toLowerCase().replace(/[^a-z0-9]/g, '')} product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12`}
-            data-category={product.category}
-          >
-            {/* Product Image */}
-            <div class="relative aspect-square bg-neutral-700/50 rounded-xl overflow-hidden mb-6">
-              <img
-                src={`${product.image}`}
-                alt={product.name}
-                class={`product-image-${product.id} w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105`}
-              />
-            </div>
+      {/* Product Image */}
+      <div class="relative aspect-square bg-neutral-700/50 rounded-xl overflow-hidden mb-6">
+        <img
+          src={`${product.image}`}
+          alt={product.name}
+          class={`product-image-${product.id} w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105`}
+        />
+      </div>
 
-            {/* Product Details */}
-            <h3
-              class={`product-name-${product.id}   text-xl sm:text-2xl font-bold text-white mb-2`}
-            >
-              {product.name}
-            </h3>
+      {/* Product Details */}
+      <h3
+        class={`product-name-${product.id} text-xl sm:text-2xl font-bold text-white mb-2`}
+      >
+        {product.name}
+      </h3>
 
-            {/* Product Description */}
-            <p
-              class={`product-description-${product.id} hidden md:block descDot text-neutral-400 mb-4 text-sm sm:text-base`}
-              style="white-space: pre-line;"
-            >
-              {product.description}
-            </p>
+      {/* Product Description */}
+      <p
+        class={`product-description-${product.id} hidden md:block descDot text-neutral-400 mb-4 text-sm sm:text-base`}
+        style="white-space: pre-line;"
+      >
+        {product.description}
+      </p>
 
-            {/* Price & Rating */}
-            <div class="hidden md:flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
-              <span
-                class={`product-price-${product.id} text-2xl sm:text-3xl font-bold text-red-500`}
-              >
-                ₹{product.price}
-              </span>
-            </div>
+      {/* Price & Rating */}
+      <div class="hidden md:flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+        <span
+          class={`product-price-${product.id} text-2xl sm:text-3xl font-bold text-red-500`}
+        >
+          ₹{product.price}
+        </span>
+      </div>
 
-            {/* Category */}
-            <div class="mb-4">
-              <span
-                class={`product-category-${product.id} text-neutral-400 text-sm sm:text-base`}
-              >
-                Category: <span class="text-white">{product.category}</span>
-              </span>
-            </div>
+      {/* Category */}
+      <div class="mb-4">
+        <span
+          class={`product-category-${product.id} text-neutral-400 text-sm sm:text-base`}
+        >
+          Category: <span class="text-white">{product.category}</span>
+        </span>
+      </div>
 
-            {/* CTA Button */}
-            <button
-              value={product.id}
-              class="product-button w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-colors text-sm sm:text-base shadow-lg"
-            >
-              Learn More
-            </button>
-          </div>
-        ))
-      }
+      {/* CTA Button */}
+      <button
+        value={product.id}
+        class="product-button w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-lg hover:from-red-600 hover:to-red-700 transition-colors text-sm sm:text-base shadow-lg"
+      >
+        Learn More
+      </button>
     </div>
+  ))
+}
+</div>
+
 
     <div
     id="search-container"

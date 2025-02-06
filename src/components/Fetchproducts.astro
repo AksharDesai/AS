@@ -186,9 +186,9 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
           Product Name
         </h3>
         <!-- Description -->
-        <p id="modal-description" class="text-gray-300 text-sm mb-4">
+        <p id="modal-description" class="text-gray-300 text-sm mb-4" style="white-space: pre-line;">
           This is a brief description of the product. It gives details about
-          features and benefits. lorem50
+          features and benefits. Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius eaque earum perferendis quibusdam qui commodi deleniti nam dolor aliquam asperiores dignissimos ducimus quae ea dolores suscipit facilis, veritatis praesentium aperiam sit fugiat excepturi similique necessitatibus voluptatibus nemo. Magnam quos a quibusdam, tenetur, architecto optio asperiores ipsam ex quaerat aliquam nam!
         </p>
         <!-- Price and Rating -->
         <div class="flex justify-between items-center mt-auto">
@@ -266,7 +266,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     btn.addEventListener("click", function (e) {
       const productID = e.target.value;
 
-      console.log(productID);
+     
 
       const image = document.querySelector(`.product-image-${productID}`);
       const name = document.querySelector(`.product-name-${productID}`);
@@ -281,7 +281,8 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
       document.body.classList.add("overflow-hidden");
       modalImg.src = image.src;
       modalName.textContent = name.textContent;
-      modalDescription.textContent = description.textContent;
+      modalDescription.innerHTML = description.innerHTML.replace(/-/g, '<span class="text-red-500">•</span>');
+
       modalPrice.textContent = price.textContent;
 
       productModal.classList.add("fade-in"); // Add fade-in class
@@ -290,7 +291,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   });
 
   document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOMContentLoaded event fired!"); // Check if the script is running
+     // Check if the script is running
 
     const filterButtons = document.querySelectorAll(".filter-btn");
     const productCards = document.querySelectorAll(".product-card");
@@ -346,11 +347,8 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     });
   });
 
-  console.log(modalImg);
-  console.log(modalName);
-  console.log(modalDescription);
-  console.log(modalPrice);
-  console.log(modalRating);
 
-  console.log(productModal);
+
+  // Get all product descriptions and replace dashes with red dots
+
 </script>

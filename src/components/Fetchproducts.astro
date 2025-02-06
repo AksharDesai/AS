@@ -66,7 +66,7 @@ class="grid grid-cols-2 lg:grid-cols-3 gap-8"
   products.map((product) => (
     <div
       id={product.id}
-      class={`product-item searchable-${product.name.toLowerCase().replace(/[^a-z0-9]/g, '')} product-card group relative bg-neutral-800 rounded-xl p-6 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12`}
+      class={`product-item searchable-${product.name.toLowerCase().replace(/[^a-z0-9]/g, '')} product-card group relative bg-neutral-800 rounded-xl p-2 transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 flex flex-col justify-between mb-12`}
       data-category={product.category}
     >
       {/* Product Image */}
@@ -103,13 +103,14 @@ class="grid grid-cols-2 lg:grid-cols-3 gap-8"
       </div>
 
       {/* Category */}
-      <div class="mb-4">
+      <div class="mb-4 text-[10px]">
         <span
           class={`product-category-${product.id} text-neutral-400 text-sm sm:text-base`}
         >
-          Category: <span class="text-white">{product.category}</span>
+          Category: <span class="text-white ">{product.category}</span>
         </span>
       </div>
+
 
       {/* CTA Button */}
       <button

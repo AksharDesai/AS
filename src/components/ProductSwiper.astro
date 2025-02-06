@@ -16,7 +16,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
         height: 420px;
         perspective: 1000px; /* For 3D effect */
       }
-      
+
 
       /* Card styling */
       .card {
@@ -59,7 +59,12 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
             alt=""
             srcset=""
           />
+          <span class="hidden" id="product-name">{product.name}</span>
+          <span class="hidden" id="product-price">{product.price}</span>
+          <span class="hidden" id="product-description">{product.description}</span>
+          <span class="hidden" id="product-category">{product.category}</span>
         </div>
+      
       ))}
     </div>
 

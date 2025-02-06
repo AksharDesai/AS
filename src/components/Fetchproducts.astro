@@ -139,14 +139,14 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 >
   <!-- Modal Container -->
   <div
-    class="modal-container shadow-2xl shadow-red-500 bg-neutral-950 rounded-lg w-full sm:max-w-[372px] max-h-[90vh] mx-4 p-6 flex flex-col"
+    class="modal-container shadow-[0_0_5px_1px_rgba(239,68,68,1)] shadow-red-500 bg-neutral-950 rounded-lg w-full sm:max-w-[372px] max-h-[90vh] mx-4 p-6 flex flex-col"
   >
     <!-- Modal Header -->
     <div class="flex justify-between items-center mb-4">
       <h2 class="text-white text-2xl font-bold">Product Details</h2>
       <button
         id="closeModal"
-        class="text-red-500 hover:text-red-600 focus:outline-none"
+        class="text-white hover:text-red-600 focus:outline-none"
       >
         <!-- Close Icon -->
         <svg
@@ -194,17 +194,8 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
           <span id="modal-price" class="text-white text-lg font-bold">$99.99</span>
           <div class="flex items-center">
             <!-- Star Icon for Rating -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-yellow-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.974a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.286 3.974c.3.921-.755 1.688-1.54 1.118L10 13.348l-3.38 2.455c-.784.57-1.838-.197-1.539-1.118l1.285-3.974a1 1 0 00-.364-1.118L2.67 9.401c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.974z"
-              ></path>
-            </svg>
-            <span id="modal-rating" class="text-white ml-1">4.5</span>
+
+            <span id="modal-rating" class="text-white text-md ml-1">⭐4.5</span>
           </div>
         </div>
       </div>

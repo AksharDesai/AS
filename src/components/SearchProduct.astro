@@ -75,65 +75,69 @@ class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transit
     </div>
   </div>
 
-
 <script is:inline>
-    const searchTriggerBtn = document.getElementById('searchTrigger')
-    const searchPanel = document.getElementById('searchOverlay')
-    const closePanel = document.getElementById('closeSearch')
-    const closePanelMobile = document.getElementById('closeSearchMobile')
+  const searchTriggerBtn = document.getElementById('searchTrigger')
+  const searchPanel = document.getElementById('searchOverlay')
+  const closePanel = document.getElementById('closeSearch')
+  const closePanelMobile = document.getElementById('closeSearchMobile')
 
-    // get form elements through id
-    const searchForm = document.getElementById('searchForm')
-    const input = document.getElementById('searchInput')
+  // get form elements through id
+  const searchForm = document.getElementById('searchForm')
+  const input = document.getElementById('searchInput')
 
-    const resultsContainer = document.getElementById('product-container')
+  const resultsContainer = document.getElementById('product-container')
+  const searchContainer = document.getElementById('search-container')
 
-    searchTriggerBtn.addEventListener('click',function(e){
-        searchPanel.classList.remove('hidden')
-        document.body.classList.add('overflow-hidden')
-    })    
+  searchTriggerBtn.addEventListener('click',function(e){
+      searchPanel.classList.remove('hidden')
+      document.body.classList.add('overflow-hidden')
+  })    
 
-    closePanel.addEventListener('click',function(e){
-        searchPanel.classList.add('hidden')
-        document.body.classList.remove('overflow-hidden')
-    })
+  closePanel.addEventListener('click',function(e){
+      searchPanel.classList.add('hidden')
+      document.body.classList.remove('overflow-hidden')
+  })
 
-    closePanelMobile.addEventListener('click',function(e){
-        searchPanel.classList.add('hidden')
-        document.body.classList.remove('overflow-hidden')
-    })
+  closePanelMobile.addEventListener('click',function(e){
+      searchPanel.classList.add('hidden')
+      document.body.classList.remove('overflow-hidden')
+  })
 
-    searchForm.addEventListener('submit',function(e){
-      e.preventDefault()
-      const searchTerm = input.value;
+  searchForm.addEventListener('submit',function(e){
+    e.preventDefault()
+    const searchTerm = input.value;
 
-      const normalizedSearch = searchTerm.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const normalizedSearch = searchTerm.toLowerCase().replace(/[^a-z0-9]/g, '');
 
-      console.log(normalizedSearch);
+    console.log(normalizedSearch);
 
-      if (normalizedSearch === '') {
-      // searchResults.classList.add('hidden');
+    if (normalizedSearch === '' || !normalizedSearch) {
+      searchContainer.classList.add('hidden');
+      resultsContainer.classList.remove('hidden');
+      console.log('results container shown');
       return;
-    }
-
-      const matchingProducts = document.querySelectorAll(`.product-item[class*="searchable-${normalizedSearch}"]`);
+    } else {
+      const matchingProducts = resultsContainer.querySelectorAll(`.product-item[class*="${normalizedSearch}"]`);
       
       console.log(matchingProducts);
       
-      if (matchingProducts.length>0){
-        const resultsHtml = Array.from(matchingProducts).map(product=> product);
+      if (matchingProducts.length > 0) {
+        // Clone matching products instead of moving them
+        const clonedProducts = Array.from(matchingProducts).map(product => product.cloneNode(true));
         
-        console.log(resultsHtml);
+        resultsContainer.classList.add('hidden');
+        searchContainer.innerHTML = '';
         
-
-        // resultsContainer.innerHTML=''
-        // resultsContainer.innerHTML = resultsHtml
-        // searchResults.classList.remove('hidden');
-      }else{
+        clonedProducts.forEach(product => {
+          searchContainer.appendChild(product);
+        });
+        
+        searchContainer.classList.remove('hidden');
+        console.log('Cloned products added to search results');
+      } else {
         console.log('No products found of that name');
-        
       }
-      
-    })
-
+    }
+  })
 </script>
+

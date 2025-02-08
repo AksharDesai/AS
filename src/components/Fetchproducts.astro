@@ -1,6 +1,8 @@
 ---
 import { fetchProducts } from "../lib/fetchProducts";
 
+import searchTrigger from "../components/SearchProduct.astro";
+
 // Fetch products dynamically from your Supabase DB
 const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
@@ -257,11 +259,15 @@ class="grid grid-cols-2 lg:grid-cols-3 gap-8"
   const modalRating = document.getElementById("modal-rating");
   const modalContainer = document.querySelector(".modal-container");
 
+
+
+
   closeModal.addEventListener("click", function (e) {
     productModal.classList.add("hidden");
     document.body.classList.remove("overflow-hidden");
     productModal.classList.remove("fade-in"); // Remove fade-in class
     modalContainer.classList.remove("scale-up"); // Remove scale-up class
+    searchTrigger.classList.remove("hidden");
   });
 
   learnMoreBtns.forEach((btn) => {
@@ -286,9 +292,10 @@ class="grid grid-cols-2 lg:grid-cols-3 gap-8"
       modalDescription.innerHTML = description.innerHTML.replace(/-/g, '<span class="text-red-500">•</span>');
 
       modalPrice.textContent = price.textContent;
-
+ 
       productModal.classList.add("fade-in"); // Add fade-in class
       modalContainer.classList.add("scale-up"); // Add scale-up class
+      searchTrigger.classList.add("hidden");
     });
   });
 

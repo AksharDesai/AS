@@ -1,16 +1,19 @@
 ---
 import { fetchProducts } from "../lib/fetchProducts";
 
+
+
 const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
 ---
 
 <button
   id="searchTrigger"
-  class="bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transition-colors"
+  class="search-trigger bg-red-600 text-white p-3 rounded-l-lg shadow-lg hover:bg-red-700 transition-colors"
 >
   <i class="fas fa-search text-xl"></i>
 </button>
+
 
 <div
   id="searchOverlay"
@@ -76,6 +79,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
   closePanel.addEventListener("click", function (e) {
     searchPanel.classList.add("hidden");
+    
   });
 
   searchForm.addEventListener("input", function (e) {

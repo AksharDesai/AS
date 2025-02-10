@@ -88,19 +88,19 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
     const normalizedSearch = searchTerm.toLowerCase().replace(/[^a-z0-9]/g, "");
 
-    console.log(normalizedSearch);
+    
 
     if (normalizedSearch === "" || !normalizedSearch) {
       searchContainer.classList.add("hidden");
       resultsContainer.classList.remove("hidden");
-      console.log("results container shown");
+    
       return;
     } else {
       const matchingProducts = resultsContainer.querySelectorAll(
         `.product-item[class*="${normalizedSearch}"]`
       );
 
-      console.log(matchingProducts);
+      
 
       if (matchingProducts.length > 0) {
         // Clone matching products instead of moving them

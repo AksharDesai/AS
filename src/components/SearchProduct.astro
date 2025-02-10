@@ -79,7 +79,11 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 
   closePanel.addEventListener("click", function (e) {
     searchPanel.classList.add("hidden");
+    searchContainer.classList.add("hidden");
+    resultsContainer.classList.remove("hidden");
+   
     
+
   });
 
   searchForm.addEventListener("input", function (e) {

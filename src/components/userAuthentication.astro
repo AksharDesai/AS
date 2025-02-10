@@ -1,0 +1,195 @@
+---
+
+---
+
+<!-- Login Modal -->
+<div
+  id="Login_modal"
+  class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 translate-x-0"
+>
+  <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
+    <button
+      id="closeloginBtn"
+      class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300 transition-colors"
+    >
+      &times;
+    </button>
+
+    <h2 class="text-white text-2xl mb-6 font-semibold">Login with Phone</h2>
+
+    <form id="loginForm">
+      <div class="mb-6">
+        <label class="text-white text-sm mb-2 block">Phone Number</label>
+        <input type="hidden" name="user_action" value="through_navbar" />
+        <input
+          type="tel"
+          name="phone_number"
+          id="phoneInput"
+          maxlength="10"
+          placeholder="9876543210"
+          class="w-full bg-black text-white px-4 py-3 rounded-lg focus:border-red-500 focus:ring-1 focus:ring-red-500 placeholder-gray-400"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        id="loginBtn"
+        disabled
+        class="w-full bg-red-600 text-white py-3 rounded-lg font-medium disabled:bg-red-900 disabled:cursor-not-allowed hover:bg-red-700 transition-colors"
+      >
+        Send OTP
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- OTP Verification Modal -->
+<div
+  id="otpModal"
+  class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 transform translate-x-full"
+>
+  <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
+    <button
+      id="closeOtpBtn"
+      class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300 transition-colors"
+    >
+      &times;
+    </button>
+
+    <h2 class="text-white text-2xl mb-6 font-semibold">Verify OTP</h2>
+
+    <form id="otpForm">
+      <div class="mb-6">
+        <label class="text-white text-sm mb-2 block">OTP Code</label>
+        <input
+          type="text"
+          id="otpInput"
+          placeholder="Enter OTP"
+          class="w-full bg-black text-white px-4 py-3 rounded-lg focus:border-red-500 focus:ring-1 focus:ring-red-500 placeholder-gray-400"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
+      >
+        Verify OTP
+      </button>
+    </form>
+  </div>
+</div>
+
+<script is:inline>
+  // Replace 'YOUR_API_KEY' with your actual Fast2SMS API key.
+  const FAST2SMS_API_KEY =
+    "S4pU0AbtixjdIEesRw7DhqPQrXmvW2JuVlcfaBF9GLnZK6o18yjCPYeFvJtd2uqInOf783yharVKxigz";
+
+  // Function to generate a 4-digit OTP
+  function generateOTP() {
+    return Math.floor(1000 + Math.random() * 9000).toString();
+  }
+
+  // Store the generated OTP
+  let generatedOTP = "";
+
+  // Open the Login Modal when a trigger element is clicked.
+  document.querySelectorAll(".openLoginModal").forEach((button) =>
+    button.addEventListener("click", function () {
+      const loginModal = document.getElementById("Login_modal");
+      loginModal.classList.remove("hidden");
+    })
+  );
+
+  // Enable/disable the Send OTP button based on valid 10-digit phone input.
+  const phoneInput = document.getElementById("phoneInput");
+  const loginBtn = document.getElementById("loginBtn");
+
+  phoneInput.addEventListener("input", function () {
+    const phoneNumber = this.value;
+    const isValid = /^\d{10}$/.test(phoneNumber);
+    loginBtn.disabled = !isValid;
+  });
+
+  // Handle the login form submission: send OTP and animate modals.
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    const phoneNumber = phoneInput.value;
+    console.log("Phone Number:", phoneNumber);
+
+    // Generate OTP
+    generatedOTP = generateOTP();
+    console.log("Generated OTP:", generatedOTP);
+
+    // Prepare the Fast2SMS API URL
+    const fast2smsURL = `https://www.fast2sms.com/dev/bulkV2?authorization=${FAST2SMS_API_KEY}&variables_values=${generatedOTP}&route=otp&numbers=${phoneNumber}`;
+
+    try {
+      const response = await fetch(fast2smsURL, {
+        method: "GET",
+      });
+
+      const data = await response.json();
+      console.log("Fast2SMS Response:", data);
+
+      if (data.return === true) {
+        // Animate the login modal to slide left (off-screen)
+        const loginModal = document.getElementById("Login_modal");
+        loginModal.classList.add("-translate-x-full");
+
+        // After the login modal slides out, animate OTP modal in
+        setTimeout(() => {
+          const otpModal = document.getElementById("otpModal");
+          otpModal.classList.remove("translate-x-full");
+        }, 300); // delay should match the CSS transition duration (300ms)
+      } else {
+        alert("Failed to send OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending OTP:", error);
+      alert("An error occurred while sending OTP. Please try again.");
+    }
+  });
+
+  const otpForm = document.getElementById("otpForm");
+  otpForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Retrieve OTP entered by the user
+    const enteredOTP = document.getElementById("otpInput").value;
+    console.log("Entered OTP:", enteredOTP);
+
+    // Verify OTP
+    if (enteredOTP === generatedOTP) {
+      alert("OTP Verified Successfully!");
+      // Proceed with further authentication or redirect
+      // Close the OTP modal
+      const otpModal = document.getElementById("otpModal");
+      otpModal.classList.add("translate-x-full");
+    } else {
+      alert("Invalid OTP. Please try again.");
+    }
+  });
+
+  // Optional: If the user clicks the close button on the OTP modal, slide back to the login modal.
+  const closeOtpBtn = document.getElementById("closeOtpBtn");
+  closeOtpBtn.addEventListener("click", function () {
+    const otpModal = document.getElementById("otpModal");
+    otpModal.classList.add("translate-x-full");
+
+    // After OTP modal slides out, bring back the login modal
+    setTimeout(() => {
+      const loginModal = document.getElementById("Login_modal");
+      loginModal.classList.remove("-translate-x-full");
+    }, 300);
+  });
+
+  // (Optional) Close login modal with its close button.
+  const closeLoginBtn = document.getElementById("closeloginBtn");
+  closeLoginBtn.addEventListener("click", function () {
+    const loginModal = document.getElementById("Login_modal");
+    loginModal.classList.add("hidden");
+  });
+</script>

@@ -129,6 +129,14 @@ console.log(phoneNumbersArray);
       
       if (isLoggedIn === "true" && userPhone) {
         // User is already logged in, no need to show login modal
+        // User is logged in, so log them out
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userPhone");
+        
+        // Update all login text elements back to "Login"
+        document.querySelectorAll(".login-text").forEach(button => {
+          button.textContent = "Login";
+        });
         return;
       }else{
 
@@ -177,7 +185,7 @@ console.log(phoneNumbersArray);
       loginModal.classList.add("hidden");
 
       document.querySelectorAll(".login-text").forEach(button => {
-        button.classList.add("text-xl");
+        
         button.textContent = phoneNumber;
       });
       

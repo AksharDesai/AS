@@ -1,12 +1,12 @@
 ---
-import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers";
-import { supabase } from "../lib/supabaseClient";
+//import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers";
+//import { supabase } from "../lib/supabaseClient";
 
-const fetchedPhone = await fetchPhoneNumbers();
-const phoneNumbersObj = fetchedPhone?.length ? fetchedPhone : [];
+//const fetchedPhone = await fetchPhoneNumbers();
+//const phoneNumbersObj = fetchedPhone?.length ? fetchedPhone : [];
 
 
-const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
+//const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
 
 
 // Get phone number from localStorage if it exists
@@ -15,12 +15,12 @@ const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
 ---
 
 <!-- Hidden Div to Store phoneNumbersArray -->
-<h1 id="phoneNumbersData" class="hidden">
+<!-- <h1 id="phoneNumbersData" class="hidden">
   {JSON.stringify(phoneNumbersArray.map((num) => num.split("").join("#@$")))}
-</h1>
+</h1> -->
 
 <!-- Login Modal -->
-<div
+<!-- <div
   id="Login_modal"
   class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 translate-x-0"
 >
@@ -59,10 +59,10 @@ const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
       </button>
     </form>
   </div>
-</div>
+</div> -->
 
 <!-- OTP Verification Modal -->
-<div
+<!-- <div
   id="otpModal"
   class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 transform translate-x-full"
 >
@@ -96,9 +96,9 @@ const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
       </button>
     </form>
   </div>
-</div>
+</div> -->
 
-<script type="module">
+<!-- <script type="module">
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
   // Initialize Supabase client
@@ -312,4 +312,4 @@ const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
     const loginModal = document.getElementById("Login_modal");
     loginModal.classList.add("hidden");
   });
-</script>
+</script> -->

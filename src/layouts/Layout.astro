@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 
-import Login_modal from '../components/userAuthentication.astro';
+// import Login_modal from '../components/userAuthentication.astro';
 
 ---
 
@@ -92,7 +92,7 @@ import Login_modal from '../components/userAuthentication.astro';
 
           <a href="/contact/" class="flex items-center space-x-3 p-3 border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group bg-neutral-800 text-red-500" data-astro-source-file="D:/twg/src/layouts/Layout.astro" data-astro-source-loc="367:14"> <svg class="w-5 h-5 group-hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-astro-source-file="D:/twg/src/layouts/Layout.astro" data-astro-source-loc="373:16"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" data-astro-source-file="D:/twg/src/layouts/Layout.astro" data-astro-source-loc="374:18"></path> </svg> <span class="font-medium text-white" data-astro-source-file="D:/twg/src/layouts/Layout.astro" data-astro-source-loc="381:52">Contact</span> </a>
 
-          <button
+          <!-- <button
             class="openLoginModal flex w-full items-center space-x-3 p-3 border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group"
           >
             <svg
@@ -110,7 +110,7 @@ import Login_modal from '../components/userAuthentication.astro';
                 document.write(localStorage.getItem('userPhone') || 'Login')
               </script>
             </span>
-          </button>
+          </button> -->
 
           <!-- Logout button -->
         
@@ -354,7 +354,7 @@ import Login_modal from '../components/userAuthentication.astro';
               </svg>
               <span class="font-medium text-white">Contact</span>
             </a>
-
+<!-- 
             <button
               class="openLoginModal flex w-full items-center space-x-3 p-3 border-red-500/30 text-gray-300 hover:bg-neutral-800 rounded-lg transition-all duration-300 group"
             >
@@ -371,7 +371,7 @@ import Login_modal from '../components/userAuthentication.astro';
               <span class="login-text font-medium text-white"><script is:inline>
                 document.write(localStorage.getItem('userPhone') || 'Login')
               </script></span>
-            </button>
+            </button> -->
 
             <a
               href="https://drive.google.com/file/d/1RX93PyXdOtVmm4uW9D1izWkMhBCFOwMy/view?usp=sharing"
@@ -441,7 +441,7 @@ import Login_modal from '../components/userAuthentication.astro';
         </div>
       </div>
 
-      <Login_modal />
+      <!-- <Login_modal /> -->
     </div>
 
     <!-- slot to be filled by child -->

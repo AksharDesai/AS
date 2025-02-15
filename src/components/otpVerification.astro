@@ -1,6 +1,7 @@
 ---
-/* No server-side scripts or imports */
+// Remove the window check from frontmatter
 ---
+
 <!-- OTP Verification Modal -->
 <div
   id="otpModal"
@@ -35,11 +36,15 @@
         Verify OTP
       </button>
     </form>
+    <div id="message"></div>
   </div>
 </div>
 
 <script type="module">
   document.addEventListener("DOMContentLoaded", () => {
+    // Get phone number when needed in client-side code
+   
+
     // Function to handle OTP verification
     function handleOtpVerification() {
       const otpForm = document.getElementById("otpForm");
@@ -52,6 +57,44 @@
         otpModal.classList.remove("translate-x-full");
         otpModal.classList.add("translate-x-0");
         console.log("OTP modal opened via event.");
+
+
+        const userPhone = window.userPhone;
+    console.log("Phone number from userAuthentication:", userPhone);
+    const phone = userPhone;
+
+    console.log("Phone number:", phone);
+    
+
+    if (!phone) {
+      alert("Please enter a phone number");
+      return;
+    }
+
+    fetch("/.netlify/functions/send-otp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ phone: phone }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          document.getElementById("message").textContent =
+            "OTP sent! (Dummy OTP: " + data.otp + ")";
+          console.log("API Response:", data.apiResponse);
+        } else {
+          document.getElementById("message").textContent = "Failed to send OTP";
+          console.error("API Error:", data);
+        }
+      })
+    
+      .catch((err) => {
+        console.error(err);
+        document.getElementById("message").textContent = "Error sending OTP";
+      });
+
       });
 
       otpForm.addEventListener("submit", function (event) {
@@ -64,7 +107,6 @@
           otpModal.classList.remove("translate-x-0");
 
           // Set login state
-          const userPhone = window.userPhone;
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userPhone", userPhone);
 
@@ -73,7 +115,9 @@
             button.textContent = userPhone;
           });
 
-          console.log(`User with phone number ${userPhone} verified and logged in.`);
+          console.log(
+            `User with phone number ${userPhone} verified and logged in.`
+          );
         } else {
           alert("Invalid OTP. Please try again.");
           console.log("Invalid OTP entered.");
@@ -83,7 +127,6 @@
       // Close OTP modal and optionally trigger returning to login modal
       closeOtpBtn.addEventListener("click", function () {
         // Slide out the OTP modal to the left
-       
 
         // Dispatch an event to notify that OTP modal has been closed
         setTimeout(() => {

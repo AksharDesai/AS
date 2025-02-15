@@ -17,7 +17,8 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    const { phone } = JSON.parse(event.body);
+    const { phone, otp } = JSON.parse(event.body);
+
     
     if (!phone) {
       return {
@@ -31,8 +32,7 @@ exports.handler = async (event, context) => {
     }
 
     // Generate a 6-digit OTP
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    console.log(`Generated OTP: ${otp} for phone: ${phone}`);
+   
 
     const settings = { 
       method: "POST",

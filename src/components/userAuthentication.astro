@@ -1,21 +1,26 @@
 ---
 import OtpVerification from "./otpVerification.astro";
-// Removed Supabase imports and related code
-// import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers"; // Removed as Supabase is no longer used
 
-// Frontend-only phone numbers data (placeholder)
-const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phone numbers
+import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers"; // Removed as Supabase is no longer used
+const phoneNumbersArray = await fetchPhoneNumbers();
 ---
+
 <div class="hidden" id="phoneNumbersArray">
-  {JSON.stringify(phoneNumbersArray.map((num) => num.split("").join("#@$")))}
+  {
+    btoa(
+      JSON.stringify(phoneNumbersArray.map((num) => num.phoneNumber).join(","))
+    )
+  }
 </div>
 
 <!-- Login Modal -->
 <div
   id="Login_modal"
-  class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transform translate-x-0 transition-transform duration-300"
+  class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-opacity duration-500 opacity-0 hidden"
 >
-  <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
+  <div
+    class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px] transform scale-95 transition-transform duration-500"
+  >
     <button
       id="closeloginBtn"
       class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300 transition-colors"
@@ -56,147 +61,145 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
 <OtpVerification />
 
 <script type="module">
-
   // Get the encrypted phone numbers array from the DOM
-  const encryptedPhoneNumbers = document.getElementById("phoneNumbersArray").textContent;
-  
-  // Parse the JSON string and decrypt each phone number
-  const phoneNumbersArray = JSON.parse(encryptedPhoneNumbers).map(encryptedNum => {
-    // Replace the encryption pattern #@$ with empty string to decrypt
-    return encryptedNum.split("#@$").join("");
-  });
+  const encodedData = document.getElementById("phoneNumbersArray").textContent;
 
-  console.log("Decrypted phone numbers:", phoneNumbersArray);
-  
+  // 2. Decode the Base64 string
+  const decodedJSON = atob(encodedData);
 
+  // 3. Parse the JSON string to get the original comma-separated phone numbers
+  const phoneNumbersString = JSON.parse(decodedJSON);
 
+  // 4. Split the string into an array
+  const phoneNumbersArray = phoneNumbersString.split(",");
 
-    // Open the Login Modal when a trigger element is clicked.
-    document.querySelectorAll(".openLoginModal").forEach((button) =>
-      button.addEventListener("click", function () {
-        // Check if user is already logged in
-        const isLoggedIn = localStorage.getItem("isLoggedIn");
-        const userPhone = localStorage.getItem("userPhone");
+  console.log(phoneNumbersArray);
 
-        if (isLoggedIn === "true" && userPhone) {
-          // User is already logged in, log them out
-          localStorage.removeItem("isLoggedIn");
-          localStorage.removeItem("userPhone");
+  // Open the Login Modal when a trigger element is clicked.
+  document.querySelectorAll(".openLoginModal").forEach((button) =>
+    button.addEventListener("click", function () {
+      // Check if user is already logged in
+      const isLoggedIn = localStorage.getItem("isLoggedIn");
+      const userPhone = localStorage.getItem("userPhone");
 
-          // Update all login text elements back to "Login"
-          document.querySelectorAll(".login-text").forEach((button) => {
-            button.textContent = "Login";
-          });
-          console.log("User logged out.");
-          return;
-        } else {
-          const loginModal = document.getElementById("Login_modal");
-          loginModal.classList.remove("hidden"); // Ensure starting position
-          loginModal.classList.remove("-translate-x-full"); // Ensure starting position
-          loginModal.classList.add("translate-x-0"); // Slide in
-          console.log("Login modal opened.");
-        }
-      })
-    );
+      if (isLoggedIn === "true" && userPhone) {
+        // User is already logged in, log them out
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("userPhone");
 
-    // Enable/disable the Send OTP button based on valid 10-digit phone input.
-    const phoneInput = document.getElementById("phoneInput");
-    const loginBtn = document.getElementById("loginBtn");
-
-    phoneInput.addEventListener("input", function () {
-      const phoneNumber = this.value;
-      const isValid = /^\d{10}$/.test(phoneNumber);
-      loginBtn.disabled = !isValid;
-
-      if (phoneNumbersArray.includes(phoneNumber)) {
-        loginBtn.textContent = "Login";
-        loginBtn.classList.remove("bg-red-600");
-        loginBtn.classList.add(
-          "bg-gradient-to-r",
-          "from-green-400",
-          "to-green-600",
-          "shadow-lg",
-          "shadow-green-500/50",
-          "hover:shadow-green-500/80"
-        );
-      } else {
-        loginBtn.textContent = "Send OTP";
-        loginBtn.classList.remove(
-          "bg-gradient-to-r",
-          "from-green-400",
-          "to-green-600",
-          "shadow-lg",
-          "shadow-green-500/50",
-          "hover:shadow-green-500/80"
-        );
-        loginBtn.classList.add("bg-red-600");
-      }
-    });
-
-    // Handle the login form submission: simulate OTP sending and animate modals.
-    const loginForm = document.getElementById("loginForm");
-    loginForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const phoneNumber = phoneInput.value;
-
-      const phoneNumbersArray="";
-
-      // Check if the phone number already exists
-      if (phoneNumbersArray.includes(phoneNumber)) {
-        localStorage.setItem("isLoggedIn", "true");
-        localStorage.setItem("userPhone", phoneNumber);
-        const loginModal = document.getElementById("Login_modal");
-        loginModal.classList.add("-translate-x-full"); // Slide out to left
-
-        setTimeout(() => {
-          loginModal.classList.add("hidden");
-          loginModal.classList.remove("-translate-x-full");
-          console.log("User logged in directly.");
-        }, 300); // Match with transition duration
-
+        // Update all login text elements back to "Login"
         document.querySelectorAll(".login-text").forEach((button) => {
-          button.textContent = phoneNumber;
+          button.textContent = "Login";
         });
-
-        console.log(`User with phone number ${phoneNumber} logged in.`);
+        console.log("User logged out.");
         return;
       } else {
-        // Simulate OTP sending
-        console.log(`Simulating OTP send to phone number: ${phoneNumber}`);
-
-        // Simulate OTP generation
-        const simulatedOTP = "123456";
-        console.log(`Simulated OTP: ${simulatedOTP}`);
-
-        // Animate the login modal to slide left (off-screen)
         const loginModal = document.getElementById("Login_modal");
-        loginModal.classList.add("-translate-x-full"); // Slide out to left
-
-        // Dispatch an event to open the OTP modal
+        loginModal.classList.remove("hidden");
         setTimeout(() => {
-          window.dispatchEvent(new Event("openOtpModal"));
-          console.log("OTP modal opened via event.");
-        }, 300); // delay should match the CSS transition duration (300ms)
-
-        // Store the simulated OTP in a variable for verification
-      
-        window.userPhone = phoneNumber;
+          loginModal.classList.remove("opacity-0");
+          const modalContent = loginModal.querySelector("div");
+          modalContent.classList.remove("scale-95");
+          modalContent.classList.add("scale-100");
+        }, 10);
+        console.log("Login modal opened.");
       }
-    });
+    })
+  );
 
-    // Handle closing the Login Modal when the X button is clicked
-    const closeLoginBtn = document.getElementById("closeloginBtn");
-    closeLoginBtn.addEventListener("click", function () {
-      const loginModal = document.getElementById("Login_modal");
-      loginModal.classList.add("-translate-x-full"); // Slide out to left
+  // Enable/disable the Send OTP button based on valid 10-digit phone input.
+  const phoneInput = document.getElementById("phoneInput");
+  const loginBtn = document.getElementById("loginBtn");
+
+  phoneInput.addEventListener("input", function () {
+    const phoneNumber = this.value;
+    const isValid = /^\d{10}$/.test(phoneNumber);
+    loginBtn.disabled = !isValid;
+
+    if (phoneNumbersArray.includes(phoneNumber)) {
+      loginBtn.textContent = "Welcome Back ";
+      loginBtn.classList.remove("bg-red-600");
+      loginBtn.classList.add(
+        "bg-gradient-to-r",
+        "from-green-400",
+        "to-green-600",
+        "shadow-lg",
+        "shadow-green-500/50",
+        "hover:shadow-green-500/80"
+      );
+    } else {
+      loginBtn.textContent = "Send OTP";
+      loginBtn.classList.remove(
+        "bg-gradient-to-r",
+        "from-green-400",
+        "to-green-600",
+        "shadow-lg",
+        "shadow-green-500/50",
+        "hover:shadow-green-500/80"
+      );
+      loginBtn.classList.add("bg-red-600");
+    }
+  });
+
+  // Handle the login form submission: simulate OTP sending and animate modals.
+  const loginForm = document.getElementById("loginForm");
+  loginForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    const phoneNumber = phoneInput.value;
+
+    // Check if the phone number already exists
+    if (phoneNumbersArray.includes(phoneNumber)) {
+      localStorage.setItem("isLoggedIn", "true");
+      localStorage.setItem("userPhone", phoneNumber);
+      closeModal();
+      document.querySelectorAll(".login-text").forEach((button) => {
+        button.textContent = phoneNumber;
+      });
+      console.log(`User with phone number ${phoneNumber} logged in.`);
+      return;
+    } else {
+      // Simulate OTP sending
+      console.log(`Simulating OTP send to phone number: ${phoneNumber}`);
+
+      // Simulate OTP generation
+      const simulatedOTP = "123456";
+      console.log(`Simulated OTP: ${simulatedOTP}`);
+
+      // Animate the login modal to slide left (off-screen)
+      closeModal(() => {
+        // Dispatch an event to open the OTP modal
+        window.dispatchEvent(new Event("openOtpModal"));
+        console.log("OTP modal opened via event.");
+      });
+
+      // Store the simulated OTP in a variable for verification
+      window.userPhone = phoneNumber;
+    }
+  });
+
+  // Handle closing the Login Modal when the X button is clicked
+  const closeLoginBtn = document.getElementById("closeloginBtn");
+  closeLoginBtn.addEventListener("click", function () {
+    closeModal();
+  });
+
+  function closeModal(callback) {
+    const loginModal = document.getElementById("Login_modal");
+    const modalContent = loginModal.querySelector("div");
+    modalContent.classList.add("scale-95");
+    loginModal.classList.add("opacity-0");
+    setTimeout(() => {
       loginModal.classList.add("hidden");
-      // Match with transition duration
-    });
+      loginModal.classList.remove("opacity-0");
+      modalContent.classList.remove("scale-95");
+      modalContent.classList.add("scale-100");
+      if (callback) callback();
+    }, 500); // Match with transition duration
+  }
 
-    // Listen for the OTP modal close event to possibly perform additional actions
-    window.addEventListener("otpModalClosed", () => {
-      // You can add any additional logic here if needed when OTP modal is closed
-      console.log("OTP modal has been closed.");
-    });
-  
+  // Listen for the OTP modal close event to possibly perform additional actions
+  window.addEventListener("otpModalClosed", () => {
+    // You can add any additional logic here if needed when OTP modal is closed
+    console.log("OTP modal has been closed.");
+  });
 </script>

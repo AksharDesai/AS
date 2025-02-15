@@ -1,26 +1,23 @@
 ---
-//import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers";
-//import { supabase } from "../lib/supabaseClient";
+import { fetchPhoneNumbers } from "../lib/fetchPhoneNumbers";
+import { supabase } from "../lib/supabaseClient";
 
-//const fetchedPhone = await fetchPhoneNumbers();
-//const phoneNumbersObj = fetchedPhone?.length ? fetchedPhone : [];
+const fetchedPhone = await fetchPhoneNumbers();
+const phoneNumbersObj = fetchedPhone?.length ? fetchedPhone : [];
 
-
-//const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
-
+const phoneNumbersArray = phoneNumbersObj.map((phone) => phone.phoneNumber);
 
 // Get phone number from localStorage if it exists
 
 // GET THE LOCAL STORAGE PHONE NUMBER
 ---
 
-<!-- Hidden Div to Store phoneNumbersArray -->
-<!-- <h1 id="phoneNumbersData" class="hidden">
+<h1 id="phoneNumbersData" class="hidden">
   {JSON.stringify(phoneNumbersArray.map((num) => num.split("").join("#@$")))}
-</h1> -->
+</h1>
 
 <!-- Login Modal -->
-<!-- <div
+<div
   id="Login_modal"
   class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 translate-x-0"
 >
@@ -59,10 +56,10 @@
       </button>
     </form>
   </div>
-</div> -->
+</div>
 
 <!-- OTP Verification Modal -->
-<!-- <div
+<div
   id="otpModal"
   class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-transform duration-300 transform translate-x-full"
 >
@@ -96,9 +93,9 @@
       </button>
     </form>
   </div>
-</div> -->
+</div>
 
-<!-- <script type="module">
+<script type="module">
   import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
   // Initialize Supabase client
@@ -113,20 +110,6 @@
   const phoneNumbersArray = JSON.parse(phoneNumbersData).map((num) =>
     num.split("#@$").join("")
   );
-
- 
-
-  // Get Fast2SMS API key from environment variable
-  const FAST2SMS_API_KEY =
-    "S4pU0AbtixjdIEesRw7DhqPQrXmvW2JuVlcfaBF9GLnZK6o18yjCPYeFvJtd2uqInOf783yharVKxigz";
-
-  // Function to generate a 4-digit OTP
-  function generateOTP() {
-    return Math.floor(1000 + Math.random() * 9000).toString();
-  }
-
-  // Store the generated OTP
-  let generatedOTP = "";
 
   // Open the Login Modal when a trigger element is clicked.
   document.querySelectorAll(".openLoginModal").forEach((button) =>
@@ -145,10 +128,12 @@
         document.querySelectorAll(".login-text").forEach((button) => {
           button.textContent = "Login";
         });
+        console.log("User logged out.");
         return;
       } else {
         const loginModal = document.getElementById("Login_modal");
         loginModal.classList.remove("hidden");
+        console.log("Login modal opened.");
       }
     })
   );
@@ -187,63 +172,54 @@
     }
   });
 
-  // Handle the login form submission: send OTP and animate modals.
-
+  // Handle the login form submission: simulate OTP sending and animate modals.
   const loginForm = document.getElementById("loginForm");
-  loginForm.addEventListener("submit", async function (event) {
-    event.preventDefault();
-    const phoneNumber = phoneInput.value;
-    
+  loginForm.addEventListener(
+    "submit",
+    async function (event) {
+      event.preventDefault();
+      const phoneNumber = phoneInput.value;
 
-    // Check if the phone number already exists
-    if (phoneNumbersArray.includes(phoneNumber)) {
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("userPhone", phoneNumber);
-      const loginModal = document.getElementById("Login_modal");
-      loginModal.classList.add("hidden");
+      // Check if the phone number already exists
+      if (phoneNumbersArray.includes(phoneNumber)) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userPhone", phoneNumber);
+        const loginModal = document.getElementById("Login_modal");
+        loginModal.classList.add("hidden");
 
-      document.querySelectorAll(".login-text").forEach((button) => {
-        button.textContent = phoneNumber;
-      });
-
-      return;
-    } else {
-      // Generate OTP
-      generatedOTP = generateOTP();
-     
-
-      // Prepare the Fast2SMS API URL
-      const fast2smsURL = `https://www.fast2sms.com/dev/bulkV2?authorization=${FAST2SMS_API_KEY}&variables_values=${generatedOTP}&route=otp&numbers=${phoneNumber}`;
-
-      try {
-        const response = await fetch(fast2smsURL, {
-          method: "GET",
+        document.querySelectorAll(".login-text").forEach((button) => {
+          button.textContent = phoneNumber;
         });
 
-        const data = await response.json();
-        
+        console.log(`User with phone number ${phoneNumber} logged in.`);
+        return;
+      } else {
+        // Simulate OTP sending
+        console.log(`Simulating OTP send to phone number: ${phoneNumber}`);
 
-        if (data.return === true) {
-          // Animate the login modal to slide left (off-screen)
-          const loginModal = document.getElementById("Login_modal");
-          loginModal.classList.add("-translate-x-full");
+        // Simulate OTP generation
+        const simulatedOTP = "123456";
+        console.log(`Simulated OTP: ${simulatedOTP}`);
 
-          // After the login modal slides out, animate OTP modal in
-          setTimeout(() => {
-            const otpModal = document.getElementById("otpModal");
-            otpModal.classList.remove("translate-x-full");
-          }, 300); // delay should match the CSS transition duration (300ms)
-        } else {
-          alert("Failed to send OTP. Please try again.");
-        }
-      } catch (error) {
-        console.error("Error sending OTP:", error);
-        alert("An error occurred while sending OTP. Please try again.");
+        // Animate the login modal to slide left (off-screen)
+        const loginModal = document.getElementById("Login_modal");
+        loginModal.classList.add("-translate-x-full");
+
+        // After the login modal slides out, animate OTP modal in
+        setTimeout(() => {
+          const otpModal = document.getElementById("otpModal");
+          otpModal.classList.remove("translate-x-full");
+          console.log("OTP modal opened.");
+        }, 300); // delay should match the CSS transition duration (300ms)
+
+        // Store the simulated OTP in a variable for verification
+        window.generatedOTP = simulatedOTP;
+        window.userPhone = phoneNumber;
       }
     } //else closing here
-  });
+  );
 
-  // Function to insert phone number into Supabase
+  // Function to insert phone number into Supabase (optional for frontend-only)
   async function insertPhoneNumber(phoneNumber) {
     const { data, error } = await supabaseClient
       .from("phoneNumbers")
@@ -266,10 +242,9 @@
 
     // Retrieve OTP entered by the user
     const enteredOTP = document.getElementById("otpInput").value;
-    
 
     // Verify OTP
-    if (enteredOTP === generatedOTP) {
+    if (enteredOTP === window.generatedOTP) {
       // Close both modals
       const loginModal = document.getElementById("Login_modal");
       const otpModal = document.getElementById("otpModal");
@@ -277,19 +252,24 @@
       otpModal.classList.add("translate-x-full");
 
       // Set login state
-      const userPhone = document.getElementById("phoneInput").value;
+      const userPhone = window.userPhone;
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userPhone", userPhone);
 
-      // Insert the phone number into Supabase
-      await insertPhoneNumber(userPhone);
+      // Optionally, insert the phone number into Supabase
+      // await insertPhoneNumber(userPhone);
 
       // Update UI accordingly
       document.querySelectorAll(".login-text").forEach((button) => {
         button.textContent = userPhone;
       });
+
+      console.log(
+        `User with phone number ${userPhone} verified and logged in.`
+      );
     } else {
       alert("Invalid OTP. Please try again.");
+      console.log("Invalid OTP entered.");
     }
   });
 
@@ -303,6 +283,7 @@
     setTimeout(() => {
       const loginModal = document.getElementById("Login_modal");
       loginModal.classList.remove("-translate-x-full");
+      console.log("Returned to login modal.");
     }, 300);
   });
 
@@ -311,5 +292,6 @@
   closeLoginBtn.addEventListener("click", function () {
     const loginModal = document.getElementById("Login_modal");
     loginModal.classList.add("hidden");
+    console.log("Login modal closed.");
   });
-</script> -->
+</script>

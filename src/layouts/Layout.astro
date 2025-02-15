@@ -481,18 +481,18 @@ import Login_modal from '../components/userAuthentication.astro';
 
 
   //  Check and prompt login modal every 10 seconds if not logged in
-   setInterval(() => {
-          const userPhone = localStorage.getItem("userPhone");
-          const loginModal = document.getElementById('Login_modal');
-          const isModalOpen = loginModal && !loginModal.classList.contains("hidden") && !loginModal.classList.contains("opacity-0");
+  //  setInterval(() => {
+  //         const userPhone = localStorage.getItem("userPhone");
+  //         const loginModal = document.getElementById('Login_modal');
+  //         const isModalOpen = loginModal && !loginModal.classList.contains("hidden") && !loginModal.classList.contains("opacity-0");
 
-          if (!userPhone && !isModalOpen) {
-            const loginButton = document.querySelector(".openLoginModal");
-            if (loginButton) {
-              loginButton.click();
-            }
-          }
-        }, 20000);
+  //         if (!userPhone && !isModalOpen) {
+  //           const loginButton = document.querySelector(".openLoginModal");
+  //           if (loginButton) {
+  //             loginButton.click();
+  //           }
+  //         }
+  //       }, 20000);
          // 10000 milliseconds = 10 seconds
       
 

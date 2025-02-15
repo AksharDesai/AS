@@ -57,6 +57,37 @@ const phoneNumbersArray = await fetchPhoneNumbers();
   </div>
 </div>
 
+<!-- Logout Confirmation Modal -->
+<div
+  id="Logout_modal"
+  class="hidden opacity-0 fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-opacity duration-500 "
+>
+  <div
+    class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px] transform scale-95 transition-transform duration-500"
+  >
+
+
+    <h2 class="text-white text-2xl mb-6 font-semibold">Confirm Logout</h2>
+    
+    <p class="text-white mb-6">Are you sure you want to logout?</p>
+
+    <div class="flex gap-4">
+      <button
+        id="confirmLogoutBtn"
+        class="flex-1 bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
+      >
+        Yes, Logout
+      </button>
+      <button
+        id="cancelLogoutBtn"
+        class="flex-1 bg-gray-600 text-white py-3 rounded-lg font-medium hover:bg-gray-700 transition-colors"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Include the OTP Verification Component -->
 <OtpVerification />
 
@@ -84,14 +115,44 @@ const phoneNumbersArray = await fetchPhoneNumbers();
 
       if (isLoggedIn === "true" && userPhone) {
         // User is already logged in, log them out
-        localStorage.removeItem("isLoggedIn");
-        localStorage.removeItem("userPhone");
 
-        // Update all login text elements back to "Login"
+        const logoutModal = document.getElementById("Logout_modal");
+        logoutModal.classList.remove("hidden");
+        setTimeout(() => {
+          logoutModal.classList.remove("opacity-0");
+          const modalContent = logoutModal.querySelector("div");
+          modalContent.classList.remove("scale-95");
+          modalContent.classList.add("scale-100");
+        }, 10);
+
+        const cancelLogoutBtn = document.getElementById("cancelLogoutBtn");
+        cancelLogoutBtn.addEventListener("click", function () {
+          logoutModal.classList.add("hidden");
+          setTimeout(() => {
+            logoutModal.classList.add("opacity-0");
+          }, 500);
+        });
+
+        const confirmLogoutBtn = document.getElementById("confirmLogoutBtn");
+        confirmLogoutBtn.addEventListener("click", function () {
+           // Update all login text elements back to "Login"
         document.querySelectorAll(".login-text").forEach((button) => {
           button.textContent = "Login";
         });
         console.log("User logged out.");
+          localStorage.removeItem("isLoggedIn");
+          localStorage.removeItem("userPhone");
+          logoutModal.classList.add("hidden");
+          setTimeout(() => {
+            logoutModal.classList.add("opacity-0");
+          }, 500);
+        });
+
+        
+        
+    
+
+       
         return;
       } else {
         const loginModal = document.getElementById("Login_modal");

@@ -1,0 +1,100 @@
+---
+/* No server-side scripts or imports */
+---
+<!-- OTP Verification Modal -->
+<div
+  id="otpModal"
+  class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transform translate-x-full transition-transform duration-300"
+>
+  <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
+    <button
+      id="closeOtpBtn"
+      class="absolute top-3 right-3 text-white text-2xl hover:text-gray-300 transition-colors"
+    >
+      &times;
+    </button>
+
+    <h2 class="text-white text-2xl mb-6 font-semibold">Verify OTP</h2>
+
+    <form id="otpForm">
+      <div class="mb-6">
+        <label class="text-white text-sm mb-2 block">OTP Code</label>
+        <input
+          type="text"
+          id="otpInput"
+          placeholder="Enter OTP"
+          class="w-full bg-black text-white px-4 py-3 rounded-lg focus:border-red-500 focus:ring-1 focus:ring-red-500 placeholder-gray-400"
+          required
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-red-600 text-white py-3 rounded-lg font-medium hover:bg-red-700 transition-colors"
+      >
+        Verify OTP
+      </button>
+    </form>
+  </div>
+</div>
+
+<script type="module">
+  document.addEventListener("DOMContentLoaded", () => {
+    // Function to handle OTP verification
+    function handleOtpVerification() {
+      const otpForm = document.getElementById("otpForm");
+      const otpInput = document.getElementById("otpInput");
+      const closeOtpBtn = document.getElementById("closeOtpBtn");
+      const otpModal = document.getElementById("otpModal");
+
+      // Listen for the custom event to open OTP modal
+      window.addEventListener("openOtpModal", () => {
+        otpModal.classList.remove("translate-x-full");
+        otpModal.classList.add("translate-x-0");
+        console.log("OTP modal opened via event.");
+      });
+
+      otpForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const enteredOTP = otpInput.value;
+
+        if (enteredOTP === window.generatedOTP) {
+          // Close OTP modal by sliding out to the left
+          otpModal.classList.add("-translate-x-full");
+          otpModal.classList.remove("translate-x-0");
+
+          // Set login state
+          const userPhone = window.userPhone;
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userPhone", userPhone);
+
+          // Update UI accordingly
+          document.querySelectorAll(".login-text").forEach((button) => {
+            button.textContent = userPhone;
+          });
+
+          console.log(`User with phone number ${userPhone} verified and logged in.`);
+        } else {
+          alert("Invalid OTP. Please try again.");
+          console.log("Invalid OTP entered.");
+        }
+      });
+
+      // Close OTP modal and optionally trigger returning to login modal
+      closeOtpBtn.addEventListener("click", function () {
+        // Slide out the OTP modal to the left
+       
+
+        // Dispatch an event to notify that OTP modal has been closed
+        setTimeout(() => {
+          otpModal.classList.add("translate-x-full");
+          console.log("OTP modal closed.");
+          window.dispatchEvent(new Event("otpModalClosed"));
+        }, 300); // Match with transition duration
+      });
+    }
+
+    // Initialize OTP verification handler
+    handleOtpVerification();
+  });
+</script>

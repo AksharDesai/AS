@@ -1,6 +1,6 @@
 // netlify/functions/send-otp.js
 
-console.log(process.env.FAST2SMS_API_KEY);
+
 
 
 exports.handler = async (event, context) => {
@@ -94,3 +94,5 @@ exports.handler = async (event, context) => {
     };
   }
 };
+
+

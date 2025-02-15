@@ -36,14 +36,13 @@
         Verify OTP
       </button>
     </form>
-    <div id="message"></div>
+    <div class="hidden" id="message"></div>
   </div>
 </div>
 
 <script type="module">
   document.addEventListener("DOMContentLoaded", () => {
     // Get phone number when needed in client-side code
-   
 
     // Function to handle OTP verification
     function handleOtpVerification() {
@@ -58,43 +57,69 @@
         otpModal.classList.add("translate-x-0");
         console.log("OTP modal opened via event.");
 
-
         const userPhone = window.userPhone;
-    console.log("Phone number from userAuthentication:", userPhone);
-    const phone = userPhone;
+        console.log("Phone number from userAuthentication:", userPhone);
+        const phone = userPhone;
 
-    console.log("Phone number:", phone);
-    
+        // Add phone number to database when OTP is verified
+        fetch("/.netlify/functions/addNumber", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phone: phone }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              console.log("Phone number added to database successfully");
+            } else {
+              console.error(
+                "Failed to add phone number to database:",
+                data.error
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Error adding phone number to database:", error);
+          });
 
-    if (!phone) {
-      alert("Please enter a phone number");
-      return;
-    }
+        console.log("Phone number:", phone);
 
-    fetch("/.netlify/functions/send-otp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ phone: phone }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          document.getElementById("message").textContent =
-            "OTP sent! (Dummy OTP: " + data.otp + ")";
-          console.log("API Response:", data.apiResponse);
-        } else {
-          document.getElementById("message").textContent = "Failed to send OTP";
-          console.error("API Error:", data);
+        const otp = Math.floor(100000 + Math.random() * 900000).toString();
+        console.log(`Generated OTP: ${otp} for phone: ${phone}`);
+        window.generatedOTP = otp;
+
+        if (!phone) {
+          alert("Please enter a phone number");
+          return;
         }
-      })
-    
-      .catch((err) => {
-        console.error(err);
-        document.getElementById("message").textContent = "Error sending OTP";
-      });
 
+        fetch("/.netlify/functions/send-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ phone: phone, otp: otp }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.success) {
+              document.getElementById("message").textContent =
+                "OTP sent! (Dummy OTP: " + data.otp + ")";
+              console.log("API Response:", data.apiResponse);
+            } else {
+              document.getElementById("message").textContent =
+                "Failed to send OTP";
+              console.error("API Error:", data);
+            }
+          })
+
+          .catch((err) => {
+            console.error(err);
+            document.getElementById("message").textContent =
+              "Error sending OTP";
+          });
       });
 
       otpForm.addEventListener("submit", function (event) {

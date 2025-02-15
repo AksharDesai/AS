@@ -6,15 +6,14 @@ import OtpVerification from "./otpVerification.astro";
 // Frontend-only phone numbers data (placeholder)
 const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phone numbers
 ---
-
-<h1 id="phoneNumbersData" class="hidden">
+<div class="hidden" id="phoneNumbersArray">
   {JSON.stringify(phoneNumbersArray.map((num) => num.split("").join("#@$")))}
-</h1>
+</div>
 
 <!-- Login Modal -->
 <div
   id="Login_modal"
-  class="fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transform translate-x-0 transition-transform duration-300"
+  class="hidden fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transform translate-x-0 transition-transform duration-300"
 >
   <div class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px]">
     <button
@@ -57,13 +56,20 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
 <OtpVerification />
 
 <script type="module">
-  document.addEventListener("DOMContentLoaded", () => {
-    // Frontend-only phone numbers data
-    const phoneNumbersData =
-      document.getElementById("phoneNumbersData").textContent;
-    const phoneNumbersArray = JSON.parse(phoneNumbersData).map((num) =>
-      num.split("#@$").join("")
-    );
+
+  // Get the encrypted phone numbers array from the DOM
+  const encryptedPhoneNumbers = document.getElementById("phoneNumbersArray").textContent;
+  
+  // Parse the JSON string and decrypt each phone number
+  const phoneNumbersArray = JSON.parse(encryptedPhoneNumbers).map(encryptedNum => {
+    // Replace the encryption pattern #@$ with empty string to decrypt
+    return encryptedNum.split("#@$").join("");
+  });
+
+  console.log("Decrypted phone numbers:", phoneNumbersArray);
+  
+
+
 
     // Open the Login Modal when a trigger element is clicked.
     document.querySelectorAll(".openLoginModal").forEach((button) =>
@@ -85,6 +91,7 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
           return;
         } else {
           const loginModal = document.getElementById("Login_modal");
+          loginModal.classList.remove("hidden"); // Ensure starting position
           loginModal.classList.remove("-translate-x-full"); // Ensure starting position
           loginModal.classList.add("translate-x-0"); // Slide in
           console.log("Login modal opened.");
@@ -132,6 +139,8 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
       event.preventDefault();
       const phoneNumber = phoneInput.value;
 
+      const phoneNumbersArray="";
+
       // Check if the phone number already exists
       if (phoneNumbersArray.includes(phoneNumber)) {
         localStorage.setItem("isLoggedIn", "true");
@@ -170,7 +179,7 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
         }, 300); // delay should match the CSS transition duration (300ms)
 
         // Store the simulated OTP in a variable for verification
-        window.generatedOTP = simulatedOTP;
+      
         window.userPhone = phoneNumber;
       }
     });
@@ -180,11 +189,8 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
     closeLoginBtn.addEventListener("click", function () {
       const loginModal = document.getElementById("Login_modal");
       loginModal.classList.add("-translate-x-full"); // Slide out to left
-      setTimeout(() => {
-        loginModal.classList.add("hidden");
-        loginModal.classList.remove("-translate-x-full");
-        console.log("Login modal closed.");
-      }, 300); // Match with transition duration
+      loginModal.classList.add("hidden");
+      // Match with transition duration
     });
 
     // Listen for the OTP modal close event to possibly perform additional actions
@@ -192,5 +198,5 @@ const phoneNumbersArray = ["9876543210", "1234567890"]; // Example existing phon
       // You can add any additional logic here if needed when OTP modal is closed
       console.log("OTP modal has been closed.");
     });
-  });
+  
 </script>

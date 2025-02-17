@@ -56,17 +56,18 @@ import ProductSwiper from "../components/ProductSwiper.astro";
                 class="flex flex-col sm:flex-row justify-center gap-4"
                 id="el-h1ky1i70"
               >
-                <a
-                  href="/contact/"
+                <button
                   class="group px-8 py-4 bg-gradient-to-r from-red-600 to-red-500 text-white rounded-full font-medium transition-all duration-300 hover:shadow-lg hover:shadow-red-500/25 hover:scale-105"
-                  id="el-8lyziqg7"
+                  id="startProject"
                 >
                   Start Project
                   <span
                     class="inline-block transition-transform group-hover:translate-x-1"
                     id="el-116a69a3">→</span
                   >
-                </a>
+                </button>
+
+       
                 <a
                   href="https://drive.google.com/file/d/1RX93PyXdOtVmm4uW9D1izWkMhBCFOwMy/view?usp=drive_link"
                   target="_blank"
@@ -204,7 +205,6 @@ import ProductSwiper from "../components/ProductSwiper.astro";
                   data-astro-source-loc="20:8"
                 >
                 </div>
-              
               </div>
               <!-- 3 products -->
               <div
@@ -215,7 +215,6 @@ import ProductSwiper from "../components/ProductSwiper.astro";
               </div>
 
               <!-- 3 products -->
-
             </div>
 
             <!-- CTA Section -->
@@ -1222,8 +1221,26 @@ import ProductSwiper from "../components/ProductSwiper.astro";
 
 <script is:inline>
 
+  document.getElementById('startProject').addEventListener('click', function() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (!isLoggedIn) {
+      const loginButton = document.querySelector('.openLoginModal');
+      if (loginButton) {
+        loginButton.click();  
+      }
+    }else{
+      const messageDiv = document.querySelector('.message');
+        
+          messageDiv.classList.remove('translate-x-full');
+          messageDiv.classList.add('translate-x-0');
+       
 
-
+        setTimeout(() => {
+          messageDiv.classList.remove('translate-x-0');
+          messageDiv.classList.add('translate-x-full');
+        }, 5000);
+    }
+  });
 
   document.getElementById("heartIcon").addEventListener("click", function () {
     this.classList.toggle("text-red-500"); // Toggle red fill color
@@ -1231,10 +1248,8 @@ import ProductSwiper from "../components/ProductSwiper.astro";
   });
 
   // <============= Sending sms to the user =============>
- 
 
-    // Trigger the sendSMS function when the DOM is fully loaded
-   
+  // Trigger the sendSMS function when the DOM is fully loaded
 </script>
 
 <style>

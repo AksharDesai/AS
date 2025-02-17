@@ -361,15 +361,30 @@ import Login_modal from '../components/userAuthentication.astro';
       <Login_modal /> 
     </div>
 
+    <div class="message fixed top-10 right-0 bg-[#0F141C]  z-50 w-[270px] h-[70px] flex justify-center items-center transform transition-transform duration-500 ease-in-out translate-x-full border-t-2 border-b-2 border-l-2  border-[#561B24] rounded-l-lg">
+      <p class="text-white">
+          Our Team Will Contact You Soon
+      </p>
+    </div>
+
+
+    <!-- <script>
+  
+    </script> -->
+
     <!-- slot to be filled by child -->
     <slot />
     <!-- slot to be filled by child -->
+
+  
 
     <div id="page_complete">
       <!-- <script src="{% static  'js/loginForm.js' %}"></script>  -->
     </div>
 
 </div>
+
+
 
   </body>
 </html>
@@ -379,6 +394,7 @@ import Login_modal from '../components/userAuthentication.astro';
 
 <script is:inline>
  
+
   
  
 document.addEventListener('DOMContentLoaded', () => {

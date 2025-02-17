@@ -361,9 +361,32 @@ import Login_modal from '../components/userAuthentication.astro';
       <Login_modal /> 
     </div>
 
-    <div class="message fixed top-10 right-0 bg-[#0F141C]  z-50 w-[270px] h-[70px] flex justify-center items-center transform transition-transform duration-500 ease-in-out translate-x-full border-t-2 border-b-2 border-l-2  border-[#561B24] rounded-l-lg">
-      <p class="text-white">
+
+    <div class="loader-wrapper">
+      <div class="loader ">
+        <span class="letter t mont-alternate font-bold">T</span>
+        <span class="letter w mont-alternate font-bold ">W</span>
+        <span class="letter g mont-alternate font-bold">G</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress"></div>
+      </div>
+    </div>
+    
+    
+
+
+
+    <div class="message bg-[#23CE6B] fixed top-4 right-0 z-50 w-[270px] h-[70px] flex justify-center items-center transform transition-transform duration-500 ease-in-out translate-x-full rounded-l-lg"
+         >
+      <p class="text-white font-medium">
           Our Team Will Contact You Soon
+      </p>
+    </div>
+    <div class="login-success bg-[#23CE6B] fixed top-4 right-0 z-50 w-[270px] h-[70px] flex justify-center items-center transform transition-transform duration-500 ease-in-out translate-x-full rounded-l-lg"
+         >
+      <p class="text-white font-medium">
+          Logged in successfully
       </p>
     </div>
 
@@ -394,8 +417,28 @@ import Login_modal from '../components/userAuthentication.astro';
 
 <script is:inline>
  
+// Simulate page load progress
+let progress = 0;
+const progressElement = document.querySelector('.progress');
+const loaderWrapper = document.querySelector('.loader-wrapper');
 
-  
+const progressInterval = setInterval(() => {
+  progress++;
+  progressElement.style.width = progress + '%';
+
+  if (progress >= 100) {
+    clearInterval(progressInterval);
+    // Wait for 1 second after reaching 100%
+    setTimeout(() => {
+      loaderWrapper.style.opacity = 0;
+      // Optionally remove loader from DOM after fade-out
+      setTimeout(() => {
+        loaderWrapper.style.display = 'none';
+      }, 500); // Matches CSS transition duration
+    }, 350);
+  }
+}); // Adjust interval as needed (30ms per increment gives ~3 seconds total)
+
  
 document.addEventListener('DOMContentLoaded', () => {
   const currentPath = window.location.pathname.replace(/\/$/, '');
@@ -439,5 +482,93 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
 
+<style>
+/* Full-page loader wrapper */
+/* Loader wrapper covers the entire viewport */
+/* Loader wrapper covers the entire viewport */
+.loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #121212;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensures it overlays other content */
+  transition: opacity 0.5s ease;
+}
 
+/* Loader letters container */
+.loader {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 4rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.letter {
+  display: inline-block;
+  position: relative;
+}
+
+/* T coming from left */
+@keyframes slideInFromLeft {
+  0%   { transform: translateX(-150%); }
+  60%  { transform: translateX(5px); }
+  80%  { transform: translateX(-3px); }
+  100% { transform: translateX(0); }
+}
+/* G coming from right */
+@keyframes slideInFromRight {
+  0%   { transform: translateX(150%); }
+  60%  { transform: translateX(-5px); }
+  80%  { transform: translateX(3px); }
+  100% { transform: translateX(0); }
+}
+/* W clash effect */
+@keyframes clashShake {
+  0%   { transform: translateX(0); }
+  25%  { transform: translateX(-3px); }
+  50%  { transform: translateX(3px); }
+  75%  { transform: translateX(-2px); }
+  100% { transform: translateX(0); }
+}
+
+/* Apply animations */
+.letter.t {
+  animation: slideInFromLeft 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+.letter.g {
+  animation: slideInFromRight 0.9s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+}
+.letter.w {
+  animation: clashShake 0.3s ease-out forwards;
+  animation-delay: 0.7s;
+}
+
+/* Progress bar container */
+.progress-bar {
+  width: 80%;
+  max-width: 500px;
+  height: 8px;
+  background: #333;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+/* Progress indicator */
+.progress {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #fc3261, #ff4b2b);
+}
+
+
+</style>
 

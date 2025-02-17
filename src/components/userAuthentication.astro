@@ -60,15 +60,13 @@ const phoneNumbersArray = await fetchPhoneNumbers();
 <!-- Logout Confirmation Modal -->
 <div
   id="Logout_modal"
-  class="hidden opacity-0 fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-opacity duration-500 "
+  class="hidden opacity-0 fixed inset-0 bg-[rgba(0,0,0,0.8)] flex items-center justify-center z-50 transition-opacity duration-500"
 >
   <div
     class="bg-[#2F2F2F] rounded-xl p-8 relative w-[300px] transform scale-95 transition-transform duration-500"
   >
-
-
     <h2 class="text-white text-2xl mb-6 font-semibold">Confirm Logout</h2>
-    
+
     <p class="text-white mb-6">Are you sure you want to logout?</p>
 
     <div class="flex gap-4">
@@ -106,67 +104,134 @@ const phoneNumbersArray = await fetchPhoneNumbers();
 
   console.log(phoneNumbersArray);
 
-  // Open the Login Modal when a trigger element is clicked.
+  // Function to handle opening the Login Modal
+  function openLoginModal() {
+    const loginModal = document.getElementById("Login_modal");
+    const modalContent = loginModal.querySelector("div");
+
+    // Remove 'hidden' to display the modal
+    loginModal.classList.remove("hidden");
+
+    // Reset classes for animation
+    loginModal.classList.add("opacity-0");
+    modalContent.classList.add("scale-95");
+
+    // Force reflow to ensure the browser recognizes the initial state
+    void loginModal.offsetWidth;
+
+    // Add classes to trigger the animation
+    loginModal.classList.remove("opacity-0");
+    modalContent.classList.remove("scale-95");
+    modalContent.classList.add("scale-100");
+
+    console.log("Login modal opened with animation.");
+  }
+
+  // Function to handle closing the Login Modal
+  function closeLoginModal() {
+    const loginModal = document.getElementById("Login_modal");
+    const modalContent = loginModal.querySelector("div");
+    document.body.classList.remove("overflow-hidden");
+    // Add classes to trigger the closing animation
+    modalContent.classList.remove("scale-100");
+    modalContent.classList.add("scale-95");
+    loginModal.classList.add("opacity-0");
+
+    // After the transition duration, add 'hidden' to remove the modal from view
+    setTimeout(() => {
+      loginModal.classList.add("hidden");
+      console.log("Login modal closed.");
+    }, 500); // Match with transition duration
+  }
+
+  // Function to handle opening the Logout Modal
+  function openLogoutModal() {
+    const logoutModal = document.getElementById("Logout_modal");
+    const modalContent = logoutModal.querySelector("div");
+
+    // Remove 'hidden' to display the modal
+    logoutModal.classList.remove("hidden");
+
+    // Reset classes for animation
+    logoutModal.classList.add("opacity-0");
+    modalContent.classList.add("scale-95");
+
+    // Force reflow to ensure the browser recognizes the initial state
+    void logoutModal.offsetWidth;
+
+    // Add classes to trigger the animation
+    logoutModal.classList.remove("opacity-0");
+    modalContent.classList.remove("scale-95");
+    modalContent.classList.add("scale-100");
+
+    console.log("Logout modal opened with animation.");
+  }
+
+  // Function to handle closing the Logout Modal
+  function closeLogoutModal() {
+    const logoutModal = document.getElementById("Logout_modal");
+    const modalContent = logoutModal.querySelector("div");
+
+    // Add classes to trigger the closing animation
+    modalContent.classList.remove("scale-100");
+    modalContent.classList.add("scale-95");
+    logoutModal.classList.add("opacity-0");
+
+    // After the transition duration, add 'hidden' to remove the modal from view
+    setTimeout(() => {
+      logoutModal.classList.add("hidden");
+      console.log("Logout modal closed.");
+    }, 500); // Match with transition duration
+  }
+
+  // Open the Login Modal when a trigger element is clicked
   document.querySelectorAll(".openLoginModal").forEach((button) =>
     button.addEventListener("click", function () {
       // Check if user is already logged in
+      document.body.classList.add("overflow-hidden");
       const isLoggedIn = localStorage.getItem("isLoggedIn");
       const userPhone = localStorage.getItem("userPhone");
 
       if (isLoggedIn === "true" && userPhone) {
-        // User is already logged in, log them out
-
-        const logoutModal = document.getElementById("Logout_modal");
-        logoutModal.classList.remove("hidden");
-        setTimeout(() => {
-          logoutModal.classList.remove("opacity-0");
-          const modalContent = logoutModal.querySelector("div");
-          modalContent.classList.remove("scale-95");
-          modalContent.classList.add("scale-100");
-        }, 10);
-
-        const cancelLogoutBtn = document.getElementById("cancelLogoutBtn");
-        cancelLogoutBtn.addEventListener("click", function () {
-          logoutModal.classList.add("hidden");
-          setTimeout(() => {
-            logoutModal.classList.add("opacity-0");
-          }, 500);
-        });
-
-        const confirmLogoutBtn = document.getElementById("confirmLogoutBtn");
-        confirmLogoutBtn.addEventListener("click", function () {
-           // Update all login text elements back to "Login"
-        document.querySelectorAll(".login-text").forEach((button) => {
-          button.textContent = "Login";
-        });
-        console.log("User logged out.");
-          localStorage.removeItem("isLoggedIn");
-          localStorage.removeItem("userPhone");
-          logoutModal.classList.add("hidden");
-          setTimeout(() => {
-            logoutModal.classList.add("opacity-0");
-          }, 500);
-        });
-
-        
-        
-    
-
-       
-        return;
+        // User is already logged in, open Logout Modal
+        openLogoutModal();
       } else {
-        const loginModal = document.getElementById("Login_modal");
-        loginModal.classList.remove("hidden");
-        setTimeout(() => {
-          loginModal.classList.remove("opacity-0");
-          const modalContent = loginModal.querySelector("div");
-          modalContent.classList.remove("scale-95");
-          modalContent.classList.add("scale-100");
-        }, 10);
-        console.log("Login modal opened.");
+        // Open Login Modal with animation
+        openLoginModal();
       }
     })
   );
+
+  // Handle closing the Login Modal when the X button is clicked
+  document
+    .getElementById("closeloginBtn")
+    .addEventListener("click", function () {
+      document.body.classList.remove("overflow-hidden");
+      closeLoginModal();
+    });
+
+  // Handle closing the Logout Modal when 'Cancel' is clicked
+  document
+    .getElementById("cancelLogoutBtn")
+    .addEventListener("click", function () {
+      closeLogoutModal();
+      document.body.classList.remove("overflow-hidden");
+    });
+
+  // Handle confirming logout
+  document
+    .getElementById("confirmLogoutBtn")
+    .addEventListener("click", function () {
+      // Update all login text elements back to "Login"
+      document.querySelectorAll(".login-text").forEach((button) => {
+        button.textContent = "Login";
+      });
+      console.log("User logged out.");
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userPhone");
+      closeLogoutModal();
+      document.body.classList.remove("overflow-hidden");
+    });
 
   // Enable/disable the Send OTP button based on valid 10-digit phone input.
   const phoneInput = document.getElementById("phoneInput");
@@ -178,7 +243,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     loginBtn.disabled = !isValid;
 
     if (phoneNumbersArray.includes(phoneNumber)) {
-      loginBtn.textContent = "Welcome Back ";
+      loginBtn.textContent = "Welcome Back";
       loginBtn.classList.remove("bg-red-600");
       loginBtn.classList.add(
         "bg-gradient-to-r",
@@ -212,7 +277,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     if (phoneNumbersArray.includes(phoneNumber)) {
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("userPhone", phoneNumber);
-      closeModal();
+      closeLoginModal();
       document.querySelectorAll(".login-text").forEach((button) => {
         button.textContent = phoneNumber;
       });
@@ -228,40 +293,14 @@ const phoneNumbersArray = await fetchPhoneNumbers();
       const simulatedOTP = "123456";
       console.log(`Simulated OTP: ${simulatedOTP}`);
 
-      // Animate the login modal to slide left (off-screen)
-      
-        // Dispatch an event to open the OTP modal
-        window.dispatchEvent(new Event("openOtpModal"));
-        console.log("OTP modal opened via event.");
-     
-
-      
+      // Dispatch an event to open the OTP modal
+      window.dispatchEvent(new Event("openOtpModal"));
+      console.log("OTP modal opened via event.");
     }
   });
 
-  // Handle closing the Login Modal when the X button is clicked
-  const closeLoginBtn = document.getElementById("closeloginBtn");
-  closeLoginBtn.addEventListener("click", function () {
-    closeModal();
-  });
-
-  function closeModal(callback) {
-    const loginModal = document.getElementById("Login_modal");
-    const modalContent = loginModal.querySelector("div");
-    modalContent.classList.add("scale-95");
-    loginModal.classList.add("opacity-0");
-    setTimeout(() => {
-      loginModal.classList.add("hidden");
-      loginModal.classList.remove("opacity-0");
-      modalContent.classList.remove("scale-95");
-      modalContent.classList.add("scale-100");
-      if (callback) callback();
-    }, 500); // Match with transition duration
-  }
-
-  // Listen for the OTP modal close event to possibly perform additional actions
+  // Optional: Listen for the OTP modal close event to perform additional actions
   window.addEventListener("otpModalClosed", () => {
-    // You can add any additional logic here if needed when OTP modal is closed
     console.log("OTP modal has been closed.");
   });
 </script>

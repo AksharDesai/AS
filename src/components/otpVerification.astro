@@ -108,7 +108,38 @@
           // Close OTP modal by sliding out to the left
           otpModal.classList.add("-translate-x-full");
           otpModal.classList.remove("translate-x-0");
+          console.log("OTP verified and modal closed.");
 
+          // Close login modal by sliding out to the left
+          const loginModal = document.getElementById("Login_modal");
+    const modalContent = loginModal.querySelector("div");
+    document.body.classList.remove("overflow-hidden");
+    // Add classes to trigger the closing animation
+    modalContent.classList.remove("scale-100");
+    modalContent.classList.add("scale-95");
+    loginModal.classList.add("opacity-0");
+
+    // After the transition duration, add 'hidden' to remove the modal from view
+    setTimeout(() => {
+      loginModal.classList.add("hidden");
+      console.log("Login modal closed.");
+    }, 500);
+
+
+
+
+
+          // Show the login success modal for 5 seconds
+          const loginSuccessModal = document.querySelector(".login-success");
+          if (loginSuccessModal) {
+            loginSuccessModal.classList.remove("translate-x-full");
+            loginSuccessModal.classList.add("translate-x-0");
+
+            setTimeout(() => {
+              loginSuccessModal.classList.remove("translate-x-0");
+              loginSuccessModal.classList.add("translate-x-full");
+            }, 5000);
+          }
           // Set login state
           localStorage.setItem("isLoggedIn", "true");
           localStorage.setItem("userPhone", window.userPhone);

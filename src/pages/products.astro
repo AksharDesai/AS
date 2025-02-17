@@ -1,7 +1,9 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import FeaturedProducts from "../components/Fetchproducts.astro";
-import SearchProduct from "../components/SearchProduct.astro";
+
+import Layout from '../layouts/Layout.astro';
+import FeaturedProducts from '../components/Fetchproducts.astro'
+import SearchProduct from '../components/SearchProduct.astro';
+
 
 const seoScript = `
 <script type="application/ld+json">
@@ -1156,103 +1158,119 @@ const seoScript = `
   ]
 }
 </script>
-`;
+`
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout
-  description="Explore premium kitchen and wardrobe accessories, including soft-close drawer channels, stainless steel baskets, hinges, pull-out storage, and more. Shop high-quality, durable, and stylish hardware solutions for modular kitchens and wardrobes at the best prices!"
->
-  <!-- Main Content Area -->
-  <main
-    class="flex-1 ml-0 lg:ml-64 overflow-y-auto overflow-x-hidden border-red-500"
-    id="el-6jvywkgc"
-  >
-    <!-- fetched products from supabase how can i loop and create cards acccording to databas -->
-
-    <element
-      id="1fbb2dd5-79fb-48cf-8976-397830822c7b"
-      data-section-id="1fbb2dd5-79fb-48cf-8976-397830822c7b"
-    >
-      <htmlCode>
-        <div id="root">
-          <section id="Hero" class="relative bg-neutral-900">
-            <!-- Slider Container -->
-            <div class="swiper-container hero-slider">
-              <div class="swiper-wrapper">
-                <!-- Slide 1 -->
-
-                <!-- Slide 2 -->
-                <div class="swiper-slide relative">
-                  <div class="absolute inset-0 bg-black"></div>
-                  <div
-                    class="bg-neutral-800 min-h-[40vh] md:min-h-[70vh] flex items-center justify-center"
-                  >
-                    <div class="container mx-auto px-4 relative z-10">
-                      <div
-                        class="max-w-3xl mx-auto text-center animate-fade-in"
-                      >
-                        <h2
-                          class="text-4xl md:text-6xl font-bold text-white mb-6"
-                        >
-                          Premium Kitchen
-                          <span class="block text-red-600"
-                            >Storage Solutions</span
-                          >
-                        </h2>
-                        <p class="text-gray-300 text-lg md:text-xl mb-8">
-                          Transform your kitchen with our innovative storage
-                          systems
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+<Layout description="Explore premium kitchen and wardrobe accessories, including soft-close drawer channels, stainless steel baskets, hinges, and pull-out storage. Shop durable, stylish, high-quality hardware solutions for modular kitchens and wardrobes at the best prices today!">
+	   <!-- Main Content Area -->
+       <main class="flex-1 ml-0 lg:ml-64 overflow-y-auto overflow-x-hidden  border-red-500" id="el-6jvywkgc">
+        
+        <!-- fetched products from supabase how can i loop and create cards acccording to databas -->
+        
+      
+    
+       
+      
+    
+    
+      
+        <element id="1fbb2dd5-79fb-48cf-8976-397830822c7b" data-section-id="1fbb2dd5-79fb-48cf-8976-397830822c7b">
+    
+            <htmlCode>
+                <div id="root">
+                    <section id="Hero" class="relative bg-neutral-900 ">
+                        <!-- Slider Container -->
+                        <div class="swiper-container hero-slider ">
+                            <div class="swiper-wrapper">
+                                <!-- Slide 1 -->
+    
+                                <!-- Slide 2 -->
+                                <div class="swiper-slide relative">
+                                    <div class="absolute inset-0 bg-black">
+                                    </div>
+                                    <div class="bg-neutral-800 min-h-[40vh] md:min-h-[70vh] flex items-center justify-center">
+                                        <div class="container mx-auto px-4 relative z-10">
+                                            <div class="max-w-3xl mx-auto text-center animate-fade-in">
+                                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                                                    Premium Kitchen
+                                                    <span class="block text-red-600">Storage Solutions</span>
+                                                </h2>
+                                                <p class="text-gray-300 text-lg md:text-xl mb-8">
+                                                    Transform your kitchen with our innovative storage systems
+                                                </p>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Navigation Buttons -->
+                            
+                            <!-- Pagination -->
+                            
+                        </div>
+                    </section>
+    
+               
                 </div>
-              </div>
-              <!-- Navigation Buttons -->
+            </htmlCode>
+        </element>
+    
 
-              <!-- Pagination -->
-            </div>
-          </section>
-        </div>
-      </htmlCode>
-    </element>
-  </main>
+        </htmlcode>
+    
+        </element>
+    
+    
+        <element id="47651010-23b2-4c6f-b340-49376911016b" data-section-id="47651010-23b2-4c6f-b340-49376911016b">
+    
+    
+    
+            <htmlcode id="el-zixgp9l1">
+    
+                <div id="root">
+    
+                    
+                    <!-- {% include 'crudProducts.html' %} -->
+                    <FeaturedProducts></FeaturedProducts>
+
+                    
+    
+                   
+                </div>
+            </htmlcode>
+    
+        </element>
+        <element id="d5a43a05-6281-4d50-8993-a642f262c31f" data-section-id="d5a43a05-6281-4d50-8993-a642f262c31f">
+    
+            <htmlCode>
+                <div id="root">
+                    <section id="SearchAndFilter" class="fixed bottom-10 right-0 z-50">
+                        <!-- Search Trigger Button -->
+
+                        <SearchProduct>
+                        </SearchProduct>
+                        
+                        <!-- Search and Filter Panel -->
+
+                    </section>
+    
+                    <script>
+    
+                    </script>
+                </div>
+            </htmlCode>
+        </element>
+     
+    
+        <div id="page_complete">
+            <script>
+                console.log('Page complete');
+            </script>
+    
+    </main>
+    
+	 
 </Layout>
-
-<element
-  id="47651010-23b2-4c6f-b340-49376911016b"
-  data-section-id="47651010-23b2-4c6f-b340-49376911016b"
->
-  <htmlcode id="el-zixgp9l1">
-    <div id="root">
-      <!-- {% include 'crudProducts.html' %} -->
-      <FeaturedProducts />
-    </div>
-  </htmlcode>
-</element>
-<element
-  id="d5a43a05-6281-4d50-8993-a642f262c31f"
-  data-section-id="d5a43a05-6281-4d50-8993-a642f262c31f"
->
-  <htmlCode>
-    <div id="root">
-      <section id="SearchAndFilter" class="fixed bottom-10 right-0 z-50">
-        <!-- Search Trigger Button -->
-
-        <SearchProduct />
-
-        <!-- Search and Filter Panel -->
-      </section>
-
-      <script></script>
-    </div>
-  </htmlCode>
-</element>
-
-<div id="page_complete">
-  <script>
-    console.log("Page complete");
-  </script>
-</div>

@@ -221,20 +221,21 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     } else {
       // Simulate OTP sending
       console.log(`Simulating OTP send to phone number: ${phoneNumber}`);
+      // Store the simulated OTP in a variable for verification
+      window.userPhone = phoneNumber;
 
       // Simulate OTP generation
       const simulatedOTP = "123456";
       console.log(`Simulated OTP: ${simulatedOTP}`);
 
       // Animate the login modal to slide left (off-screen)
-      closeModal(() => {
+      
         // Dispatch an event to open the OTP modal
         window.dispatchEvent(new Event("openOtpModal"));
         console.log("OTP modal opened via event.");
-      });
+     
 
-      // Store the simulated OTP in a variable for verification
-      window.userPhone = phoneNumber;
+      
     }
   });
 

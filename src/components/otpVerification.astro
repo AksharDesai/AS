@@ -22,6 +22,8 @@
         <label class="text-white text-sm mb-2 block">OTP Code</label>
         <input
           type="text"
+          inputmode="numeric"
+          autocomplete="one-time-code"
           id="otpInput"
           placeholder="Enter OTP"
           class="w-full bg-black text-white px-4 py-3 rounded-lg focus:border-red-500 focus:ring-1 focus:ring-red-500 placeholder-gray-400"
@@ -59,32 +61,9 @@
 
         const userPhone = window.userPhone;
         console.log("Phone number from userAuthentication:", userPhone);
+
+        // Ensure phone is defined here
         const phone = userPhone;
-
-        // Add phone number to database when OTP is verified
-        fetch("/.netlify/functions/addNumber", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ phone: phone }),
-        })
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.success) {
-              console.log("Phone number added to database successfully");
-            } else {
-              console.error(
-                "Failed to add phone number to database:",
-                data.error
-              );
-            }
-          })
-          .catch((error) => {
-            console.error("Error adding phone number to database:", error);
-          });
-
-        console.log("Phone number:", phone);
 
         const otp = Math.floor(100000 + Math.random() * 900000).toString();
         console.log(`Generated OTP: ${otp} for phone: ${phone}`);
@@ -114,7 +93,6 @@
               console.error("API Error:", data);
             }
           })
-
           .catch((err) => {
             console.error(err);
             document.getElementById("message").textContent =
@@ -133,16 +111,41 @@
 
           // Set login state
           localStorage.setItem("isLoggedIn", "true");
-          localStorage.setItem("userPhone", userPhone);
+          localStorage.setItem("userPhone", window.userPhone);
 
           // Update UI accordingly
           document.querySelectorAll(".login-text").forEach((button) => {
-            button.textContent = userPhone;
+            button.textContent = window.userPhone;
           });
 
           console.log(
-            `User with phone number ${userPhone} verified and logged in.`
+            `User with phone number ${window.userPhone} verified and logged in.`
           );
+
+          // Add phone number to database when OTP is verified
+          fetch("/.netlify/functions/addNumber", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ phone: window.userPhone }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.success) {
+                console.log("Phone number added to database successfully");
+              } else {
+                console.error(
+                  "Failed to add phone number to database:",
+                  data.error
+                );
+              }
+            })
+            .catch((error) => {
+              console.error("Error adding phone number to database:", error);
+            });
+
+          console.log("Phone number:", window.userPhone);
         } else {
           alert("Invalid OTP. Please try again.");
           console.log("Invalid OTP entered.");

@@ -6,122 +6,153 @@ const fetchedProducts = await fetchProducts();
 const products = fetchedProducts?.length ? fetchedProducts : [];
 ---
 
-    
-    
-    <style>
-      /* Container styling */
-      .swiper-container {
-        position: relative;
-        width: 340px;
-        height: 420px;
-        perspective: 1000px; /* For 3D effect */
+<style>
+  /* Container styling */
+  .swiper-container {
+    position: relative;
+    width: 340px;
+    height: 420px;
+    perspective: 1000px; /* For 3D effect */
+    margin: 0 auto;
+  }
+
+  img{
+
+    width: 100% !important;
+    height: 100% !important;
+    object-fit:fill !important;
+    object-position: center !important;
+  }
+
+  /* Card styling */
+  .card {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 18px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    user-select: none;
+    cursor: pointer;
+    /* Smooth transitions */
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+
+  /* Inactive card style */
+  .card.inactive {
+    opacity: 1;
+  }
+
+  /* Shadow for cards behind the active one */
+  .card:not(:last-child) {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Navigation buttons styling */
+  .nav-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+  }
+
+
+</style>
+
+<div class="swiper-container">
+  {
+    products.map((product, index) => (
+      <div class="card overflow-hidden border-4 border-neutral-700">
+        <img
+          class=""
+          src={`${product.image}`}
+          draggable="false"
+          loading="lazy"
+          decoding="async"
+          alt={`${product.name}`}
+        />
+      </div>
+    ))
+  }
+</div>
+
+<div class="nav-buttons rounded-md overflow-hidden  ">
+  <button id="prev-btn" class="bg-black text-white py-2 px-4   text-xl">< </button>
+  <button id="next-btn" class=" bg-red-500 text-white px-4 py-2  border-white  text-xl">></button>
+</div>
+
+<script is:inline>
+  const container = document.querySelector('.swiper-container');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const cards = Array.from(container.querySelectorAll('.card'));
+
+  // Set current index (active card is on top)
+  let currentIndex = cards.length - 1;
+
+  // Initialize positions for each card
+  const initCards = () => {
+    cards.forEach((card, index) => {
+      if (index === currentIndex) {
+        card.style.transform = 'none';
+        card.style.opacity = 1;
+        card.classList.remove('inactive');
+      } else {
+        // Cards behind the active one are slightly pushed back
+        card.style.transform = 'translate3d(0, 0, -400px)';
+        card.style.opacity = 1;
+        card.classList.add('inactive');
       }
+    });
+  };
 
+  initCards();
 
-      /* Card styling */
-      .card {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        border-radius: 18px;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        font-size: 22px;
-        font-weight: bold;
-        user-select: none;
-        cursor: pointer;
-        /* Set transition for transform and opacity so that animations are smooth */
-        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-      }
+  // Animate the current card off-screen to the right (Next)
+  const nextCard = () => {
+    if (currentIndex === 0) {
+      console.log("Reached the end of the products.");
+      return;
+    }
+    const currentCard = cards[currentIndex];
+    currentCard.style.transform = 'translate3d(100%, 0, 0)';
+    currentCard.style.opacity = 0;
+    currentCard.classList.add('inactive');
 
-      /* Distinct background colors (fallback or when images don’t cover the full card) */
-     
+    setTimeout(() => {
+      currentIndex--;
+      const newCurrent = cards[currentIndex];
+      newCurrent.style.transform = 'none';
+      newCurrent.style.opacity = 1;
+      newCurrent.classList.remove('inactive');
+    }, 300);
+  };
 
-      /* Add a subtle shadow to all cards except the top one */
-      .card:not(:last-child) {
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      }
-    </style>
-  
-    <div class="swiper-container">
-      <!-- Render each product card -->
-      {products.map((product) => (
-        <div class="card overflow-hidden border-4 border-neutral-700">
-          <img
-            class="w-full h-full"
-            src={`${product.image}`}
-            draggable="false"
-            loading="lazy"
-            decoding="async"
-            alt=""
-            srcset=""
-          />
-          <span class="hidden" id="product-name">{product.name}</span>
-          <span class="hidden" id="product-price">{product.price}</span>
-          <span class="hidden" id="product-description">{product.description}</span>
-          <span class="hidden" id="product-category">{product.category}</span>
-          
-        </div>
-      
-      ))}
+  // Animate the previous card back into view (Previous)
+  const prevCard = () => {
+    if (currentIndex === cards.length - 1) {
+      console.log("Already at the first product.");
+      return;
+    }
+    const previousCard = cards[currentIndex + 1];
+    previousCard.style.transform = 'translate3d(-100%, 0, 0)';
+    previousCard.style.opacity = 0;
+    previousCard.classList.add('inactive');
 
-      
-    </div>
+    // Force a reflow to ensure the starting position is applied
+    previousCard.getBoundingClientRect();
 
-    <script is:inline>
-      // Select the container element
-      const container = document.querySelector('.swiper-container');
+    previousCard.style.transform = 'none';
+    previousCard.style.opacity = 1;
+    previousCard.classList.remove('inactive');
+    currentIndex++;
+  };
 
-      // Initialize card transforms:
-      // All cards except the top (last child) start with a transform that mimics the "prev" effect (translated back in Z).
-      const initCards = () => {
-        const cards = container.querySelectorAll('.card');
-        cards.forEach((card) => {
-          if (card !== container.lastElementChild) {
-            card.style.transform = 'translate3d(0, 0, -400px)';
-          } else {
-            card.style.transform = 'none';
-          }
-          card.style.opacity = 1;
-        });
-      };
-
-      initCards();
-
-      // Function to animate the top card away (mimicking the "next" effect: translate to the right)
-      function animateTopCard() {
-        const topCard = container.lastElementChild;
-        if (!topCard) return;
-
-        // Animate the top card: translate it 100% to the right
-        topCard.style.transform = 'translate3d(100%, 0, 0)';
-        topCard.style.opacity = 0;
-
-        // After the transition duration, remove the card and animate the new top card coming forward
-        setTimeout(() => {
-          topCard.remove();
-          const newTop = container.lastElementChild;
-          if (newTop) {
-            // Force reflow to ensure the transition is applied
-            newTop.getBoundingClientRect();
-            // Animate the new top card from the "prev" state (translateZ(-400px)) to its natural position (none)
-            newTop.style.transform = 'none';
-          } else {
-            console.log("No more cards!");
-          }
-        }, 500); // Transition duration matches the CSS transition
-      }
-
-      // Listen for click events on the container.
-      // Only the top (last) card should react to clicks.
-      container.addEventListener('click', (e) => {
-        // If the clicked card is the top card, animate it away
-        if (e.target.closest('.card') === container.lastElementChild) {
-          animateTopCard();
-        }
-      });
-    </script>
-
+  nextBtn.addEventListener('click', nextCard);
+  prevBtn.addEventListener('click', prevCard);
+</script>

@@ -102,7 +102,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
   // 4. Split the string into an array
   const phoneNumbersArray = phoneNumbersString.split(",");
 
-  console.log(phoneNumbersArray);
+  
 
   // Function to handle opening the Login Modal
   function openLoginModal() {
@@ -124,13 +124,17 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     modalContent.classList.remove("scale-95");
     modalContent.classList.add("scale-100");
 
-    console.log("Login modal opened with animation.");
+   
   }
 
   // Function to handle closing the Login Modal
   function closeLoginModal() {
+    const phoneInput = document.getElementById("phoneInput");
     const loginModal = document.getElementById("Login_modal");
     const modalContent = loginModal.querySelector("div");
+
+    phoneInput.value = "";
+    
     document.body.classList.remove("overflow-hidden");
     // Add classes to trigger the closing animation
     modalContent.classList.remove("scale-100");
@@ -140,7 +144,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     // After the transition duration, add 'hidden' to remove the modal from view
     setTimeout(() => {
       loginModal.classList.add("hidden");
-      console.log("Login modal closed.");
+      
     }, 500); // Match with transition duration
   }
 
@@ -164,7 +168,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     modalContent.classList.remove("scale-95");
     modalContent.classList.add("scale-100");
 
-    console.log("Logout modal opened with animation.");
+    
   }
 
   // Function to handle closing the Logout Modal
@@ -180,7 +184,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
     // After the transition duration, add 'hidden' to remove the modal from view
     setTimeout(() => {
       logoutModal.classList.add("hidden");
-      console.log("Logout modal closed.");
+   
     }, 500); // Match with transition duration
   }
 
@@ -226,7 +230,7 @@ const phoneNumbersArray = await fetchPhoneNumbers();
       document.querySelectorAll(".login-text").forEach((button) => {
         button.textContent = "Login";
       });
-      console.log("User logged out.");
+      
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("userPhone");
       closeLogoutModal();
@@ -281,26 +285,27 @@ const phoneNumbersArray = await fetchPhoneNumbers();
       document.querySelectorAll(".login-text").forEach((button) => {
         button.textContent = phoneNumber;
       });
-      console.log(`User with phone number ${phoneNumber} logged in.`);
+      
       return;
     } else {
       // Simulate OTP sending
-      console.log(`Simulating OTP send to phone number: ${phoneNumber}`);
+     
       // Store the simulated OTP in a variable for verification
       window.userPhone = phoneNumber;
 
       // Simulate OTP generation
       const simulatedOTP = "123456";
-      console.log(`Simulated OTP: ${simulatedOTP}`);
+     
 
       // Dispatch an event to open the OTP modal
       window.dispatchEvent(new Event("openOtpModal"));
-      console.log("OTP modal opened via event.");
+   
+
     }
   });
 
   // Optional: Listen for the OTP modal close event to perform additional actions
   window.addEventListener("otpModalClosed", () => {
-    console.log("OTP modal has been closed.");
+ 
   });
 </script>

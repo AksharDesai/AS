@@ -116,7 +116,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   // Animate the current card off-screen to the right (Next)
   const nextCard = () => {
     if (currentIndex === 0) {
-      console.log("Reached the end of the products.");
+      
       return;
     }
     const currentCard = cards[currentIndex];
@@ -136,7 +136,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   // Animate the previous card back into view (Previous)
   const prevCard = () => {
     if (currentIndex === cards.length - 1) {
-      console.log("Already at the first product.");
+     
       return;
     }
     const previousCard = cards[currentIndex + 1];

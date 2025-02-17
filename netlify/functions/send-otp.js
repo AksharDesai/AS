@@ -50,7 +50,7 @@ exports.handler = async (event, context) => {
     // Use the global fetch provided by Netlify Functions
     const response = await fetch("https://www.fast2sms.com/dev/bulkV2", settings);
     const data = await response.json();
-    console.log("Fast2SMS Response:", data);
+   
 
     if (data.return && data.return === true) {
       return {

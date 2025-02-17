@@ -16,11 +16,10 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     margin: 0 auto;
   }
 
-  img{
-
+  img {
     width: 100% !important;
     height: 100% !important;
-    object-fit:fill !important;
+    object-fit: fill !important;
     object-position: center !important;
   }
 
@@ -39,7 +38,6 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     font-weight: bold;
     user-select: none;
     cursor: pointer;
-    /* Smooth transitions */
     transition: transform 0.3s ease-out, opacity 0.3s ease-out;
   }
 
@@ -60,16 +58,13 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
     margin-top: 20px;
     gap: 10px;
   }
-
-
 </style>
 
 <div class="swiper-container">
   {
     products.map((product, index) => (
-      <div class="card overflow-hidden border-4 border-neutral-700">
+      <div class="card overflow-hidden border-4 border-neutral-700" key={product.id}>
         <img
-          class=""
           src={`${product.image}`}
           draggable="false"
           loading="lazy"
@@ -81,78 +76,98 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
   }
 </div>
 
-<div class="nav-buttons rounded-md overflow-hidden  ">
-  <button id="prev-btn" class="bg-black text-white py-2 px-4   text-xl">< </button>
-  <button id="next-btn" class=" bg-red-500 text-white px-4 py-2  border-white  text-xl">></button>
+<div class="nav-buttons rounded-md overflow-hidden">
+  <button id="prev-btn" class="bg-black text-white py-2 px-4 text-xl">&lt;</button>
+  <button id="next-btn" class="bg-red-500 text-white px-4 py-2 border-white text-xl">&gt;</button>
 </div>
 
 <script is:inline>
-  const container = document.querySelector('.swiper-container');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
-  const cards = Array.from(container.querySelectorAll('.card'));
-
-  // Set current index (active card is on top)
-  let currentIndex = cards.length - 1;
-
-  // Initialize positions for each card
-  const initCards = () => {
-    cards.forEach((card, index) => {
-      if (index === currentIndex) {
-        card.style.transform = 'none';
-        card.style.opacity = 1;
-        card.classList.remove('inactive');
-      } else {
-        // Cards behind the active one are slightly pushed back
-        card.style.transform = 'translate3d(0, 0, -400px)';
-        card.style.opacity = 1;
-        card.classList.add('inactive');
-      }
-    });
-  };
-
-  initCards();
-
-  // Animate the current card off-screen to the right (Next)
-  const nextCard = () => {
-    if (currentIndex === 0) {
-      
+  document.addEventListener('DOMContentLoaded', () => {
+    // Grab essential DOM elements
+    const container = document.querySelector('.swiper-container');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    if (!container || !prevBtn || !nextBtn) {
+      console.error('Essential DOM elements for slider are missing.');
       return;
     }
-    const currentCard = cards[currentIndex];
-    currentCard.style.transform = 'translate3d(100%, 0, 0)';
-    currentCard.style.opacity = 0;
-    currentCard.classList.add('inactive');
-
-    setTimeout(() => {
-      currentIndex--;
-      const newCurrent = cards[currentIndex];
-      newCurrent.style.transform = 'none';
-      newCurrent.style.opacity = 1;
-      newCurrent.classList.remove('inactive');
-    }, 300);
-  };
-
-  // Animate the previous card back into view (Previous)
-  const prevCard = () => {
-    if (currentIndex === cards.length - 1) {
-     
+    
+    const cards = Array.from(container.querySelectorAll('.card'));
+    if (!cards.length) {
+      console.error('No cards found in the slider.');
       return;
     }
-    const previousCard = cards[currentIndex + 1];
-    previousCard.style.transform = 'translate3d(-100%, 0, 0)';
-    previousCard.style.opacity = 0;
-    previousCard.classList.add('inactive');
+    
+    // Current index represents the active card (top of the stack)
+    let currentIndex = cards.length - 1;
+    let isAnimating = false; // Prevent rapid clicks that may break animations
 
-    // Force a reflow to ensure the starting position is applied
-    previousCard.getBoundingClientRect();
+    // Initialize positions and classes for each card
+    const initCards = () => {
+      cards.forEach((card, index) => {
+        if (index === currentIndex) {
+          card.style.transform = 'none';
+          card.style.opacity = '1';
+          card.classList.remove('inactive');
+        } else {
+          card.style.transform = 'translate3d(0, 0, -400px)';
+          card.style.opacity = '1';
+          card.classList.add('inactive');
+        }
+      });
+    };
 
-    previousCard.style.transform = 'none';
-    previousCard.style.opacity = 1;
-    previousCard.classList.remove('inactive');
-    currentIndex++;
-  };
+    initCards();
 
-  nextBtn.addEventListener('click', nextCard);
-  prevBtn.addEventListener('click', prevCard);
+    // Handler for moving to the next card (animate current card out)
+    const nextCard = () => {
+      if (isAnimating || currentIndex === 0) return;
+      isAnimating = true;
+      const currentCard = cards[currentIndex];
+      currentCard.style.transform = 'translate3d(100%, 0, 0)';
+      currentCard.style.opacity = '0';
+      currentCard.classList.add('inactive');
+
+      // Listen for the end of the transform transition
+      const onTransitionEnd = (event) => {
+        if (event.propertyName !== 'transform') return;
+        currentCard.removeEventListener('transitionend', onTransitionEnd);
+        currentIndex--;
+        const newCurrent = cards[currentIndex];
+        newCurrent.style.transform = 'none';
+        newCurrent.style.opacity = '1';
+        newCurrent.classList.remove('inactive');
+        isAnimating = false;
+      };
+      currentCard.addEventListener('transitionend', onTransitionEnd);
+    };
+
+    // Handler for moving to the previous card (animate previous card in)
+    const prevCard = () => {
+      if (isAnimating || currentIndex === cards.length - 1) return;
+      isAnimating = true;
+      const previousCard = cards[currentIndex + 1];
+      // Set initial state off-screen to the left
+      previousCard.style.transform = 'translate3d(-100%, 0, 0)';
+      previousCard.style.opacity = '0';
+      // Force reflow to ensure the starting state is applied
+      previousCard.getBoundingClientRect();
+      // Transition to the active state
+      previousCard.style.transform = 'none';
+      previousCard.style.opacity = '1';
+      previousCard.classList.remove('inactive');
+
+      const onTransitionEnd = (event) => {
+        if (event.propertyName !== 'transform') return;
+        previousCard.removeEventListener('transitionend', onTransitionEnd);
+        currentIndex++;
+        isAnimating = false;
+      };
+      previousCard.addEventListener('transitionend', onTransitionEnd);
+    };
+
+    // Bind navigation button events
+    nextBtn.addEventListener('click', nextCard);
+    prevBtn.addEventListener('click', prevCard);
+  });
 </script>

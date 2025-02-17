@@ -3,6 +3,8 @@ import "../styles/global.css";
 
 import Login_modal from '../components/userAuthentication.astro';
 
+const { title, description, seoScript } = Astro.props;
+
 ---
 
 <!doctype html>
@@ -12,6 +14,7 @@ import Login_modal from '../components/userAuthentication.astro';
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description}>
 
     <!-- unknown links -->
     <link
@@ -65,11 +68,17 @@ import Login_modal from '../components/userAuthentication.astro';
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- swiper js link /-->
 
+    {seoScript}
+
+<!-- Other head elements -->
+
 
 
   
 
-    <title>TWG</title>
+    <title>| TWG | High-Quality Hardware & Home Improvement Products </title>
+    
+    <!-- <title>TWG | High-Quality Hardware & Home Improvement Products </title> -->
   </head>
   <body>
     <div class="smooth-scroll-wrapper">

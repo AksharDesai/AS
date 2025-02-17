@@ -1,122 +1,1258 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import FeaturedProducts from "../components/Fetchproducts.astro";
+import SearchProduct from "../components/SearchProduct.astro";
 
-import Layout from '../layouts/Layout.astro';
-import FeaturedProducts from '../components/Fetchproducts.astro'
-import SearchProduct from '../components/SearchProduct.astro';
-
-
+const seoScript = `
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@graph": [
+    {
+      "@type": "Product",
+      "name": "Slim Tandem Box",
+      "image": "https://www.yourwebsite.com/images/slim-tandem-box.jpg",
+      "description": "Enhance your storage solutions with our Slim Tandem Box, designed for space efficiency and durability.",
+      "sku": "STB-1001",
+      "mpn": "STB-1001",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/slim-tandem-box",
+        "priceCurrency": "INR",
+        "price": "1500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "24"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wooden Quadro",
+      "image": "https://www.yourwebsite.com/images/wooden-quadro.jpg",
+      "description": "The Wooden Quadro combines traditional craftsmanship with modern functionality, perfect for any home decor.",
+      "sku": "WQ-1002",
+      "mpn": "WQ-1002",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wooden-quadro",
+        "priceCurrency": "INR",
+        "price": "2000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Telescopic Channel (Soft Close)",
+      "image": "https://www.yourwebsite.com/images/telescopic-channel-soft-close.jpg",
+      "description": "Our Telescopic Channel with Soft Close offers smooth and silent sliding mechanisms, ideal for modern kitchen cabinets and wardrobes.",
+      "sku": "TC-SC-1003",
+      "mpn": "TC-SC-1003",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/telescopic-channel-soft-close",
+        "priceCurrency": "INR",
+        "price": "1800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Telescopic Channel (Regular)",
+      "image": "https://www.yourwebsite.com/images/telescopic-channel-regular.jpg",
+      "description": "Our Regular Telescopic Channel provides reliable sliding mechanisms, perfect for various cabinetry and storage solutions.",
+      "sku": "TC-R-1004",
+      "mpn": "TC-R-1004",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/telescopic-channel-regular",
+        "priceCurrency": "INR",
+        "price": "1500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "22"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Pocket Channel",
+      "image": "https://www.yourwebsite.com/images/pocket-channel.jpg",
+      "description": "Maximize your storage efficiency with the Pocket Channel, ideal for concealed and organized storage in modern kitchens and closets.",
+      "sku": "PC-1005",
+      "mpn": "PC-1005",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/pocket-channel",
+        "priceCurrency": "INR",
+        "price": "1300.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "19"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Tandem Box Fixer",
+      "image": "https://www.yourwebsite.com/images/tandem-box-fixer.jpg",
+      "description": "Ensure the stability of your storage solutions with our Tandem Box Fixer, designed for easy installation and reliable performance.",
+      "sku": "TBF-1006",
+      "mpn": "TBF-1006",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/tandem-box-fixer",
+        "priceCurrency": "INR",
+        "price": "800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "15"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Stainless Steel Clip-On Hinges (2D)",
+      "image": "https://www.yourwebsite.com/images/clip-on-hinges-2d.jpg",
+      "description": "Upgrade your cabinets with our Stainless Steel Clip-On Hinges in 2D, offering durability and ease of installation without the need for tools.",
+      "sku": "SSCH-2D-1007",
+      "mpn": "SSCH-2D-1007",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/stainless-steel-clip-on-hinges-2d",
+        "priceCurrency": "INR",
+        "price": "1200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Stainless Steel Clip-On Hinges (3D)",
+      "image": "https://www.yourwebsite.com/images/clip-on-hinges-3d.jpg",
+      "description": "Our Stainless Steel Clip-On Hinges in 3D provide enhanced functionality and a sleek appearance, perfect for modern cabinetry.",
+      "sku": "SSCH-3D-1008",
+      "mpn": "SSCH-3D-1008",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/stainless-steel-clip-on-hinges-3d",
+        "priceCurrency": "INR",
+        "price": "1400.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Cutlery Basket",
+      "image": "https://www.yourwebsite.com/images/cutlery-basket.jpg",
+      "description": "Organize your kitchen utensils with our Cutlery Basket, designed for easy access and optimal storage efficiency.",
+      "sku": "CB-1009",
+      "mpn": "CB-1009",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/cutlery-basket",
+        "priceCurrency": "INR",
+        "price": "500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "12"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Plate Basket",
+      "image": "https://www.yourwebsite.com/images/plate-basket.jpg",
+      "description": "Store your plates neatly with our Plate Basket, featuring a sturdy design and easy installation for any kitchen setup.",
+      "sku": "PB-1010",
+      "mpn": "PB-1010",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/plate-basket",
+        "priceCurrency": "INR",
+        "price": "600.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "14"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Thali Basket",
+      "image": "https://www.yourwebsite.com/images/thali-basket.jpg",
+      "description": "Keep your thalis organized with our Thali Basket, designed for durability and ease of use in busy kitchens.",
+      "sku": "TB-1011",
+      "mpn": "TB-1011",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/thali-basket",
+        "priceCurrency": "INR",
+        "price": "550.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "10"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Partition Basket",
+      "image": "https://www.yourwebsite.com/images/partition-basket.jpg",
+      "description": "Organize your kitchen essentials with our Partition Basket, featuring adjustable compartments for customized storage.",
+      "sku": "PB-1012",
+      "mpn": "PB-1012",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/partition-basket",
+        "priceCurrency": "INR",
+        "price": "700.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "16"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Glass Basket",
+      "image": "https://www.yourwebsite.com/images/glass-basket.jpg",
+      "description": "Display and store your glassware elegantly with our Glass Basket, designed for both functionality and aesthetic appeal.",
+      "sku": "GB-1013",
+      "mpn": "GB-1013",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/glass-basket",
+        "priceCurrency": "INR",
+        "price": "800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Cup & Saucer Basket",
+      "image": "https://www.yourwebsite.com/images/cup-saucer-basket.jpg",
+      "description": "Store your cups and saucers securely with our Cup & Saucer Basket, featuring individual compartments for organized storage.",
+      "sku": "CSB-1014",
+      "mpn": "CSB-1014",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/cup-saucer-basket",
+        "priceCurrency": "INR",
+        "price": "750.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "15"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Plain Basket",
+      "image": "https://www.yourwebsite.com/images/plain-basket.jpg",
+      "description": "Our Plain Basket offers versatile storage solutions for various kitchen and home essentials, designed for simplicity and strength.",
+      "sku": "PlainB-1015",
+      "mpn": "PlainB-1015",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/plain-basket",
+        "priceCurrency": "INR",
+        "price": "400.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.0",
+        "reviewCount": "8"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Bottle Basket",
+      "image": "https://www.yourwebsite.com/images/bottle-basket.jpg",
+      "description": "Store your bottles efficiently with our Bottle Basket, featuring specialized compartments to keep your beverages organized.",
+      "sku": "BB-1016",
+      "mpn": "BB-1016",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/bottle-basket",
+        "priceCurrency": "INR",
+        "price": "900.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "12"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Aluminium Basket",
+      "image": "https://www.yourwebsite.com/images/aluminium-basket.jpg",
+      "description": "Our Aluminium Basket offers lightweight and durable storage solutions, perfect for both kitchen and household use.",
+      "sku": "AB-1017",
+      "mpn": "AB-1017",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/aluminium-basket",
+        "priceCurrency": "INR",
+        "price": "650.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "10"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Grey Pantry Unit",
+      "image": "https://www.yourwebsite.com/images/grey-pantry-unit.jpg",
+      "description": "Organize your kitchen seamlessly with our Grey Pantry Unit, featuring ample storage space and a modern design.",
+      "sku": "GPU-1018",
+      "mpn": "GPU-1018",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/grey-pantry-unit",
+        "priceCurrency": "INR",
+        "price": "3500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "25"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Grey Tall Unit (6 Layers)",
+      "image": "https://www.yourwebsite.com/images/grey-tall-unit-6-layers.jpg",
+      "description": "Maximize vertical storage with our Grey Tall Unit, featuring 6 layers for efficient organization of your kitchen essentials.",
+      "sku": "GTU-1019",
+      "mpn": "GTU-1019",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/grey-tall-unit-6-layers",
+        "priceCurrency": "INR",
+        "price": "4000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Grey Pull-Out Shelves (2 Shelf)",
+      "image": "https://www.yourwebsite.com/images/grey-pull-out-shelves-2.jpg",
+      "description": "Enhance accessibility with our Grey Pull-Out Shelves featuring 2 shelves, perfect for organizing kitchen and storage areas.",
+      "sku": "GPS-1020",
+      "mpn": "GPS-1020",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/grey-pull-out-shelves-2",
+        "priceCurrency": "INR",
+        "price": "2500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Grey Pull-Out Shelves (3 Shelf)",
+      "image": "https://www.yourwebsite.com/images/grey-pull-out-shelves-3.jpg",
+      "description": "Optimize your storage with our Grey Pull-Out Shelves featuring 3 shelves, ideal for larger kitchen and storage spaces.",
+      "sku": "GPS-1021",
+      "mpn": "GPS-1021",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/grey-pull-out-shelves-3",
+        "priceCurrency": "INR",
+        "price": "3000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "22"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Elevator Basket (Pull Down)",
+      "image": "https://www.yourwebsite.com/images/elevator-basket-pulldown.jpg",
+      "description": "Our Elevator Basket with Pull Down feature offers easy access and organized storage, ideal for kitchens and pantries.",
+      "sku": "EB-PD-1022",
+      "mpn": "EB-PD-1022",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/elevator-basket-pull-down",
+        "priceCurrency": "INR",
+        "price": "2200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "17"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "360° Rotating Shoe Rack",
+      "image": "https://www.yourwebsite.com/images/rotating-shoe-rack.jpg",
+      "description": "Store your shoes efficiently with our 360° Rotating Shoe Rack, providing easy access and organized storage.",
+      "sku": "RSR-1023",
+      "mpn": "RSR-1023",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/rotating-shoe-rack",
+        "priceCurrency": "INR",
+        "price": "1800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "19"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Cabinet Bi-Fold System",
+      "image": "https://www.yourwebsite.com/images/cabinet-bi-fold-system.jpg",
+      "description": "Optimize your cabinet space with our Cabinet Bi-Fold System, featuring durable construction and easy installation.",
+      "sku": "CBS-1024",
+      "mpn": "CBS-1024",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/cabinet-bi-fold-system",
+        "priceCurrency": "INR",
+        "price": "2500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "21"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wardrobe Cloth Lifter",
+      "image": "https://www.yourwebsite.com/images/wardrobe-cloth-lifter.jpg",
+      "description": "Enhance your wardrobe functionality with our Wardrobe Cloth Lifter, designed for easy access to clothes stored on high shelves.",
+      "sku": "WCL-1025",
+      "mpn": "WCL-1025",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wardrobe-cloth-lifter",
+        "priceCurrency": "INR",
+        "price": "1200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "14"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wardrobe Trouser Rack (Single)",
+      "image": "https://www.yourwebsite.com/images/wardrobe-trouser-rack-single.jpg",
+      "description": "Organize your trousers efficiently with our Wardrobe Trouser Rack (Single), offering sturdy support and easy access.",
+      "sku": "WTR-S-1026",
+      "mpn": "WTR-S-1026",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wardrobe-trouser-rack-single",
+        "priceCurrency": "INR",
+        "price": "900.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "10"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wardrobe Trouser Rack (Double)",
+      "image": "https://www.yourwebsite.com/images/wardrobe-trouser-rack-double.jpg",
+      "description": "Increase storage capacity with our Wardrobe Trouser Rack (Double), perfect for organizing multiple pairs of trousers efficiently.",
+      "sku": "WTR-D-1027",
+      "mpn": "WTR-D-1027",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wardrobe-trouser-rack-double",
+        "priceCurrency": "INR",
+        "price": "1500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "12"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wardrobe Revolving Mirror",
+      "image": "https://www.yourwebsite.com/images/wardrobe-revolving-mirror.jpg",
+      "description": "Add a touch of elegance with our Wardrobe Revolving Mirror, providing a full view of your outfits and enhancing wardrobe aesthetics.",
+      "sku": "WRM-1028",
+      "mpn": "WRM-1028",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wardrobe-revolving-mirror",
+        "priceCurrency": "INR",
+        "price": "2000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "16"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Jewellery Box",
+      "image": "https://www.yourwebsite.com/images/jewellery-box.jpg",
+      "description": "Organize your jewellery with our elegant Jewellery Box, featuring multiple compartments and a stylish design.",
+      "sku": "JB-1029",
+      "mpn": "JB-1029",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/jewellery-box",
+        "priceCurrency": "INR",
+        "price": "1800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Wall Bed Fitting Vertical with Clamps",
+      "image": "https://www.yourwebsite.com/images/wall-bed-fitting-vertical.jpg",
+      "description": "Our Wall Bed Fitting Vertical with Clamps offers secure and easy installation for space-saving wall bed solutions.",
+      "sku": "WBFVC-1030",
+      "mpn": "WBFVC-1030",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/wall-bed-fitting-vertical-clamps",
+        "priceCurrency": "INR",
+        "price": "3000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "22"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Top Screw Brush Wheel with Track",
+      "image": "https://www.yourwebsite.com/images/top-screw-brush-wheel.jpg",
+      "description": "Ensure smooth operation of your folding systems with our Top Screw Brush Wheel with Track, designed for durability and efficiency.",
+      "sku": "TSBW-1031",
+      "mpn": "TSBW-1031",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/top-screw-brush-wheel-track",
+        "priceCurrency": "INR",
+        "price": "2200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Dining Folding Table Bracket",
+      "image": "https://www.yourwebsite.com/images/dining-folding-table-bracket.jpg",
+      "description": "Our Dining Folding Table Bracket provides robust support for your folding tables, ensuring stability and ease of use.",
+      "sku": "DFTB-1032",
+      "mpn": "DFTB-1032",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/dining-folding-table-bracket",
+        "priceCurrency": "INR",
+        "price": "2500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "17"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (5kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-5kg.jpg",
+      "description": "Our Soft Closing Gas Pump (5kg) ensures smooth and silent cabinet operations, perfect for lightweight storage solutions.",
+      "sku": "SCGP-5KG-1033",
+      "mpn": "SCGP-5KG-1033",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-5kg",
+        "priceCurrency": "INR",
+        "price": "1000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "10"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (10kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-10kg.jpg",
+      "description": "Our Soft Closing Gas Pump (10kg) offers enhanced support for medium-weight storage solutions, ensuring durability and quiet operation.",
+      "sku": "SCGP-10KG-1034",
+      "mpn": "SCGP-10KG-1034",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-10kg",
+        "priceCurrency": "INR",
+        "price": "1200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.2",
+        "reviewCount": "12"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (15kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-15kg.jpg",
+      "description": "Our Soft Closing Gas Pump (15kg) is designed for heavy-duty storage solutions, providing reliable and silent cabinet operations.",
+      "sku": "SCGP-15KG-1035",
+      "mpn": "SCGP-15KG-1035",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-15kg",
+        "priceCurrency": "INR",
+        "price": "1400.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "14"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (20kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-20kg.jpg",
+      "description": "Our Soft Closing Gas Pump (20kg) delivers robust support for large storage systems, ensuring smooth and quiet operations.",
+      "sku": "SCGP-20KG-1036",
+      "mpn": "SCGP-20KG-1036",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-20kg",
+        "priceCurrency": "INR",
+        "price": "1600.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "16"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (25kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-25kg.jpg",
+      "description": "Our Soft Closing Gas Pump (25kg) provides exceptional support for heavyweight storage cabinets, ensuring longevity and quiet functionality.",
+      "sku": "SCGP-25KG-1037",
+      "mpn": "SCGP-25KG-1037",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-25kg",
+        "priceCurrency": "INR",
+        "price": "1800.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (30kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-30kg.jpg",
+      "description": "Our Soft Closing Gas Pump (30kg) offers superior support for the heaviest storage systems, ensuring seamless and silent cabinet operations.",
+      "sku": "SCGP-30KG-1038",
+      "mpn": "SCGP-30KG-1038",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-30kg",
+        "priceCurrency": "INR",
+        "price": "2000.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Soft Closing Gas Pump (35kg)",
+      "image": "https://www.yourwebsite.com/images/soft-closing-gas-pump-35kg.jpg",
+      "description": "Our Soft Closing Gas Pump (35kg) ensures robust support for the largest storage cabinets, providing reliable and silent operations.",
+      "sku": "SCGP-35KG-1039",
+      "mpn": "SCGP-35KG-1039",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/soft-closing-gas-pump-35kg",
+        "priceCurrency": "INR",
+        "price": "2200.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "22"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "MS Imported Ladder (4 Steps)",
+      "image": "https://www.yourwebsite.com/images/ms-imported-ladder-4-steps.jpg",
+      "description": "Our MS Imported Ladder with 4 Steps provides reliable and sturdy support for reaching elevated storage areas.",
+      "sku": "MSL-4S-1040",
+      "mpn": "MSL-4S-1040",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/ms-imported-ladder-4-steps",
+        "priceCurrency": "INR",
+        "price": "1500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.3",
+        "reviewCount": "16"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "MS Imported Ladder (5 Steps)",
+      "image": "https://www.yourwebsite.com/images/ms-imported-ladder-5-steps.jpg",
+      "description": "Our MS Imported Ladder with 5 Steps offers extended reach and stability for various household and storage needs.",
+      "sku": "MSL-5S-1041",
+      "mpn": "MSL-5S-1041",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/ms-imported-ladder-5-steps",
+        "priceCurrency": "INR",
+        "price": "1700.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "18"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "MS Imported Ladder (6 Steps)",
+      "image": "https://www.yourwebsite.com/images/ms-imported-ladder-6-steps.jpg",
+      "description": "Our MS Imported Ladder with 6 Steps provides maximum reach and durability for all your elevated storage requirements.",
+      "sku": "MSL-6S-1042",
+      "mpn": "MSL-6S-1042",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/ms-imported-ladder-6-steps",
+        "priceCurrency": "INR",
+        "price": "1900.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "reviewCount": "20"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Iron Board",
+      "image": "https://www.yourwebsite.com/images/iron-board.jpg",
+      "description": "Our Iron Board offers a sturdy and adjustable surface for efficient ironing, designed for durability and ease of use.",
+      "sku": "IB-1043",
+      "mpn": "IB-1043",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/iron-board",
+        "priceCurrency": "INR",
+        "price": "2500.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.4",
+        "reviewCount": "19"
+      }
+    },
+    {
+      "@type": "Product",
+      "name": "Masking Tape (24mm x 20 yards)",
+      "image": "https://www.yourwebsite.com/images/masking-tape.jpg",
+      "description": "Our Masking Tape (24mm x 20 yards) offers reliable adhesion and easy removal, perfect for various painting and crafting projects.",
+      "sku": "MT-2420-1044",
+      "mpn": "MT-2420-1044",
+      "brand": {
+        "@type": "Brand",
+        "name": "TWG"
+      },
+      "offers": {
+        "@type": "Offer",
+        "url": "https://www.yourwebsite.com/products/masking-tape-24mm-x-20yards",
+        "priceCurrency": "INR",
+        "price": "300.00",
+        "priceValidUntil": "2024-12-31",
+        "itemCondition": "https://schema.org/NewCondition",
+        "availability": "https://schema.org/InStock"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.1",
+        "reviewCount": "10"
+      }
+    }
+    // Add additional products following the same structure below
+  ]
+}
+</script>
+`;
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	   <!-- Main Content Area -->
-       <main class="flex-1 ml-0 lg:ml-64 overflow-y-auto overflow-x-hidden  border-red-500" id="el-6jvywkgc">
-        
-        <!-- fetched products from supabase how can i loop and create cards acccording to databas -->
-        
-      
-    
-       
-      
-    
-    
-      
-        <element id="1fbb2dd5-79fb-48cf-8976-397830822c7b" data-section-id="1fbb2dd5-79fb-48cf-8976-397830822c7b">
-    
-            <htmlCode>
-                <div id="root">
-                    <section id="Hero" class="relative bg-neutral-900 ">
-                        <!-- Slider Container -->
-                        <div class="swiper-container hero-slider ">
-                            <div class="swiper-wrapper">
-                                <!-- Slide 1 -->
-    
-                                <!-- Slide 2 -->
-                                <div class="swiper-slide relative">
-                                    <div class="absolute inset-0 bg-black">
-                                    </div>
-                                    <div class="bg-neutral-800 min-h-[40vh] md:min-h-[70vh] flex items-center justify-center">
-                                        <div class="container mx-auto px-4 relative z-10">
-                                            <div class="max-w-3xl mx-auto text-center animate-fade-in">
-                                                <h2 class="text-4xl md:text-6xl font-bold text-white mb-6">
-                                                    Premium Kitchen
-                                                    <span class="block text-red-600">Storage Solutions</span>
-                                                </h2>
-                                                <p class="text-gray-300 text-lg md:text-xl mb-8">
-                                                    Transform your kitchen with our innovative storage systems
-                                                </p>
-                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Navigation Buttons -->
-                            
-                            <!-- Pagination -->
-                            
-                        </div>
-                    </section>
-    
-               
+<Layout
+  description="Explore premium kitchen and wardrobe accessories, including soft-close drawer channels, stainless steel baskets, hinges, pull-out storage, and more. Shop high-quality, durable, and stylish hardware solutions for modular kitchens and wardrobes at the best prices!"
+>
+  <!-- Main Content Area -->
+  <main
+    class="flex-1 ml-0 lg:ml-64 overflow-y-auto overflow-x-hidden border-red-500"
+    id="el-6jvywkgc"
+  >
+    <!-- fetched products from supabase how can i loop and create cards acccording to databas -->
+
+    <element
+      id="1fbb2dd5-79fb-48cf-8976-397830822c7b"
+      data-section-id="1fbb2dd5-79fb-48cf-8976-397830822c7b"
+    >
+      <htmlCode>
+        <div id="root">
+          <section id="Hero" class="relative bg-neutral-900">
+            <!-- Slider Container -->
+            <div class="swiper-container hero-slider">
+              <div class="swiper-wrapper">
+                <!-- Slide 1 -->
+
+                <!-- Slide 2 -->
+                <div class="swiper-slide relative">
+                  <div class="absolute inset-0 bg-black"></div>
+                  <div
+                    class="bg-neutral-800 min-h-[40vh] md:min-h-[70vh] flex items-center justify-center"
+                  >
+                    <div class="container mx-auto px-4 relative z-10">
+                      <div
+                        class="max-w-3xl mx-auto text-center animate-fade-in"
+                      >
+                        <h2
+                          class="text-4xl md:text-6xl font-bold text-white mb-6"
+                        >
+                          Premium Kitchen
+                          <span class="block text-red-600"
+                            >Storage Solutions</span
+                          >
+                        </h2>
+                        <p class="text-gray-300 text-lg md:text-xl mb-8">
+                          Transform your kitchen with our innovative storage
+                          systems
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-            </htmlCode>
-        </element>
-    
+              </div>
+              <!-- Navigation Buttons -->
 
-        </htmlcode>
-    
-        </element>
-    
-    
-        <element id="47651010-23b2-4c6f-b340-49376911016b" data-section-id="47651010-23b2-4c6f-b340-49376911016b">
-    
-    
-    
-            <htmlcode id="el-zixgp9l1">
-    
-                <div id="root">
-    
-                    
-                    <!-- {% include 'crudProducts.html' %} -->
-                    <FeaturedProducts></FeaturedProducts>
-
-                    
-    
-                   
-                </div>
-            </htmlcode>
-    
-        </element>
-        <element id="d5a43a05-6281-4d50-8993-a642f262c31f" data-section-id="d5a43a05-6281-4d50-8993-a642f262c31f">
-    
-            <htmlCode>
-                <div id="root">
-                    <section id="SearchAndFilter" class="fixed bottom-10 right-0 z-50">
-                        <!-- Search Trigger Button -->
-
-                        <SearchProduct>
-                        </SearchProduct>
-                        
-                        <!-- Search and Filter Panel -->
-
-                    </section>
-    
-                    <script>
-    
-                    </script>
-                </div>
-            </htmlCode>
-        </element>
-     
-    
-        <div id="page_complete">
-            <script>
-                console.log('Page complete');
-            </script>
-    
-    </main>
-    
-	 
+              <!-- Pagination -->
+            </div>
+          </section>
+        </div>
+      </htmlCode>
+    </element>
+  </main>
 </Layout>
+
+<element
+  id="47651010-23b2-4c6f-b340-49376911016b"
+  data-section-id="47651010-23b2-4c6f-b340-49376911016b"
+>
+  <htmlcode id="el-zixgp9l1">
+    <div id="root">
+      <!-- {% include 'crudProducts.html' %} -->
+      <FeaturedProducts />
+    </div>
+  </htmlcode>
+</element>
+<element
+  id="d5a43a05-6281-4d50-8993-a642f262c31f"
+  data-section-id="d5a43a05-6281-4d50-8993-a642f262c31f"
+>
+  <htmlCode>
+    <div id="root">
+      <section id="SearchAndFilter" class="fixed bottom-10 right-0 z-50">
+        <!-- Search Trigger Button -->
+
+        <SearchProduct />
+
+        <!-- Search and Filter Panel -->
+      </section>
+
+      <script></script>
+    </div>
+  </htmlCode>
+</element>
+
+<div id="page_complete">
+  <script>
+    console.log("Page complete");
+  </script>
+</div>

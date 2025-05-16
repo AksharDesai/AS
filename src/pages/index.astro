@@ -63,35 +63,64 @@ const seoScript = `<script type="application/ld+json">
           
           <section class="grid grid-rows-2 md:grid-rows-none md:grid-cols-[30%_70%] min-h-screen md:min-h-[80vh] -mt-14 md:mt-14 ">
             <!-- Hero Section (Top Row on small screens, Left Column on medium screens) -->
-            <div class="flex flex-col justify-center items-center p-8 text-white h-full">
-              <h1
-              class="text-7xl  md:text-7xl text-left animate-fade-in text-red-500 mont-alternate animate-fade-in tracking-tight"
-              id="el-k0ehc7q3"
-            >
-              TWG
-            </h1>
-          
-              <p class="text-sm mt-2 font-bold max-w-56 text-center font-mono">we craft unforgettable experiences</p>
+            <div class="flex flex-col justify-center items-center p-8 text-white h-full  bg-gradient-to-b from-black to-gray-900 md:from-black md:to-black relative overflow-hidden">
+              <!-- Animated background elements -->
+              <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 left-0 w-full h-full">
+                  <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
+                    <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="white" stroke-width="0.2" stroke-dasharray="5,5"></path>
+                  </svg>
+                </div>
+                <div class="absolute w-20 h-20 rounded-full bg-red-500 blur-xl -top-10 -left-10 animate-pulse"></div>
+                <div class="absolute w-16 h-16 rounded-full bg-red-400 blur-xl bottom-10 right-10 animate-pulse" style="animation-delay: 1s;"></div>
+              </div>
+              
+              <h1 class="text-7xl md:text-7xl text-left animate-fade-in text-red-500 mont-alternate tracking-tight relative">
+                <span class="inline-block transform hover:scale-105 transition-transform duration-300">T</span>
+                <span class="inline-block transform hover:scale-105 transition-transform duration-300" style="animation-delay: 0.1s;">W</span>
+                <span class="inline-block transform hover:scale-105 transition-transform duration-300" style="animation-delay: 0.2s;">G</span>
+                <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-transparent"></span>
+              </h1>
+              
+              <p class="text-sm mt-6 font-bold max-w-56 text-center font-mono relative">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-300">we craft unforgettable experiences</span>
+                <span class="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 "></span>
+              </p>
+              
+            
             </div>
+            
             <!-- Image Slider (Bottom Row on small screens, Right Column on medium screens) -->
-            <div class="flex items-center justify-center overflow-hidden h-[400px] md:h-[500px] -mt-10 md:mt-0 md:rounded-l-4xl md:-mr-8">
+            <div class="flex items-center justify-center overflow-hidden h-[400px] md:h-[500px] -mt-10 md:mt-0 md:rounded-l-4xl md:-mr-8 relative">
+              <!-- Decorative elements -->
+              <div class="absolute inset-0 border-l-2 border-red-500 opacity-50 pointer-events-none"></div>
+              <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-radial from-red-500/20 to-transparent rounded-full blur-xl"></div>
+              <div class="absolute bottom-0 left-0 w-24 h-24 bg-gradient-radial from-red-500/20 to-transparent rounded-full blur-xl"></div>
+              
               <!-- Using aspect-video ensures a 16:9 ratio; change as needed -->
               <div class="slider relative w-full h-full aspect-video flex items-center justify-center">
                 <div class="vignette slide absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center">
-                  <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1635321350281-e2a91ecffd00?q=80&w=2023&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 2" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40 z-10"></div>
+                  <img class="w-full h-full object-cover transform scale-105 hover:scale-100 transition-transform duration-7000" src="https://images.unsplash.com/photo-1635321350281-e2a91ecffd00?q=80&w=2023&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 2" />
                 </div>
                 <div class="slide active absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center">
-                  <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1714836999719-86884fbe3ee2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 1" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40 z-10"></div>
+                  <img class="w-full h-full object-cover transform scale-105 hover:scale-100 transition-transform duration-7000" src="https://images.unsplash.com/photo-1714836999719-86884fbe3ee2?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 1" />
                 </div>
                 <div class="vignette slide absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center">
-                  <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1635321349581-d3a6ff81a9a6?q=80&w=2050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 3" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40 z-10"></div>
+                  <img class="w-full h-full object-cover transform scale-105 hover:scale-100 transition-transform duration-7000" src="https://images.unsplash.com/photo-1635321349581-d3a6ff81a9a6?q=80&w=2050&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 3" />
                 </div>
                 <div class="vignette slide absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center">
-                  <img class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1650091063553-58b5f50b59ca?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 4" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-40 z-10"></div>
+                  <img class="w-full h-full object-cover transform scale-105 hover:scale-100 transition-transform duration-7000" src="https://images.unsplash.com/photo-1650091063553-58b5f50b59ca?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Restaurant Ambiance 4" />
                 </div>
-                <!-- Navigation Arrows (optional) -->
-                <button id="prev" class="hidden">&#10094;</button>
-                <button id="next" class="hidden">&#10095;</button>
+                
+                <!-- Navigation Arrows (now visible and styled) -->
+                <button id="prev" class="md:hidden absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10094;</button>
+                <button id="next" class="md:hidden absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10095;</button>
+                
+            
               </div>
             </div>
           </section>
@@ -100,7 +129,7 @@ const seoScript = `<script type="application/ld+json">
           
 
             <!-- ProductSwiper Section -->
-            <div class="mt-32 bg-[#1A1A1A] pt-10 pb-10" id="el-6g9646t2">
+            <div class="md:mt-32 bg-[#1A1A1A] pt-10 pb-10" id="el-6g9646t2">
               <div class="text-center mb-16" id="el-bxkhfufq">
                 <h2
                   class="text-3xl md:text-4xl font-bold text-white mb-2"

@@ -63,7 +63,7 @@ const products = fetchedProducts?.length ? fetchedProducts : [];
 <div class="swiper-container">
   {
     products.map((product, index) => (
-      <div class="card overflow-hidden border-4 border-neutral-700" key={product.id}>
+      <div class="card overflow-hidden border-4 border-neutral-700" >
         <img
           src={`${product.image}`}
           draggable="false"

@@ -63,10 +63,10 @@ const seoScript = `<script type="application/ld+json">
           
           <section class="grid grid-rows-2 md:grid-rows-none md:grid-cols-[30%_70%] min-h-screen md:min-h-[80vh] -mt-14 md:mt-14 ">
             <!-- Hero Section (Top Row on small screens, Left Column on medium screens) -->
-            <div class="flex flex-col justify-center items-center p-8 text-white h-full  bg-gradient-to-b from-black to-gray-900 md:from-black md:to-black relative overflow-hidden">
+            <div class="flex flex-col justify-center items-center p-8 text-white h-full bg-gradient-to-b from-black to-gray-900 md:bg-black md:from-black md:to-black relative overflow-hidden rounded-4xl">
               <!-- Animated background elements -->
               <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-0 left-0 w-full h-full">
+                <div class="absolute top-0 left-0 w-full h-full md:hidden ">
                   <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="w-full h-full">
                     <path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="white" stroke-width="0.2" stroke-dasharray="5,5"></path>
                   </svg>
@@ -91,7 +91,7 @@ const seoScript = `<script type="application/ld+json">
             </div>
             
             <!-- Image Slider (Bottom Row on small screens, Right Column on medium screens) -->
-            <div class="flex items-center justify-center overflow-hidden h-[400px] md:h-[500px] -mt-10 md:mt-0 md:rounded-l-4xl md:-mr-8 relative">
+            <div class="flex items-center justify-center overflow-hidden h-[400px] md:h-[500px] -mt-10 md:my-auto md:rounded-l-4xl relative md:mr-0 lg:mr-[-10vw] xl:mr-[-15vw] 2xl:mr-[-20vw]">
               <!-- Decorative elements -->
               <div class="absolute inset-0 border-l-2 border-red-500 opacity-50 pointer-events-none"></div>
               <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-radial from-red-500/20 to-transparent rounded-full blur-xl"></div>
@@ -117,16 +117,13 @@ const seoScript = `<script type="application/ld+json">
                 </div>
                 
                 <!-- Navigation Arrows (now visible and styled) -->
-                <button id="prev" class="md:hidden absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10094;</button>
-                <button id="next" class="md:hidden absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10095;</button>
+                <button id="prev" class="hidden absolute left-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10094;</button>
+                <button id="next" class="hidden absolute right-4 top-1/2 transform -translate-y-1/2 w-10 h-10 rounded-full bg-black/30 backdrop-blur-sm  items-center justify-center text-white hover:bg-red-500/50 transition-all duration-300 z-20">&#10095;</button>
                 
             
               </div>
             </div>
           </section>
-
-
-          
 
             <!-- ProductSwiper Section -->
             <div class="md:mt-32 bg-[#1A1A1A] pt-10 pb-10" id="el-6g9646t2">
